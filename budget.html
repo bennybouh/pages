@@ -392,6 +392,8 @@ const SK_CATS="budget-cats-v1";
 const SK_BALANCE="budget-start-balance-v1";
 
 let mi=new Date().getMonth(), yr=new Date().getFullYear();
+// Si on est avant 2026, démarrer en Janvier 2026
+if(yr<2026){mi=0;yr=2026;}
 let allData={}, curSection="income", curTab="dashboard";
 let pieChart=null, barChart=null;
 
@@ -441,7 +443,7 @@ function buildYearSelect(){
   const sel=document.getElementById("year-sel");
   sel.innerHTML="";
   const cur=new Date().getFullYear();
-  for(let y=Math.min(2024,cur-2);y<=cur+10;y++){
+  for(let y=2026;y<=cur+10;y++){
     const o=document.createElement("option");
     o.value=y;o.textContent=y;
     if(y===yr)o.selected=true;
