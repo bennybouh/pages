@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Focus Check</title>
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+body {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #0a0a0a;
+  font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+  padding: 32px 24px;
+  text-align: center;
+}
+
+/* ── POUR AJOUTER UN MESSAGE : ajoute une ligne dans le tableau MESSAGES ci-dessous ── */
+
+.emoji {
+  font-size: 52px;
+  margin-bottom: 32px;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.08); }
+}
+
+.message {
+  font-size: clamp(22px, 6vw, 34px);
+  font-weight: 700;
+  color: #ffffff;
+  line-height: 1.4;
+  letter-spacing: -0.3px;
+  max-width: 500px;
+  margin-bottom: 48px;
+}
+
+.sub {
+  font-size: 15px;
+  color: #444;
+  margin-bottom: 40px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+}
+
+.btn {
+  background: #ffffff;
+  color: #0a0a0a;
+  border: none;
+  border-radius: 50px;
+  padding: 16px 48px;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+  letter-spacing: -0.2px;
+  transition: all 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn:active {
+  transform: scale(0.96);
+  background: #e0e0e0;
+}
+
+.counter {
+  margin-top: 32px;
+  font-size: 12px;
+  color: #222;
+  letter-spacing: 0.1em;
+}
+</style>
+</head>
+<body>
+
+<div class="emoji" id="emoji">🎯</div>
+<div class="message" id="message"></div>
+<div class="sub">Rappel · Focus Check</div>
+<button class="btn" onclick="goBack()">J'ai compris</button>
+<div class="counter" id="counter"></div>
+
+<script>
+// ============================================================
+// POUR AJOUTER UN MESSAGE :
+// Ajoute une ligne dans le tableau ci-dessous entre les crochets
+// Format : { e: "emoji", m: "ton message ici" },
+// ============================================================
+
+const MESSAGES = [
+  { e: "🎯", m: "Pourquoi tu ouvres ça ? Qu'est-ce que tu voulais accomplir aujourd'hui ?" },
+  { e: "⚡", m: "Les réseaux sociaux peuvent attendre. Tes objectifs, non." },
+  { e: "🌱", m: "Dans 1 an tu seras content d'avoir résisté maintenant." },
+  { e: "🧠", m: "Est-ce que ça t'aide à avancer ? Si non, ferme." },
+  { e: "💪", m: "Tu codes à 42, tu investis, tu construis. Focus." },
+  { e: "🔥", m: "Chaque minute sur Instagram est une minute de moins pour ce qui compte vraiment." },
+  { e: "👀", m: "Tu scrolles ou tu construis ? Tu ne peux pas faire les deux en même temps." },
+  { e: "🎮", m: "Même les jeux peuvent attendre. Finis d'abord ce que tu as commencé." },
+  { e: "💰", m: "Les gens que tu admires ne passent pas leurs journées à scroller." },
+  { e: "🚀", m: "La discipline aujourd'hui, c'est la liberté demain." },
+  { e: "⏳", m: "Le temps que tu passes là, tu ne le récupères jamais." },
+  { e: "🌙", m: "Tu mérites mieux que de nourrir l'algorithme d'Instagram." },
+];
+
+// Choisit un message aléatoire
+const idx = Math.floor(Math.random() * MESSAGES.length);
+const item = MESSAGES[idx];
+
+document.getElementById("emoji").textContent = item.e;
+document.getElementById("message").textContent = item.m;
+document.getElementById("counter").textContent = `Message ${idx + 1} / ${MESSAGES.length}`;
+
+function goBack() {
+  // Essaie de fermer / revenir en arrière
+  if (history.length > 1) {
+    history.back();
+  } else {
+    window.close();
+  }
+}
+</script>
+</body>
+</html>

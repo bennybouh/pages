@@ -1,0 +1,1113 @@
+<!DOCTYPE html>
+<!-- ============================================================
+     BUDGET PERSONNEL — fichier HTML autonome
+     Ouvrir directement dans Brave ou tout autre navigateur.
+     Tes données sont sauvegardées automatiquement dans le
+     navigateur (localStorage). Utilise Export/Import pour
+     transférer entre appareils.
+     ============================================================ -->
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Budget Personnel</title>
+
+<!-- Bibliothèque externe pour les graphiques (camembert, barres) -->
+<!-- Si tu n'as pas internet, les graphiques ne s'affichent pas mais tout le reste fonctionne -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+
+<!-- Police de caractères (DM Sans) chargée depuis Google Fonts -->
+<!-- Tu peux changer "DM Sans" par n'importe quelle autre police Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ============================================================
+   CSS — STYLES VISUELS
+   Tout ce qui est entre balises style contrôle l'apparence.
+   Couleurs principales à modifier pour changer le thème :
+     - Fond de page        : #f0f2f5  (ligne body background)
+     - Couleur principale  : #0ea5e9  (bleu — boutons, liens actifs)
+     - Texte principal     : #111827  (quasi-noir)
+     - Texte secondaire    : #9ca3af  (gris clair)
+   ============================================================ */
+
+/* Réinitialisation : supprime les marges par défaut du navigateur */
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:#f0f2f5;color:#1a1d23;font-family:'DM Sans',sans-serif;min-height:100vh;font-size:15px}
+input::-webkit-outer-spin-button,input::-webkit-inner-spin-button{-webkit-appearance:none}
+input[type=number]{-moz-appearance:textfield}
+::-webkit-scrollbar{width:6px}::-webkit-scrollbar-track{background:#f0f2f5}::-webkit-scrollbar-thumb{background:#d1d5db;border-radius:3px}
+
+
+/* ── SIDEBAR (menu latéral gauche) ──────────────────────────────
+   width:220px = largeur de la sidebar en pixels
+   Pour la cacher sur mobile, voir @media en bas du CSS          */
+.sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:#fff;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;z-index:100;padding:0}
+.logo{padding:24px 20px 20px;border-bottom:1px solid #f3f4f6}
+.logo-title{font-size:18px;font-weight:700;color:#111827;letter-spacing:-.3px}
+.logo-sub{font-size:11px;color:#9ca3af;margin-top:2px;letter-spacing:.05em}
+.nav{padding:16px 12px;flex:1}
+.nav-item{display:flex;align-items:center;gap:10px;padding:10px 12px;border-radius:10px;cursor:pointer;font-size:14px;color:#6b7280;font-weight:500;transition:all .15s;margin-bottom:2px;border:none;background:none;width:100%;text-align:left;font-family:inherit}
+.nav-item:hover{background:#f9fafb;color:#111827}
+.nav-item.active{background:#f0f9ff;color:#0ea5e9;font-weight:600}
+.nav-item .icon{font-size:16px;width:20px;text-align:center}
+.month-nav{padding:16px 12px;border-top:1px solid #f3f4f6}
+.month-nav-label{font-size:11px;color:#9ca3af;letter-spacing:.08em;text-transform:uppercase;margin-bottom:10px;padding:0 4px}
+.month-select{display:flex;align-items:center;gap:8px;margin-bottom:8px}
+.month-name{flex:1;text-align:center;font-size:14px;font-weight:600;color:#111827}
+.month-year{text-align:center;font-size:12px;color:#9ca3af;margin-bottom:12px}
+.mbtn{background:#f3f4f6;border:none;width:28px;height:28px;border-radius:7px;cursor:pointer;font-size:14px;color:#6b7280;display:flex;align-items:center;justify-content:center;transition:all .15s}
+.mbtn:hover{background:#e5e7eb;color:#111827}
+.year-select{width:100%;padding:7px 10px;border:1px solid #e5e7eb;border-radius:8px;font-family:inherit;font-size:13px;color:#374151;background:#f9fafb;outline:none;cursor:pointer}
+.sidebar-actions{padding:12px;border-top:1px solid #f3f4f6;display:flex;gap:6px}
+.btn-sm{flex:1;padding:8px 6px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;color:#6b7280;font-size:11px;font-family:inherit;cursor:pointer;font-weight:500;transition:all .15s;text-align:center}
+.btn-sm:hover{background:#f9fafb;color:#111827}
+
+
+/* ── ZONE PRINCIPALE (contenu à droite de la sidebar) ──────────
+   margin-left:220px doit correspondre à la largeur de la sidebar */
+.main{margin-left:220px;min-height:100vh;padding:28px}
+.page-title{font-size:22px;font-weight:700;color:#111827;margin-bottom:4px;letter-spacing:-.3px}
+.page-sub{font-size:14px;color:#9ca3af;margin-bottom:24px}
+
+
+/* ── CARTES KPI (les 4 grands chiffres en haut du Dashboard) ─── */
+.kpi-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:24px}
+.kpi{background:#fff;border-radius:14px;padding:20px;border:1px solid #e5e7eb;position:relative;overflow:hidden}
+.kpi-accent{position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0}
+.kpi-label{font-size:12px;color:#9ca3af;font-weight:500;letter-spacing:.03em;margin-bottom:10px}
+.kpi-value{font-size:24px;font-weight:700;letter-spacing:-.5px;margin-bottom:6px}
+.kpi-planned{font-size:12px;color:#9ca3af}
+.kpi-pct{font-size:12px;font-weight:600;margin-top:4px}
+
+
+/* ── GRAPHIQUES ─────────────────────────────────────────────────
+   height:220px = hauteur des graphiques. Modifie à ta guise.    */
+.charts-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
+.card{background:#fff;border-radius:14px;padding:20px;border:1px solid #e5e7eb}
+.card-title{font-size:13px;font-weight:600;color:#374151;margin-bottom:16px;letter-spacing:.01em}
+.chart-wrap{position:relative;height:220px}
+
+/* SECTION CARDS */
+.sec-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:12px;margin-bottom:24px}
+.sec-card{background:#fff;border-radius:12px;padding:16px;border:1px solid #e5e7eb;cursor:pointer;transition:all .15s}
+.sec-card:hover{border-color:#d1d5db;box-shadow:0 2px 8px rgba(0,0,0,.06)}
+.sec-card-label{font-size:11px;color:#9ca3af;font-weight:500;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+.sec-card-value{font-size:18px;font-weight:700;margin-bottom:8px}
+.prog-bg{background:#f3f4f6;border-radius:4px;height:4px;overflow:hidden}
+.prog-bar{height:100%;border-radius:4px;transition:width .4s}
+.sec-card-sub{font-size:11px;color:#9ca3af;margin-top:6px}
+
+/* PCT ROW */
+.pct-row{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-bottom:24px}
+.pct-card{background:#fff;border-radius:12px;padding:16px;border:1px solid #e5e7eb;text-align:center}
+.pct-num{font-size:28px;font-weight:700;letter-spacing:-1px}
+.pct-label{font-size:12px;color:#9ca3af;margin-top:4px;font-weight:500}
+
+
+/* ── TABLEAUX (Saisie et listes) ───────────────────────────────  */
+.tbl-wrap{background:#fff;border-radius:14px;border:1px solid #e5e7eb;overflow:hidden;margin-bottom:20px}
+.tbl-hd{display:grid;padding:12px 20px;background:#f9fafb;border-bottom:1px solid #e5e7eb}
+.tbl-hd span{font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.06em;text-transform:uppercase}
+.tbl-row{display:grid;padding:11px 20px;border-bottom:1px solid #f3f4f6;align-items:center;transition:background .1s}
+.tbl-row:last-child{border-bottom:none}
+.tbl-row:hover{background:#f9fafb}
+.tbl-ft{display:grid;padding:13px 20px;background:#f9fafb;border-top:1px solid #e5e7eb}
+
+/* SECTION TABS */
+.sec-tabs{display:flex;gap:6px;margin-bottom:20px;flex-wrap:wrap}
+.sec-tab{padding:7px 14px;border-radius:8px;border:1px solid #e5e7eb;background:#fff;color:#6b7280;cursor:pointer;font-size:12px;font-family:inherit;font-weight:500;transition:all .15s}
+
+
+/* ── CHAMPS DE SAISIE ───────────────────────────────────────────
+   border-color:#0ea5e9 = couleur du contour quand tu cliques    */
+.inp{background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:7px 10px;color:#111827;font-size:14px;font-family:inherit;outline:none;width:100%;transition:all .15s}
+.inp:focus{border-color:#0ea5e9;background:#fff;box-shadow:0 0 0 3px rgba(14,165,233,.08)}
+select.inp{cursor:pointer}
+.inp-r{text-align:right}
+
+/* ADD BOX */
+.add-box{background:#fff;border-radius:14px;padding:20px;border:1px solid #e5e7eb;margin-bottom:20px}
+.add-title{font-size:13px;font-weight:600;color:#374151;margin-bottom:16px}
+.add-grid{display:grid;gap:12px;align-items:end}
+.field-lbl{font-size:11px;color:#6b7280;font-weight:600;letter-spacing:.05em;text-transform:uppercase;margin-bottom:5px;display:block}
+.btn-primary{background:#0ea5e9;border:none;border-radius:8px;padding:9px 20px;color:#fff;font-weight:600;cursor:pointer;font-size:14px;font-family:inherit;white-space:nowrap;transition:all .15s}
+.btn-primary:hover{background:#0284c7}
+
+
+/* ── TRANSACTIONS (lignes de la liste) ─────────────────────────  */
+.tx-hd{display:grid;padding:11px 20px;background:#f9fafb;border-bottom:1px solid #e5e7eb;column-gap:16px}
+.tx-row{display:grid;padding:13px 20px;border-bottom:1px solid #f3f4f6;align-items:center;column-gap:16px}
+.tx-row:last-child{border-bottom:none}
+.tx-row:hover{background:#fafafa}
+.tx-ft{display:grid;padding:12px 20px;background:#f9fafb;border-top:1px solid #e5e7eb}
+.del{background:none;border:none;color:#d1d5db;cursor:pointer;font-size:20px;line-height:1;transition:color .15s}
+.del:hover{color:#ef4444}
+.empty{padding:48px;text-align:center;color:#d1d5db;font-size:14px}
+.badge{display:inline-block;padding:2px 8px;border-radius:20px;font-size:11px;font-weight:600}
+.note-text{font-size:12px;color:#9ca3af;margin-top:2px}
+
+
+/* ── VUE ANNUELLE (grille des 12 mois) ─────────────────────────  */
+.yearly-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:24px}
+.yr-card{background:#fff;border-radius:12px;border:1px solid #e5e7eb;overflow:hidden}
+.yr-card-head{padding:12px 16px;border-bottom:1px solid #f3f4f6;display:flex;justify-content:space-between;align-items:center}
+.yr-card-month{font-size:13px;font-weight:600;color:#374151}
+.yr-card-body{padding:12px 16px}
+.yr-row{display:flex;justify-content:space-between;align-items:center;margin-bottom:6px;font-size:13px}
+.yr-row:last-child{margin-bottom:0}
+
+@media(max-width:900px){
+  .sidebar{width:180px}.main{margin-left:180px}
+  .kpi-grid{grid-template-columns:repeat(2,1fr)}
+  .sec-grid{grid-template-columns:repeat(3,1fr)}
+  .pct-row{grid-template-columns:repeat(2,1fr)}
+  .yearly-grid{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:640px){
+  .sidebar{display:none}.main{margin-left:0;padding:16px}
+  .kpi-grid,.charts-row{grid-template-columns:1fr}
+  .sec-grid{grid-template-columns:repeat(2,1fr)}
+  .yearly-grid{grid-template-columns:1fr}
+}
+</style>
+</head>
+<body>
+
+
+<!-- ============================================================
+     HTML — STRUCTURE DE LA PAGE
+     La page est divisée en deux zones :
+       1. .sidebar  → menu de navigation à gauche (fixe)
+       2. .main     → contenu qui change selon l'onglet actif
+     ============================================================ -->
+
+<!-- ── SIDEBAR : menu gauche fixe ────────────────────────────── -->
+<div class="sidebar">
+  <div class="logo">
+    <div class="logo-title">💰 Budget</div>
+    <div class="logo-sub">Tableau de bord personnel</div>
+  </div>
+  <div class="nav">
+    <button class="nav-item active" onclick="switchTab('dashboard',this)"><span class="icon">📊</span>Dashboard</button>
+    <button class="nav-item" onclick="switchTab('saisie',this)"><span class="icon">✏️</span>Saisie</button>
+    <button class="nav-item" onclick="switchTab('transactions',this)"><span class="icon">📋</span>Transactions</button>
+    <button class="nav-item" onclick="switchTab('yearly',this)"><span class="icon">📅</span>Vue annuelle</button>
+    <button class="nav-item" onclick="switchTab('categories',this)"><span class="icon">⚙️</span>Catégories</button>
+  </div>
+  <div class="month-nav">
+    <div class="month-nav-label">Période</div>
+    <div class="month-select">
+      <button class="mbtn" onclick="prevMonth()">‹</button>
+      <div class="month-name" id="month-lbl"></div>
+      <button class="mbtn" onclick="nextMonth()">›</button>
+    </div>
+    <div class="month-year" id="year-lbl"></div>
+    <select class="year-select" id="year-sel" onchange="setYear(this.value)"></select>
+  </div>
+  <div class="sidebar-actions">
+    <button class="btn-sm" onclick="exportData()">💾 Export</button>
+    <label class="btn-sm" style="cursor:pointer">📂 Import<input type="file" accept=".json" onchange="importData(event)" style="display:none"></label>
+  </div>
+</div>
+
+
+<!-- ── ZONE PRINCIPALE : contenu des onglets ─────────────────── -->
+<!-- Chaque pane-xxx correspond à un onglet.                      -->
+<!-- style="display:none" = caché par défaut, affiché par le JS   -->
+<div class="main">
+  <div id="pane-dashboard"></div>
+  <div id="pane-saisie" style="display:none"></div>
+  <div id="pane-transactions" style="display:none"></div>
+  <div id="pane-yearly" style="display:none"></div>
+  <div id="pane-categories" style="display:none"></div>
+</div>
+
+<script>
+/* ============================================================
+   PIN DE PROTECTION
+   Pour changer le PIN : modifie la valeur de CORRECT_PIN ci-dessous
+   ============================================================ */
+const CORRECT_PIN = "0000";
+const PIN_KEY = "budget-pin-unlocked";
+
+function checkPin(){
+  // Déjà déverrouillé dans cette session ?
+  if(sessionStorage.getItem(PIN_KEY)==="1") return;
+
+  // Afficher l'écran de PIN
+  document.body.innerHTML=`
+    <div style="min-height:100vh;display:flex;align-items:center;justify-content:center;background:#f0f2f5;font-family:'DM Sans',sans-serif">
+      <div style="background:#fff;border-radius:20px;padding:40px 32px;border:1px solid #e5e7eb;text-align:center;max-width:320px;width:100%">
+        <div style="font-size:36px;margin-bottom:16px">💰</div>
+        <div style="font-size:20px;font-weight:700;color:#111827;margin-bottom:6px">Budget Personnel</div>
+        <div style="font-size:14px;color:#9ca3af;margin-bottom:28px">Entre ton PIN pour accéder</div>
+        <input id="pin-input" type="password" maxlength="6" placeholder="••••"
+          style="width:100%;text-align:center;font-size:28px;letter-spacing:8px;padding:14px;border:2px solid #e5e7eb;border-radius:12px;outline:none;font-family:inherit;color:#111827;background:#f9fafb;margin-bottom:16px"
+          oninput="tryPin(this.value)"
+          onfocus="this.style.borderColor='#0ea5e9'"
+          onblur="this.style.borderColor='#e5e7eb'">
+        <div id="pin-error" style="font-size:13px;color:#ef4444;height:20px"></div>
+      </div>
+    </div>`;
+  document.getElementById("pin-input").focus();
+}
+
+function tryPin(val){
+  if(val.length < CORRECT_PIN.length) return;
+  if(val === CORRECT_PIN){
+    sessionStorage.setItem(PIN_KEY,"1");
+    location.reload();
+  } else {
+    const el=document.getElementById("pin-error");
+    if(el) el.textContent="PIN incorrect ❌";
+    const inp=document.getElementById("pin-input");
+    if(inp){ inp.value=""; inp.style.borderColor="#ef4444"; setTimeout(()=>{inp.style.borderColor="#e5e7eb";},1000); }
+  }
+}
+
+/* ============================================================
+   JAVASCRIPT — LOGIQUE DE L'APPLICATION
+   Tout ce qui est entre balises script est le code qui
+   fait fonctionner l'app : calculs, sauvegarde, affichage.
+
+   STRUCTURE DU CODE (cherche ces titres pour naviguer) :
+   ─ CONFIGURATION      → couleurs, catégories, clés de stockage
+   ─ DONNÉES            → chargement/sauvegarde localStorage
+   ─ NAVIGATION         → changement de mois/onglet
+   ─ EXPORT / IMPORT    → sauvegarde en fichier JSON
+   ─ TRANSACTIONS       → ajout / suppression de transactions
+   ─ DASHBOARD          → calculs et affichage du dashboard
+   ─ SAISIE             → tableau de saisie mensuelle
+   ─ TRANSACTIONS HTML  → rendu de la liste des transactions
+   ─ YEARLY             → vue annuelle
+   ─ CATÉGORIES         → ajout / suppression / renommage
+   ============================================================ */
+
+/* ── CONFIGURATION ──────────────────────────────────────────── */
+/* Noms des mois en français (index 0 = Janvier) */
+const MONTHS=["Janvier","Février","Mars","Avril","Mai","Juin","Juillet","Août","Septembre","Octobre","Novembre","Décembre"];
+const MONTHS_SHORT=["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"];
+/* ── Catégories par section ─────────────────────────────────────
+   Format : {section: [{name:"Nom", addedAt:"2026-3", deletedAt:null}]}
+   addedAt  = mois d'ajout (si null = catégorie de base, toujours visible)
+   deletedAt = mois de suppression (si null = toujours active)
+   Pour ajouter une catégorie par défaut : ajoute {name:"Ta Catégorie"} dans la liste
+   ─────────────────────────────────────────────────────────────── */
+// CATS_META: {section: [{name, addedAt:"YYYY-M", deletedAt:"YYYY-M"|null}]}
+const DEFAULT_CATS_META={
+  income:[{name:"Salary"},{name:"Refunds"},{name:"Misc"}],
+  savings:[{name:"BoursoPlus"},{name:"Crypto"},{name:"Wise"},{name:"Misc"}],
+  fixed:[{name:"Rent"},{name:"Cell Phone"},{name:"Subscriptions"},{name:"Groceries"},{name:"Taxes/Fees"},{name:"Insurance"},{name:"Fuel"},{name:"Misc"}],
+  variable:[{name:"Eating Out"},{name:"Shopping"},{name:"Health"},{name:"Gifts"},{name:"Pocket Money"},{name:"E-Vape"},{name:"Transport"},{name:"Activities"},{name:"Travel"},{name:"Misc"}],
+  debt:[{name:"Boursorama"},{name:"Myriam"},{name:"Parent's Money"}]
+};
+let CATS_META=JSON.parse(JSON.stringify(DEFAULT_CATS_META));
+
+// keyNum: comparable integer YYYYMM
+const keyNum=(y,m)=>y*100+m;
+
+/* Calcule le total cumulé d'épargne pour une catégorie donnée,
+   en additionnant tous les mois de début jusqu'au mois courant.
+   Les transactions positives ajoutent, les négatives retirent. */
+function getSavingsRunningTotal(cat){
+  let total=0;
+  for(const k of Object.keys(allData)){
+    const[ky,km]=k.split("-").map(Number);
+    if(keyNum(ky,km)<=keyNum(yr,mi)){
+      const actual=Number(allData[k]?.savings?.[cat]?.actual||0);
+      total+=actual;
+    }
+  }
+  return total;
+}
+
+/* Calcule le solde de début d'un mois donné.
+   Pour le tout premier mois : retourne startBalance (saisi manuellement).
+   Pour les autres : solde fin du mois précédent. */
+function getSoldeDebut(y,m){
+  // Find first month that has data
+  const allKeys=Object.keys(allData).sort((a,b)=>{
+    const[ay,am]=a.split("-").map(Number);
+    const[by,bm]=b.split("-").map(Number);
+    return keyNum(ay,am)-keyNum(by,bm);
+  });
+  const firstKey=allKeys[0];
+  const firstKN=firstKey?keyNum(...firstKey.split("-").map(Number)):keyNum(y,m);
+  const thisKN=keyNum(y,m);
+
+  // If this is the first month or before, return startBalance
+  if(thisKN<=firstKN) return startBalance;
+
+  // Otherwise calculate solde fin of previous month
+  let pm=m-1, py=y;
+  if(pm<0){pm=11;py--;}
+  const prev=allData[`${py}-${pm}`]||emptyM();
+  const pI=sum(prev.income),pF=sum(prev.fixed),pV=sum(prev.variable),pS=sum(prev.savings),pD=sum(prev.debt);
+  const pNet=pI-(pF+pV+pD)-pS;
+  return getSoldeDebut(py,pm)+pNet;
+}
+
+// Migrate CATS_META: if any entry is a string, convert to object format
+function migrateCATSMeta(){
+  for(const sec of Object.keys(CATS_META)){
+    CATS_META[sec]=CATS_META[sec].map(c=>
+      typeof c==="string"?{name:c}:c
+    );
+  }
+}
+
+// catsForMonth: return array of category names visible for a given year/month
+function catsForMonth(sec,y,m){
+  const kn=keyNum(y,m);
+  return (CATS_META[sec]||[])
+    .filter(c=>{
+      if(!c||typeof c.name!=="string") return false;
+      const added=c.addedAt?keyNum(...c.addedAt.split("-").map(Number)):0;
+      const deleted=c.deletedAt?keyNum(...c.deletedAt.split("-").map(Number)):999999;
+      return kn>=added && kn<deleted;
+    })
+    .map(c=>c.name);
+}
+// CATS: compatibility shim - all category names for current month
+const getCATSForCurrent=()=>{
+  const r={};
+  for(const sec of Object.keys(CATS_META)) r[sec]=catsForMonth(sec,yr,mi);
+  return r;
+};
+// Getter used everywhere that previously used CATS[sec]
+const CATS={};
+for(const sec of Object.keys(DEFAULT_CATS_META)) CATS[sec]=DEFAULT_CATS_META[sec].map(c=>c.name);
+/* ── Couleurs par section (modifie les codes hex pour changer) ─ */
+/* income=revenus, savings=épargne, fixed=fixes, variable=variables, debt=dettes */
+const COL={income:"#10b981",savings:"#8b5cf6",fixed:"#f59e0b",variable:"#3b82f6",debt:"#ef4444"};
+const COL_LIGHT={income:"#d1fae5",savings:"#ede9fe",fixed:"#fef3c7",variable:"#dbeafe",debt:"#fee2e2"};
+const COL_TEXT={income:"#065f46",savings:"#5b21b6",fixed:"#92400e",variable:"#1e40af",debt:"#991b1b"};
+const LBL={income:"Revenus",savings:"Épargne",fixed:"Fixes",variable:"Variables",debt:"Dettes"};
+/* ── Clés de stockage localStorage ─────────────────────────────
+   Si tu changes SK, tu perds les données existantes (nouveau départ)
+   Utile si tu veux réinitialiser complètement l'app             */
+const SK="budget-pro-v1";
+const SK_CATS="budget-cats-v1";
+/* Clé pour le solde de départ initial (saisi une seule fois) */
+const SK_BALANCE="budget-start-balance-v1";
+
+let mi=new Date().getMonth(), yr=new Date().getFullYear();
+let allData={}, curSection="income", curTab="dashboard";
+let pieChart=null, barChart=null;
+
+/* ── DONNÉES : chargement depuis le navigateur ──────────────── */
+/* localStorage = stockage permanent dans le navigateur (survit aux rechargements) */
+try{const d=localStorage.getItem(SK);if(d)allData=JSON.parse(d);}catch{}
+try{const c=localStorage.getItem(SK_CATS);if(c)CATS_META=JSON.parse(c);}catch{}
+// Charger le solde de départ initial
+let startBalance=0;
+try{const b=localStorage.getItem(SK_BALANCE);if(b!==null)startBalance=parseFloat(b)||0;}catch{}
+const saveBalance=()=>{try{localStorage.setItem(SK_BALANCE,String(startBalance));}catch{}};
+
+// Migrate old string format to object format if needed
+migrateCATSMeta();
+// Rebuild CATS shim from meta for current month
+function rebuildCATSShim(){
+  for(const sec of Object.keys(CATS_META)) CATS[sec]=catsForMonth(sec,yr,mi);
+}
+rebuildCATSShim();
+
+const save=()=>{try{localStorage.setItem(SK,JSON.stringify(allData));}catch{}};
+const saveCats=()=>{try{localStorage.setItem(SK_CATS,JSON.stringify(CATS_META));}catch{}};
+const key=()=>`${yr}-${mi}`;
+const md=()=>{if(!allData[key()])allData[key()]=emptyM();return allData[key()];};
+function emptyM(){
+  const d={};
+  for(const sec of Object.keys(CATS_META)){
+    d[sec]={};
+    for(const c of catsForMonth(sec,yr,mi)) d[sec][c]={planned:0,actual:0};
+  }
+  d.transactions=[];return d;
+}
+const fmt=n=>Number(n||0).toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2})+" €";
+const fmtS=n=>{const v=Number(n||0);return(v>=0?"+":"")+v.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2})+" €"};
+const pct=(a,b)=>b>0?Math.round((a/b)*100):0;
+const sum=o=>Math.round(Object.values(o||{}).reduce((a,v)=>a+Number(v?.actual||0),0)*100)/100;
+const sumP=o=>Math.round(Object.values(o||{}).reduce((a,v)=>a+Number(v?.planned||0),0)*100)/100;
+const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+const green="#10b981",red="#ef4444",gray="#9ca3af";
+
+/* ── NAVIGATION : changement de mois ───────────────────────── */
+function prevMonth(){if(mi===0){mi=11;yr--;}else mi--;rebuildCATSShim();render();}
+function nextMonth(){if(mi===11){mi=0;yr++;}else mi++;rebuildCATSShim();render();}
+function setYear(v){yr=parseInt(v);rebuildCATSShim();render();}
+
+function buildYearSelect(){
+  const sel=document.getElementById("year-sel");
+  sel.innerHTML="";
+  const cur=new Date().getFullYear();
+  for(let y=Math.min(2024,cur-2);y<=cur+10;y++){
+    const o=document.createElement("option");
+    o.value=y;o.textContent=y;
+    if(y===yr)o.selected=true;
+    sel.appendChild(o);
+  }
+}
+
+/* ── EXPORT / IMPORT : sauvegarde en fichier JSON ──────────── */
+/* Export → télécharge un fichier budget-data.json               */
+/* Import → charge un fichier JSON précédemment exporté          */
+function exportData(){
+  const b=new Blob([JSON.stringify(allData,null,2)],{type:"application/json"});
+  const u=URL.createObjectURL(b),a=document.createElement("a");
+  a.href=u;a.download="budget-data.json";a.click();URL.revokeObjectURL(u);
+}
+function importData(e){
+  const f=e.target.files[0];if(!f)return;
+  const r=new FileReader();
+  r.onload=ev=>{try{allData=JSON.parse(ev.target.result);save();render();alert("✅ Données importées !");}catch{alert("❌ Fichier invalide");}};
+  r.readAsText(f);e.target.value="";
+}
+
+/* Sauvegarde le solde de départ initial */
+function saveStartBalance(){
+  const inp=document.getElementById("start-balance-inp");
+  if(!inp)return;
+  startBalance=parseFloat(inp.value)||0;
+  saveBalance();
+  renderDashboard();
+}
+function toggleEditBalance(){
+  const form=document.getElementById("edit-balance-form");
+  if(!form)return;
+  form.style.display=form.style.display==="none"?"block":"none";
+}
+
+/* ── NAVIGATION : changement d'onglet ──────────────────────── */
+function switchTab(tab,btn){
+  curTab=tab;
+  document.querySelectorAll(".nav-item").forEach(t=>t.classList.remove("active"));
+  btn.classList.add("active");
+  document.querySelectorAll("[id^=pane-]").forEach(el=>el.style.display="none");
+  document.getElementById("pane-"+tab).style.display="";
+  renderTab();
+}
+
+/* ── SAISIE : mise à jour d'une valeur (prévu ou réel) ─────── */
+function updateField(sec,cat,field,val){
+  md()[sec][cat][field]=Math.round((parseFloat(val)||0)*100)/100;save();
+  if(curTab==="dashboard")renderDashboard();
+}
+function setSec(sec){curSection=sec;renderSaisie();}
+function updateNote(sec,cat,val){
+  if(!md()[sec][cat])md()[sec][cat]={planned:0,actual:0};
+  md()[sec][cat].note=val;save();
+}
+/* Sauvegarde la note prévisionnelle (saisie en début de mois) */
+function updatePlannedNote(sec,cat,val){
+  if(!md()[sec][cat])md()[sec][cat]={planned:0,actual:0};
+  md()[sec][cat].plannedNote=val.trim();save();
+}
+
+/* ── TRANSACTIONS : ajout d'une transaction ────────────────── */
+function addTx(){
+  const day=document.getElementById("tx-day").value;
+  const sec=document.getElementById("tx-sec").value;
+  const cat=document.getElementById("tx-cat").value;
+  const amt=document.getElementById("tx-amt").value;
+  const note=document.getElementById("tx-note").value.trim();
+  if(!day||!sec||!cat||!amt)return;
+  const tx={day:parseInt(day),section:sec,category:cat,amount:Math.round(parseFloat(amt)*100)/100,note:note||"",id:Date.now()};
+  const m=md();m.transactions.push(tx);
+  // update actual
+  if(m[sec]&&m[sec][cat]!==undefined){
+    if(sec==="income"||sec==="savings"||sec==="debt"){
+      m[sec][cat].actual=Math.round(((Number(m[sec][cat].actual)||0)+parseFloat(amt))*100)/100;
+    } else {
+      m[sec][cat].actual=Math.round(((Number(m[sec][cat].actual)||0)+parseFloat(amt))*100)/100;
+    }
+  }
+  save();renderTx();
+  // reset
+  ["tx-day","tx-amt","tx-note"].forEach(id=>document.getElementById(id).value="");
+  document.getElementById("tx-sec").value="fixed";
+  updateTxCatOptions("fixed");
+}
+
+function updateTxCatOptions(sec){
+  const sel=document.getElementById("tx-cat");
+  if(!sel)return;
+  sel.innerHTML=CATS[sec].map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
+}
+
+/* ── TRANSACTIONS : édition inline ─────────────────────────── */
+function editTx(id){
+  window._editingTxId=id;
+  renderTx();
+}
+function cancelEdit(){
+  window._editingTxId=null;
+  renderTx();
+}
+function refreshEditCats(txId){
+  const sec=document.getElementById("edit-sec").value;
+  const sel=document.getElementById("edit-cat-"+txId);
+  if(!sel)return;
+  sel.innerHTML=(CATS[sec]||[]).map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
+}
+function saveEditTx(id){
+  const m=md();
+  const tx=m.transactions.find(t=>t.id===id);
+  if(!tx)return;
+  const newDay=parseInt(document.getElementById("edit-day").value)||tx.day;
+  const newSec=document.getElementById("edit-sec").value||tx.section;
+  const newCat=document.getElementById("edit-cat-"+id).value||tx.category;
+  const newAmt=parseFloat(document.getElementById("edit-amt").value)||tx.amount;
+  const newNote=document.getElementById("edit-note").value.trim();
+
+  // Reverse old actual impact
+  const oldSec=tx.section;
+  if(m[oldSec]&&m[oldSec][tx.category]!==undefined)
+    m[oldSec][tx.category].actual=Math.max(0,(Number(m[oldSec][tx.category].actual)||0)-tx.amount);
+
+  // Apply new values
+  tx.day=newDay; tx.section=newSec; tx.category=newCat; tx.amount=newAmt; tx.note=newNote;
+
+  // Apply new actual impact
+  if(m[newSec]&&m[newSec][newCat]!==undefined)
+    m[newSec][newCat].actual=(Number(m[newSec][newCat].actual)||0)+newAmt;
+
+  window._editingTxId=null;
+  save(); renderTx();
+}
+
+/* ── TRANSACTIONS : suppression d'une transaction ──────────── */
+function removeTx(id){
+  const m=md();
+  const tx=m.transactions.find(t=>t.id===id);if(!tx)return;
+  m.transactions=m.transactions.filter(t=>t.id!==id);
+  const sec=tx.section;
+  if(m[sec]&&m[sec][tx.category]!==undefined){
+    m[sec][tx.category].actual=Math.round(Math.max(0,(Number(m[sec][tx.category].actual)||0)-tx.amount)*100)/100;
+  }
+  save();renderTx();
+}
+
+/* ── DASHBOARD : calculs et affichage ───────────────────────── */
+/* C'est ici que sont calculés revenus, dépenses, solde net...   */
+function renderDashboard(){
+  const m=md();
+  const tI=sum(m.income),tF=sum(m.fixed),tV=sum(m.variable),tS=sum(m.savings),tD=sum(m.debt);
+  const tE=tF+tV+tD,net=tI-tE-tS;
+  const pI=sumP(m.income),pF=sumP(m.fixed),pV=sumP(m.variable),pS=sumP(m.savings);
+  const soldeDebut=getSoldeDebut(yr,mi);
+  const soldeFin=soldeDebut+net;
+
+  const kpis=[
+    {l:"Revenus",v:tI,p:pI,c:green,diff:tI-pI},
+    {l:"Dépenses",v:tE,p:pF+pV,c:red,diff:(pF+pV)-tE},
+    {l:"Épargne",v:tS,p:pS,c:"#8b5cf6",diff:tS-pS},
+    {l:"Solde Net",v:net,c:net>=0?green:red},
+  ];
+
+  const kpiHtml=kpis.map(k=>`
+    <div class="kpi">
+      <div class="kpi-accent" style="background:${k.c}"></div>
+      <div class="kpi-label">${k.l}</div>
+      <div class="kpi-value" style="color:${k.c}">${fmt(k.v)}</div>
+      ${k.p!==undefined?`<div class="kpi-planned">Prévu : ${fmt(k.p)}</div>`:``}
+      ${k.diff!==undefined?`<div class="kpi-pct" style="color:${k.diff>=0?green:red}">${fmtS(k.diff)}</div>`:""}
+    </div>`).join("");
+
+  const secHtml=Object.entries(CATS).map(([sec])=>{
+    const total=sum(m[sec]),planned=sumP(m[sec]);
+    const p=pct(total,planned),over=total>planned&&planned>0;
+    return `<div class="sec-card" onclick="switchTabDirect('saisie','${sec}')">
+      <div class="sec-card-label">${LBL[sec]}</div>
+      <div class="sec-card-value" style="color:${COL[sec]}">${fmt(total)}</div>
+      <div class="prog-bg"><div class="prog-bar" style="width:${Math.min(100,p)}%;background:${over?red:COL[sec]}"></div></div>
+      <div class="sec-card-sub">${p}% du prévu · ${fmt(planned)}</div>
+    </div>`;
+  }).join("");
+
+  const incPct=pct(tI,pI||1);
+  const expPct=pct(tE,tI||1);
+  const savPct=pct(tS,tI||1);
+  const netPct=pct(Math.abs(net),tI||1);
+
+  const pctHtml=`
+    <div class="pct-card"><div class="pct-num" style="color:${green}">${incPct}%</div><div class="pct-label">Revenus / Prévu</div></div>
+    <div class="pct-card"><div class="pct-num" style="color:${red}">${expPct}%</div><div class="pct-label">Dépenses / Revenus</div></div>
+    <div class="pct-card"><div class="pct-num" style="color:#8b5cf6">${savPct}%</div><div class="pct-label">Épargne / Revenus</div></div>
+    <div class="pct-card"><div class="pct-num" style="color:${net>=0?green:red}">${netPct}%</div><div class="pct-label">Solde net / Revenus</div></div>`;
+
+  // Solde de départ HTML - toujours éditable via petit bouton ✏️
+  const soldeHtml=`
+    <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
+      <div style="background:#fff;border-radius:14px;padding:20px;border:1px solid #e5e7eb;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;background:#64748b"></div>
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
+          <div style="font-size:12px;color:#9ca3af;font-weight:500">Solde début de mois</div>
+          <button onclick="toggleEditBalance()" id="edit-balance-btn"
+            style="background:none;border:none;color:#9ca3af;cursor:pointer;font-size:13px;padding:0"
+            title="Modifier le solde de départ initial">✏️</button>
+        </div>
+        <div style="font-size:24px;font-weight:700;color:#374151;margin-bottom:8px">${fmt(soldeDebut)}</div>
+        <div id="edit-balance-form" style="display:none;margin-top:8px">
+          <div style="font-size:11px;color:#9ca3af;margin-bottom:6px">Modifier le solde initial (Janvier 2024)</div>
+          <div style="display:flex;align-items:center;gap:8px">
+            <input id="start-balance-inp" type="number" value="${startBalance||""}" placeholder="Solde initial…"
+              style="background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:6px 10px;font-size:13px;font-family:inherit;outline:none;width:140px"
+              onfocus="this.style.borderColor='#0ea5e9'" onblur="this.style.borderColor='#e5e7eb'">
+            <button onclick="saveStartBalance()" style="background:#0ea5e9;border:none;border-radius:8px;padding:6px 14px;color:#fff;font-size:13px;font-family:inherit;font-weight:600;cursor:pointer">✓</button>
+            <button onclick="toggleEditBalance()" style="background:#f3f4f6;border:none;border-radius:8px;padding:6px 10px;color:#6b7280;font-size:13px;font-family:inherit;cursor:pointer">✕</button>
+          </div>
+        </div>
+        <div style="font-size:12px;color:#d1d5db;margin-top:4px" id="balance-sub-label">Solde initial · modifiable via ✏️</div>
+      </div>
+      <div style="background:#fff;border-radius:14px;padding:20px;border:1px solid #e5e7eb;position:relative;overflow:hidden">
+        <div style="position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;background:${soldeFin>=0?"#10b981":"#ef4444"}"></div>
+        <div style="font-size:12px;color:#9ca3af;font-weight:500;margin-bottom:10px">Solde fin de mois</div>
+        <div style="font-size:24px;font-weight:700;color:${soldeFin>=0?green:red}">${fmt(soldeFin)}</div>
+        <div style="font-size:12px;color:#d1d5db;margin-top:6px">${soldeFin>=0?"✓ Positif":"⚠ Négatif"}</div>
+      </div>
+    </div>`;
+
+  document.getElementById("pane-dashboard").innerHTML=`
+    <div class="page-title">${MONTHS[mi]} ${yr}</div>
+    <div class="page-sub">Vue d'ensemble de votre budget mensuel</div>
+    ${soldeHtml}
+    <div class="kpi-grid">${kpiHtml}</div>
+    <div class="pct-row">${pctHtml}</div>
+    <div class="sec-grid">${secHtml}</div>
+    <div class="charts-row">
+      <div class="card"><div class="card-title">Répartition des dépenses</div><div class="chart-wrap"><canvas id="pieChart"></canvas></div></div>
+      <div class="card"><div class="card-title">Variables : Prévu vs Réel</div><div class="chart-wrap"><canvas id="barChart"></canvas></div></div>
+    </div>
+    <div class="card" style="margin-bottom:20px">
+      <div class="card-title">💰 Épargne cumulée (tous les mois)</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:4px">
+        ${catsForMonth("savings",yr,mi).map(cat=>{
+          const running=getSavingsRunningTotal(cat);
+          const monthly=m.savings[cat]?.actual||0;
+          return `<div style="background:#f9fafb;border-radius:10px;padding:14px;border:1px solid #e5e7eb">
+            <div style="font-size:11px;color:#9ca3af;font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">${esc(cat)}</div>
+            <div style="font-size:18px;font-weight:700;color:#8b5cf6">${fmt(running)}</div>
+            <div style="font-size:11px;color:#9ca3af;margin-top:4px">Ce mois : <span style="color:${monthly>=0?"#10b981":"#ef4444"};font-weight:600">${monthly>=0?"+":""}${fmt(monthly)}</span></div>
+          </div>`;
+        }).join("")}
+      </div>
+    </div>`;
+
+  // Pie
+  if(pieChart){pieChart.destroy();pieChart=null;}
+  const pieData=[
+    {label:"Fixes",v:tF,c:COL.fixed},
+    {label:"Variables",v:tV,c:COL.variable},
+    {label:"Épargne",v:tS,c:COL.savings},
+    {label:"Dettes",v:tD,c:COL.debt}
+  ].filter(d=>d.v>0);
+  if(pieData.length>0){
+    pieChart=new Chart(document.getElementById("pieChart"),{
+      type:"doughnut",
+      data:{labels:pieData.map(d=>d.label),datasets:[{data:pieData.map(d=>d.v),backgroundColor:pieData.map(d=>d.c),borderWidth:2,borderColor:"#fff",hoverOffset:8}]},
+      options:{responsive:true,maintainAspectRatio:false,cutout:"65%",plugins:{legend:{position:"right",labels:{color:"#374151",font:{size:12,family:"DM Sans"},padding:12,usePointStyle:true}},tooltip:{callbacks:{label:ctx=>" "+fmt(ctx.raw)+" ("+pct(ctx.raw,tE||1)+"%)"}}}}
+    });
+  }
+
+  // Bar
+  if(barChart){barChart.destroy();barChart=null;}
+  const barCats=CATS.variable.filter(c=>m.variable[c]?.planned>0||m.variable[c]?.actual>0);
+  if(barCats.length>0){
+    barChart=new Chart(document.getElementById("barChart"),{
+      type:"bar",
+      data:{
+        labels:barCats.map(c=>c.length>10?c.slice(0,10)+"…":c),
+        datasets:[
+          {label:"Prévu",data:barCats.map(c=>m.variable[c]?.planned||0),backgroundColor:"#e0f2fe",borderRadius:6,borderSkipped:false},
+          {label:"Réel",data:barCats.map(c=>m.variable[c]?.actual||0),backgroundColor:COL.variable,borderRadius:6,borderSkipped:false}
+        ]
+      },
+      options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{labels:{color:"#374151",font:{size:12,family:"DM Sans"},usePointStyle:true}},tooltip:{callbacks:{label:ctx=>ctx.dataset.label+": "+fmt(ctx.raw)}}},scales:{x:{ticks:{color:"#9ca3af",font:{size:11}},grid:{display:false}},y:{ticks:{color:"#9ca3af",font:{size:11}},grid:{color:"#f3f4f6"}}}}
+    });
+  }
+}
+
+/* ── SAISIE : tableau mensuel ────────────────────────────────── */
+/* Affiche les catégories de la section active avec prévu/réel   */
+function renderSaisie(){
+  const m=md();
+  const secTabsHtml=Object.keys(CATS_META).map(s=>`
+    <button class="sec-tab" onclick="setSec('${s}')" style="${s===curSection?`border-color:${COL[s]};background:${COL_LIGHT[s]};color:${COL_TEXT[s]};font-weight:600`:""}">
+      ${LBL[s]}
+    </button>`).join("");
+
+  // Aggregate notes from transactions per category
+  const txNotes={};
+  (m.transactions||[]).forEach(tx=>{
+    if(tx.section===curSection&&tx.note&&tx.note.trim()){
+      if(!txNotes[tx.category])txNotes[tx.category]=[];
+      if(!txNotes[tx.category].includes(tx.note.trim()))
+        txNotes[tx.category].push(tx.note.trim());
+    }
+  });
+
+  /* cols: categorie | note prévisionnelle | prévu | réel | écart */
+  const cols="1fr 1fr 110px 110px 80px";
+  const rows=catsForMonth(curSection,yr,mi).map((cat)=>{
+    const planned=m[curSection][cat]?.planned||0;
+    const actual=m[curSection][cat]?.actual||0;
+    const plannedNote=m[curSection][cat]?.plannedNote||"";
+    const diff=curSection==="income"?actual-planned:planned-actual;
+    const notes=txNotes[cat]||[];
+    let txNoteEl="";
+    if(notes.length===0){
+      txNoteEl=`<span style="font-size:11px;color:#d1d5db;font-style:italic">—</span>`;
+    } else {
+      const joined=notes.join(" · ");
+      const MAX=200;
+      const display=joined.length>MAX?joined.slice(0,MAX)+"…":joined;
+      txNoteEl=`<span style="font-size:11px;color:#9ca3af;font-style:italic" title="${esc(joined)}">${esc(display)}</span>`;
+    }
+    return `<div class="tbl-row" style="grid-template-columns:${cols}">
+      <div style="min-width:0">
+        <div style="font-size:14px;color:#374151;font-weight:500;margin-bottom:3px">${esc(cat)}</div>
+        <div style="margin-top:2px">${txNoteEl}</div>
+      </div>
+      <div>
+        <input class="inp" type="text" value="${esc(plannedNote)}" placeholder="Note prévisionnelle…"
+          onchange="updatePlannedNote('${curSection}','${esc(cat)}',this.value)"
+          style="font-size:13px;color:#374151;font-style:${plannedNote?'normal':'italic'}">
+      </div>
+      <div style="text-align:right"><input class="inp inp-r" type="number" value="${planned||""}" placeholder="0" onchange="updateField('${curSection}','${esc(cat)}','planned',this.value)" style="width:100px"></div>
+      <div style="text-align:right"><input class="inp inp-r" type="number" value="${actual||""}" placeholder="0" onchange="updateField('${curSection}','${esc(cat)}','actual',this.value)" style="width:100px"></div>
+      <div style="text-align:right;font-size:14px;font-weight:600;color:${diff>=0?green:red}">${diff>=0?"+":""}${fmt(diff)}</div>
+    </div>`;
+  }).join("");
+
+  const tP=sumP(m[curSection]),tA=sum(m[curSection]);
+  const tDiff=curSection==="income"?tA-tP:tP-tA;
+
+  // ── Balance globale calculée sur TOUS les sections ──
+  const allP={
+    inc: sumP(m.income), exp: sumP(m.fixed)+sumP(m.variable)+sumP(m.debt), sav: sumP(m.savings)
+  };
+  const allA={
+    inc: sum(m.income), exp: sum(m.fixed)+sum(m.variable)+sum(m.debt), sav: sum(m.savings)
+  };
+  const balP = Math.round((allP.inc - allP.exp - allP.sav)*100)/100;
+  const balA = Math.round((allA.inc - allA.exp - allA.sav)*100)/100;
+  const balEcart = Math.round((balA - balP)*100)/100;
+
+  // Barre de progression : dépenses prévues vs revenus prévus
+  const depPct = allP.inc>0 ? Math.min(100,Math.round(((allP.exp+allP.sav)/allP.inc)*100)) : 0;
+  const depPctReal = allA.inc>0 ? Math.min(100,Math.round(((allA.exp+allA.sav)/allA.inc)*100)) : 0;
+  const barColorP = depPct>=100?"#ef4444":depPct>=80?"#f59e0b":"#10b981";
+  const barColorA = depPctReal>=100?"#ef4444":depPctReal>=80?"#f59e0b":"#10b981";
+
+  const balanceHtml=`
+    <div style="background:#fff;border-radius:14px;border:1px solid #e5e7eb;padding:20px;margin-bottom:20px">
+      <div style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px">Balance mensuelle</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:18px">
+        <!-- Prévu -->
+        <div style="text-align:center">
+          <div style="font-size:11px;color:#9ca3af;margin-bottom:6px;font-weight:500">Prévu</div>
+          <div style="font-size:22px;font-weight:700;color:${balP>=0?green:red}">${balP>=0?"+":""}${fmt(balP)}</div>
+          <div style="font-size:11px;color:#9ca3af;margin-top:4px">${fmt(allP.inc)} revenus</div>
+        </div>
+        <!-- Réel -->
+        <div style="text-align:center;border-left:1px solid #f3f4f6;border-right:1px solid #f3f4f6">
+          <div style="font-size:11px;color:#9ca3af;margin-bottom:6px;font-weight:500">Réel</div>
+          <div style="font-size:22px;font-weight:700;color:${balA>=0?green:red}">${balA>=0?"+":""}${fmt(balA)}</div>
+          <div style="font-size:11px;color:#9ca3af;margin-top:4px">${fmt(allA.inc)} revenus</div>
+        </div>
+        <!-- Écart -->
+        <div style="text-align:center">
+          <div style="font-size:11px;color:#9ca3af;margin-bottom:6px;font-weight:500">Écart</div>
+          <div style="font-size:22px;font-weight:700;color:${balEcart>=0?green:red}">${balEcart>=0?"+":""}${fmt(balEcart)}</div>
+          <div style="font-size:11px;color:#9ca3af;margin-top:4px">vs prévu</div>
+        </div>
+      </div>
+      <!-- Barres de progression -->
+      <div style="margin-bottom:8px">
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <span style="font-size:11px;color:#9ca3af">Dépenses + épargne / revenus <b style="color:#374151">prévu</b></span>
+          <span style="font-size:11px;font-weight:700;color:${barColorP}">${allP.inc>0?depPct+"%":"—"}</span>
+        </div>
+        <div style="background:#f3f4f6;border-radius:6px;height:8px;overflow:hidden">
+          <div style="width:${depPct}%;height:100%;background:${barColorP};border-radius:6px;transition:width .4s"></div>
+        </div>
+      </div>
+      <div>
+        <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+          <span style="font-size:11px;color:#9ca3af">Dépenses + épargne / revenus <b style="color:#374151">réel</b></span>
+          <span style="font-size:11px;font-weight:700;color:${barColorA}">${allA.inc>0?depPctReal+"%":"—"}</span>
+        </div>
+        <div style="background:#f3f4f6;border-radius:6px;height:8px;overflow:hidden">
+          <div style="width:${depPctReal}%;height:100%;background:${barColorA};border-radius:6px;transition:width .4s"></div>
+        </div>
+      </div>
+    </div>`;
+
+  document.getElementById("pane-saisie").innerHTML=`
+    <div class="page-title">Saisie</div>
+    <div class="page-sub">Renseignez vos montants prévus et réels</div>
+    ${balanceHtml}
+    <div class="sec-tabs">${secTabsHtml}</div>
+    <div class="tbl-wrap">
+      <div class="tbl-hd" style="grid-template-columns:${cols}">
+        <span>Catégorie <span style="font-weight:400;color:#cbd5e1">· notes transactions</span></span>
+        <span style="color:#0ea5e9">Note prévisionnelle</span>
+        <span style="text-align:right;display:block">Prévu (€)</span>
+        <span style="text-align:right;display:block">Réel (€)</span>
+        <span style="text-align:right;display:block">Écart</span>
+      </div>
+      ${rows}
+      <div class="tbl-ft" style="grid-template-columns:${cols}">
+        <span style="font-size:13px;font-weight:700;color:${COL[curSection]}">Total ${LBL[curSection]}</span>
+        <span></span>
+        <span style="text-align:right;display:block;font-size:14px;font-weight:700">${fmt(tP)}</span>
+        <span style="text-align:right;display:block;font-size:14px;font-weight:700">${fmt(tA)}</span>
+        <span style="text-align:right;display:block;font-size:14px;font-weight:700;color:${tDiff>=0?green:red}">${tDiff>=0?"+":""}${fmt(tDiff)}</span>
+      </div>
+    </div>`;
+}
+
+/* ── TRANSACTIONS : liste et formulaire d'ajout ─────────────── */
+function renderTx(){
+  const m=md();
+  const secOpts=Object.entries(LBL).map(([v,l])=>`<option value="${v}">${l}</option>`).join("");
+  const txs=[...(m.transactions||[])].sort((a,b)=>a.day-b.day);
+  const total=txs.reduce((a,t)=>a+t.amount,0);
+  const cols="50px 90px 1fr 120px 1fr 36px 36px";
+
+  const editingId=window._editingTxId||null;
+  const rows=txs.length===0?`<div class="empty">💸 Aucune transaction ce mois</div>`
+    :txs.map(tx=>{
+      const isIncome=tx.section==="income"||tx.section==="savings";
+      const sign=isIncome?"+":"-";
+      const color=isIncome?green:red;
+      const secBadge=`<span class="badge" style="background:${COL_LIGHT[tx.section]||"#f3f4f6"};color:${COL_TEXT[tx.section]||"#374151"}">${LBL[tx.section]||tx.section}</span>`;
+
+      if(editingId===tx.id){
+        // ── EDIT MODE : inline form ──
+        const secOptsEdit=Object.entries(LBL).map(([v,l])=>`<option value="${v}"${v===tx.section?" selected":""}>${l}</option>`).join("");
+        const catOptsEdit=(CATS[tx.section]||[]).map(c=>`<option value="${esc(c)}"${c===tx.category?" selected":""}>${esc(c)}</option>`).join("");
+        return `<div class="tx-row" style="grid-template-columns:${cols};background:#f0f9ff;border-left:3px solid #0ea5e9;padding-left:17px">
+          <input class="inp" id="edit-day" type="number" min="1" max="31" value="${tx.day}" style="width:44px;padding:5px 6px;font-size:13px">
+          <select class="inp" id="edit-sec" onchange="refreshEditCats(${tx.id})" style="font-size:12px;padding:5px 6px">${secOptsEdit}</select>
+          <select class="inp" id="edit-cat-${tx.id}" style="font-size:12px;padding:5px 6px">${catOptsEdit}</select>
+          <input class="inp inp-r" id="edit-amt" type="number" value="${tx.amount}" style="width:100px;font-size:13px">
+          <input class="inp" id="edit-note" type="text" value="${esc(tx.note||"")}" placeholder="Note…" style="font-size:13px">
+          <button onclick="saveEditTx(${tx.id})" style="background:#0ea5e9;border:none;border-radius:6px;color:#fff;font-size:13px;cursor:pointer;padding:0 8px;height:32px;font-family:inherit;font-weight:600">✓</button>
+          <button class="del" onclick="cancelEdit()">×</button>
+        </div>`;
+      }
+
+      // ── VIEW MODE ──
+      return `<div class="tx-row" style="grid-template-columns:${cols}">
+        <span style="font-size:14px;color:#9ca3af;font-weight:600">${tx.day}</span>
+        <span>${secBadge}</span>
+        <span style="font-size:14px;color:#374151;font-weight:500">${esc(tx.category)}</span>
+        <span style="font-size:14px;font-weight:700;color:${color};text-align:right;display:block">${sign}${fmt(tx.amount)}</span>
+        <span style="font-size:13px;color:#9ca3af;font-style:italic">${esc(tx.note||"—")}</span>
+        <button onclick="editTx(${tx.id})" style="background:none;border:none;color:#d1d5db;cursor:pointer;font-size:15px;padding:0" title="Modifier">✏️</button>
+        <button class="del" onclick="removeTx(${tx.id})">×</button>
+      </div>`;
+    }).join("");
+
+  document.getElementById("pane-transactions").innerHTML=`
+    <div class="page-title">Transactions</div>
+    <div class="page-sub">Toutes les entrées et sorties de ${MONTHS[mi]} ${yr}</div>
+    <div class="add-box">
+      <div class="add-title">➕ Nouvelle transaction</div>
+      <div class="add-grid" style="grid-template-columns:60px 110px 150px 120px 1fr auto">
+        <div><label class="field-lbl">Jour</label><input class="inp" id="tx-day" type="number" min="1" max="31" placeholder="15"></div>
+        <div><label class="field-lbl">Section</label>
+          <select class="inp" id="tx-sec" onchange="updateTxCatOptions(this.value)">${secOpts}</select>
+        </div>
+        <div><label class="field-lbl">Catégorie</label>
+          <select class="inp" id="tx-cat">${CATS.fixed.map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("")}</select>
+        </div>
+        <div><label class="field-lbl">Montant (€)</label><input class="inp" id="tx-amt" type="number" placeholder="0.00"></div>
+        <div><label class="field-lbl">Note (optionnel)</label><input class="inp" id="tx-note" type="text" placeholder="Ex: Restaurant La Mer…"></div>
+        <div style="padding-top:20px"><button class="btn-primary" onclick="addTx()">Ajouter</button></div>
+      </div>
+    </div>
+    <div class="tbl-wrap">
+      <div class="tx-hd" style="grid-template-columns:${cols}">
+        <span style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Jour</span>
+        <span style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Section</span>
+        <span style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Catégorie</span>
+        <span style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-align:right;display:block">Montant</span>
+        <span style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Note</span>
+        <span></span><span></span>
+      </div>
+      ${rows}
+      ${txs.length>0?`<div class="tx-ft" style="grid-template-columns:${cols}">
+        <span></span><span></span><span style="font-size:13px;font-weight:700;color:#374151">Total</span>
+        <span style="font-size:14px;font-weight:700;color:#374151;text-align:right;display:block">${fmt(total)}</span>
+        <span></span><span></span><span></span>
+      </div>`:""}
+    </div>`;
+}
+
+/* ── VUE ANNUELLE : récapitulatif des 12 mois ───────────────── */
+function renderYearly(){
+  const months=MONTHS.map((_,i)=>{
+    const k=`${yr}-${i}`;
+    const m=allData[k]||emptyM();
+    return {
+      i,m,
+      tI:sum(m.income),tF:sum(m.fixed),tV:sum(m.variable),tS:sum(m.savings),tD:sum(m.debt)
+    };
+  });
+
+  const totI=months.reduce((a,m)=>a+m.tI,0);
+  const totE=months.reduce((a,m)=>a+m.tF+m.tV+m.tD,0);
+  const totS=months.reduce((a,m)=>a+m.tS,0);
+  const totNet=totI-totE-totS;
+
+  const kpiHtml=`
+    <div class="kpi"><div class="kpi-accent" style="background:${green}"></div><div class="kpi-label">Revenus annuels</div><div class="kpi-value" style="color:${green}">${fmt(totI)}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:${red}"></div><div class="kpi-label">Dépenses annuelles</div><div class="kpi-value" style="color:${red}">${fmt(totE)}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:#8b5cf6"></div><div class="kpi-label">Épargne annuelle</div><div class="kpi-value" style="color:#8b5cf6">${fmt(totS)}</div></div>
+    <div class="kpi"><div class="kpi-accent" style="background:${totNet>=0?green:red}"></div><div class="kpi-label">Solde net annuel</div><div class="kpi-value" style="color:${totNet>=0?green:red}">${fmt(totNet)}</div></div>`;
+
+  const monthCards=months.map(({i,tI,tF,tV,tS,tD})=>{
+    const tE=tF+tV+tD,net=tI-tE-tS;
+    const hasData=tI>0||tE>0;
+    return `<div class="yr-card" style="${!hasData?"opacity:.4":""}">
+      <div class="yr-card-head">
+        <span class="yr-card-month">${MONTHS_SHORT[i]}</span>
+        <span style="font-size:13px;font-weight:700;color:${net>=0?green:red}">${fmt(net)}</span>
+      </div>
+      <div class="yr-card-body">
+        <div class="yr-row"><span style="color:#9ca3af;font-size:13px">Revenus</span><span style="color:${green};font-weight:600;font-size:13px">${fmt(tI)}</span></div>
+        <div class="yr-row"><span style="color:#9ca3af;font-size:13px">Dépenses</span><span style="color:${red};font-weight:600;font-size:13px">${fmt(tE)}</span></div>
+        <div class="yr-row"><span style="color:#9ca3af;font-size:13px">Épargne</span><span style="color:#8b5cf6;font-weight:600;font-size:13px">${fmt(tS)}</span></div>
+      </div>
+    </div>`;
+  }).join("");
+
+  document.getElementById("pane-yearly").innerHTML=`
+    <div class="page-title">Vue annuelle ${yr}</div>
+    <div class="page-sub">Récapitulatif de tous les mois</div>
+    <div class="kpi-grid" style="margin-bottom:24px">${kpiHtml}</div>
+    <div class="yearly-grid">${monthCards}</div>`;
+}
+
+/* ── CATÉGORIES : affichage et gestion ──────────────────────── */
+/* Pour ajouter/supprimer/renommer des catégories depuis l'interface */
+function renderCategories(){
+  const secHtml=Object.entries(CATS_META).map(([sec,allCats])=>{
+    // Show active cats + recently deleted with restore option
+    const activeCats=allCats.filter(c=>!c.deletedAt||keyNum(...c.deletedAt.split("-").map(Number))>keyNum(yr,mi));
+    const cats=activeCats;
+    return `
+    <div class="card" style="margin-bottom:16px">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+        <div style="display:flex;align-items:center;gap:10px">
+          <span style="display:inline-block;width:10px;height:10px;border-radius:50%;background:${COL[sec]||"#9ca3af"}"></span>
+          <span style="font-size:15px;font-weight:700;color:#111827">${LBL[sec]||sec}</span>
+          <span style="font-size:12px;color:#9ca3af">${activeCats.length} catégorie${activeCats.length>1?"s":""}</span>
+        </div>
+        <button onclick="addCategory('${sec}')" style="background:#f0f9ff;border:1px solid #bae6fd;color:#0284c7;border-radius:8px;padding:6px 12px;font-size:12px;font-family:inherit;cursor:pointer;font-weight:600">+ Ajouter</button>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        ${cats.map(catObj=>{const cat=typeof catObj==="string"?catObj:catObj.name; return `
+          <div style="display:flex;align-items:center;gap:6px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:6px 10px">
+            <span style="font-size:13px;color:#374151;font-weight:500">${esc(cat)}</span>
+            <button onclick="renameCategory('${sec}','${esc(cat)}')" style="background:none;border:none;color:#9ca3af;cursor:pointer;font-size:14px;padding:0 2px" title="Renommer">✏️</button>
+            <button onclick="deleteCategory('${sec}','${esc(cat)}')" style="background:none;border:none;color:#fca5a5;cursor:pointer;font-size:14px;padding:0 2px" title="Supprimer">×</button>
+          </div>`;}).join("")}
+      </div>
+    </div>`;
+  }).join("");
+
+  document.getElementById("pane-categories").innerHTML=`
+    <div class="page-title">Gestion des catégories</div>
+    <div class="page-sub">Ajoutez, renommez ou supprimez vos catégories</div>
+    ${secHtml}`;
+}
+
+/* Ajouter une catégorie — elle n'apparaît qu'à partir du mois courant */
+function addCategory(sec){
+  const name=prompt("Nom de la nouvelle catégorie :");
+  if(!name||!name.trim())return;
+  const n=name.trim();
+  const existing=CATS_META[sec]||[];
+  if(existing.find(c=>c.name===n&&(!c.deletedAt))){alert("Cette catégorie existe déjà.");return;}
+  // Add with addedAt = current month
+  const addedAt=`${yr}-${mi}`;
+  CATS_META[sec].push({name:n,addedAt});
+  // Init data for current + future months only
+  for(const k of Object.keys(allData)){
+    const[ky,km]=k.split("-").map(Number);
+    if(keyNum(ky,km)>=keyNum(yr,mi)&&allData[k][sec]&&!allData[k][sec][n])
+      allData[k][sec][n]={planned:0,actual:0};
+  }
+  rebuildCATSShim();saveCats();save();renderCategories();
+}
+
+/* Supprimer une catégorie — les données passées sont conservées */
+function deleteCategory(sec,cat){
+  if(!confirm(`Masquer "${cat}" à partir de ce mois ?\nLes données des mois passés sont conservées.`))return;
+  // Set deletedAt = current month (won't show from this month onwards)
+  const entry=CATS_META[sec].find(c=>c.name===cat);
+  if(entry) entry.deletedAt=`${yr}-${mi}`;
+  rebuildCATSShim();saveCats();save();renderCategories();
+}
+
+/* Renommer une catégorie — migre automatiquement toutes les données */
+function renameCategory(sec,oldName){
+  const newName=prompt("Nouveau nom :",oldName);
+  if(!newName||!newName.trim()||newName.trim()===oldName)return;
+  const n=newName.trim();
+  if(CATS_META[sec].find(c=>c.name===n&&!c.deletedAt)){alert("Ce nom existe déjà.");return;}
+  const entry=CATS_META[sec].find(c=>c.name===oldName);
+  if(entry) entry.name=n;
+  // migrate data
+  for(const k of Object.keys(allData)){
+    if(allData[k][sec]&&allData[k][sec][oldName]!==undefined){
+      allData[k][sec][n]=allData[k][sec][oldName];
+      delete allData[k][sec][oldName];
+    }
+    // migrate transactions
+    if(allData[k].transactions){
+      allData[k].transactions=allData[k].transactions.map(tx=>
+        tx.section===sec&&tx.category===oldName?{...tx,category:n}:tx
+      );
+    }
+  }
+  saveCats();save();renderCategories();
+}
+
+function switchTabDirect(tab,sec){
+  curSection=sec||"income";
+  document.querySelectorAll(".nav-item").forEach(t=>t.classList.remove("active"));
+  document.querySelectorAll(".nav-item").forEach(t=>{if(t.textContent.includes(tab==="saisie"?"Saisie":""))t.classList.add("active");});
+  document.querySelectorAll("[id^=pane-]").forEach(el=>el.style.display="none");
+  document.getElementById("pane-"+tab).style.display="";
+  curTab=tab;
+  renderTab();
+}
+
+function renderTab(){
+  if(curTab==="dashboard")renderDashboard();
+  else if(curTab==="saisie")renderSaisie();
+  else if(curTab==="transactions")renderTx();
+  else if(curTab==="yearly")renderYearly();
+  else if(curTab==="categories")renderCategories();
+}
+
+
+/* ── INITIALISATION : point d'entrée de l'app ───────────────── */
+/* render() est appelé une seule fois au chargement de la page   */
+function render(){
+  document.getElementById("month-lbl").textContent=MONTHS[mi];
+  document.getElementById("year-lbl").textContent=yr;
+  buildYearSelect();
+  renderTab();
+}
+
+checkPin();
+render();
+</script>
+</body>
+</html>
