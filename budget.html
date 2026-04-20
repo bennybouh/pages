@@ -41,6 +41,7 @@ input[type=number]{-moz-appearance:textfield}
 /* ── SIDEBAR (menu latéral gauche) ──────────────────────────────
    width:220px = largeur de la sidebar en pixels
    Pour la cacher sur mobile, voir @media en bas du CSS          */
+/* Largeur de la sidebar gauche — change 220px pour l'agrandir ou réduire */
 .sidebar{position:fixed;left:0;top:0;bottom:0;width:220px;background:#fff;border-right:1px solid #e5e7eb;display:flex;flex-direction:column;z-index:100;padding:0}
 .logo{padding:24px 20px 20px;border-bottom:1px solid #f3f4f6}
 .logo-title{font-size:18px;font-weight:700;color:#111827;letter-spacing:-.3px}
@@ -85,6 +86,7 @@ input[type=number]{-moz-appearance:textfield}
 .charts-row{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:24px}
 .card{background:#fff;border-radius:14px;padding:20px;border:1px solid #e5e7eb}
 .card-title{font-size:13px;font-weight:600;color:#374151;margin-bottom:16px;letter-spacing:.01em}
+/* Hauteur des graphiques dans le Dashboard — change 220px si tu veux plus grand */
 .chart-wrap{position:relative;height:220px}
 
 /* SECTION CARDS */
@@ -227,6 +229,10 @@ select.inp{cursor:pointer}
    PIN DE PROTECTION
    Pour changer le PIN : modifie la valeur de CORRECT_PIN ci-dessous
    ============================================================ */
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  PIN D'ACCÈS                                                 ║
+// ║  Change "0000" par ton code personnel (chiffres uniquement)  ║
+// ╚══════════════════════════════════════════════════════════════╝
 const CORRECT_PIN = "0000";
 const PIN_KEY = "budget-pin-unlocked";
 
@@ -294,6 +300,13 @@ const MONTHS_SHORT=["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct
    Pour ajouter une catégorie par défaut : ajoute {name:"Ta Catégorie"} dans la liste
    ─────────────────────────────────────────────────────────────── */
 // CATS_META: {section: [{name, addedAt:"YYYY-M", deletedAt:"YYYY-M"|null}]}
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  CATÉGORIES PAR DÉFAUT                                       ║
+// ║  Ce sont les catégories présentes dès le début               ║
+// ║  Pour ajouter une catégorie de base : {name:"Ma Catégorie"}  ║
+// ║  Attention : modifie aussi CAT_COLORS pour lui donner        ║
+// ║  une couleur dans Transactions                               ║
+// ╚══════════════════════════════════════════════════════════════╝
 const DEFAULT_CATS_META={
   income:[{name:"Salary"},{name:"Refunds"},{name:"Misc"}],
   savings:[{name:"BoursoPlus"},{name:"Crypto"},{name:"Wise"},{name:"Misc"}],
@@ -379,6 +392,12 @@ const CATS={};
 for(const sec of Object.keys(DEFAULT_CATS_META)) CATS[sec]=DEFAULT_CATS_META[sec].map(c=>c.name);
 /* ── Couleurs par section (modifie les codes hex pour changer) ─ */
 /* income=revenus, savings=épargne, fixed=fixes, variable=variables, debt=dettes */
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  COULEURS DES SECTIONS                                       ║
+// ║  income=Revenus, savings=Épargne, fixed=Fixes                ║
+// ║  variable=Variables, debt=Dettes                             ║
+// ║  Change les codes hex pour modifier les couleurs globales    ║
+// ╚══════════════════════════════════════════════════════════════╝
 const COL={income:"#10b981",savings:"#8b5cf6",fixed:"#f59e0b",variable:"#3b82f6",debt:"#ef4444"};
 const COL_LIGHT={income:"#d1fae5",savings:"#ede9fe",fixed:"#fef3c7",variable:"#dbeafe",debt:"#fee2e2"};
 const COL_TEXT={income:"#065f46",savings:"#5b21b6",fixed:"#92400e",variable:"#1e40af",debt:"#991b1b"};
@@ -390,6 +409,8 @@ const SK="budget-pro-v1";
 const SK_CATS="budget-cats-v1";
 /* Clé pour le solde de départ initial (saisi une seule fois) */
 const SK_BALANCE="budget-start-balance-v1";
+// ── Le solde de départ s'édite directement dans le Dashboard ──
+// Clique sur ✏️ à côté de "Solde début de mois" pour le modifier
 
 let mi=new Date().getMonth(), yr=new Date().getFullYear();
 // Si on est avant 2026, démarrer en Janvier 2026
@@ -443,7 +464,10 @@ function buildYearSelect(){
   const sel=document.getElementById("year-sel");
   sel.innerHTML="";
   const cur=new Date().getFullYear();
-  for(let y=2026;y<=cur+10;y++){
+  // ── Plage d'années disponibles dans le sélecteur ──
+// Change 2026 pour modifier l'année de départ
+// cur+10 = 10 ans dans le futur (modifie le +10 si besoin)
+for(let y=2026;y<=cur+10;y++){
     const o=document.createElement("option");
     o.value=y;o.textContent=y;
     if(y===yr)o.selected=true;
@@ -762,6 +786,7 @@ function renderSaisie(){
       txNoteEl=`<span style="font-size:11px;color:#d1d5db;font-style:italic">—</span>`;
     } else {
       const joined=notes.join(" · ");
+      // Nombre max de caractères affichés pour les notes de transactions (augmente si besoin)
       const MAX=200;
       const display=joined.length>MAX?joined.slice(0,MAX)+"…":joined;
       txNoteEl=`<span style="font-size:11px;color:#9ca3af;font-style:italic" title="${esc(joined)}">${esc(display)}</span>`;
@@ -871,12 +896,57 @@ function renderSaisie(){
 }
 
 /* ── TRANSACTIONS : liste et formulaire d'ajout ─────────────── */
+
+// ╔══════════════════════════════════════════════════════════════╗
+// ║  COULEURS DES CATÉGORIES (fond des lignes dans Transactions) ║
+// ║  Format : "Nom exact de la catégorie" : "#couleur_hex"       ║
+// ║  Trouve des couleurs sur : https://tailwindcss.com/docs/     ║
+// ║  Ajoute une ligne pour chaque nouvelle catégorie créée       ║
+// ╚══════════════════════════════════════════════════════════════╝
+const CAT_COLORS={
+  "Salary":"#f0fdf4","Refunds":"#f0fdf9","Misc":"#f9fafb",
+  "Rent":"#fff7ed","Cell Phone":"#fef9ee","Subscriptions":"#fefce8",
+  "Groceries":"#f0fdf4","Taxes/Fees":"#fdf4ff","Insurance":"#fff1f2",
+  "Fuel":"#fff7ed",
+  "Eating Out":"#fff1f2","Shopping":"#fdf4ff","Health":"#f0fdfa",
+  "Gifts":"#fdf2f8","Pocket Money":"#fffbeb","E-Vape":"#f5f3ff",
+  "Transport":"#eff6ff","Activities":"#f0fdf4","Travel":"#ecfeff",
+  "BoursoPlus":"#faf5ff","Crypto":"#f5f3ff","Wise":"#eef2ff",
+  "Tokimo":"#fdf4ff",
+  "Boursorama":"#fff1f2","Myriam":"#fdf2f8","Parent's Money":"#fff7ed",
+};
+const getCatColor=cat=>CAT_COLORS[cat]||"#f9fafb";
+
+function setTxSort(field){
+  if(window._txSortOrder===field){
+    window._txSortDir=window._txSortDir==="asc"?"desc":"asc";
+  } else {
+    window._txSortOrder=field;
+    window._txSortDir=field==="amount"?"desc":"asc";
+  }
+  renderTx();
+}
+
 function renderTx(){
   const m=md();
   const secOpts=Object.entries(LBL).map(([v,l])=>`<option value="${v}">${l}</option>`).join("");
-  const txs=[...(m.transactions||[])].sort((a,b)=>a.day-b.day);
-  const total=txs.reduce((a,t)=>a+t.amount,0);
+  const sortOrder=window._txSortOrder||"day";
+  const sortDir=window._txSortDir||"asc";
+  let txsSorted=[...(m.transactions||[])];
+  txsSorted.sort((a,b)=>{
+    let va=sortOrder==="category"?a.category||"":a[sortOrder]||0;
+    let vb=sortOrder==="category"?b.category||"":b[sortOrder]||0;
+    if(typeof va==="string") return sortDir==="asc"?va.localeCompare(vb):vb.localeCompare(va);
+    return sortDir==="asc"?va-vb:vb-va;
+  });
+  const total=txsSorted.reduce((a,t)=>a+t.amount,0);
   const cols="50px 90px 1fr 120px 1fr 36px 36px";
+  const txs=txsSorted;
+  const sortBtn=(field,label)=>{
+    const active=sortOrder===field;
+    const arrow=active?(sortDir==="asc"?"↑":"↓"):"";
+    return `<span onclick="setTxSort('${field}')" style="cursor:pointer;user-select:none;color:${active?"#0ea5e9":"#9ca3af"};font-weight:${active?"700":"600"};font-size:11px;letter-spacing:.06em;text-transform:uppercase">${label}${arrow}</span>`;
+  };
 
   const editingId=window._editingTxId||null;
   const rows=txs.length===0?`<div class="empty">💸 Aucune transaction ce mois</div>`
@@ -902,7 +972,8 @@ function renderTx(){
       }
 
       // ── VIEW MODE ──
-      return `<div class="tx-row" style="grid-template-columns:${cols}">
+      const rowBg=getCatColor(tx.category);
+      return `<div class="tx-row" style="grid-template-columns:${cols};background:${rowBg}">
         <span style="font-size:14px;color:#9ca3af;font-weight:600">${tx.day}</span>
         <span>${secBadge}</span>
         <span style="font-size:14px;color:#374151;font-weight:500">${esc(tx.category)}</span>
@@ -933,10 +1004,10 @@ function renderTx(){
     </div>
     <div class="tbl-wrap">
       <div class="tx-hd" style="grid-template-columns:${cols}">
-        <span style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Jour</span>
+        <span style="font-size:11px;letter-spacing:.06em;text-transform:uppercase">${sortBtn("day","Jour")}</span>
         <span style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Section</span>
-        <span style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Catégorie</span>
-        <span style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.06em;text-transform:uppercase;text-align:right;display:block">Montant</span>
+        <span style="font-size:11px;letter-spacing:.06em;text-transform:uppercase">${sortBtn("category","Catégorie")}</span>
+        <span style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:right;display:block">${sortBtn("amount","Montant")}</span>
         <span style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Note</span>
         <span></span><span></span>
       </div>
@@ -1062,22 +1133,32 @@ function renameCategory(sec,oldName){
   if(!newName||!newName.trim()||newName.trim()===oldName)return;
   const n=newName.trim();
   if(CATS_META[sec].find(c=>c.name===n&&!c.deletedAt)){alert("Ce nom existe déjà.");return;}
-  const entry=CATS_META[sec].find(c=>c.name===oldName);
-  if(entry) entry.name=n;
-  // migrate data
+
+  // Stratégie : on garde l'ancienne entrée pour le passé, on crée une nouvelle pour le futur
+  // 1. Marquer l'ancienne comme supprimée à partir du mois courant
+  const oldEntry=CATS_META[sec].find(c=>c.name===oldName&&!c.deletedAt);
+  if(oldEntry) oldEntry.deletedAt=`${yr}-${mi}`;
+
+  // 2. Créer une nouvelle entrée avec le nouveau nom à partir du mois courant
+  CATS_META[sec].push({name:n, addedAt:`${yr}-${mi}`});
+
+  // 3. Migrer les données uniquement pour le mois courant et futurs
   for(const k of Object.keys(allData)){
-    if(allData[k][sec]&&allData[k][sec][oldName]!==undefined){
-      allData[k][sec][n]=allData[k][sec][oldName];
-      delete allData[k][sec][oldName];
-    }
-    // migrate transactions
-    if(allData[k].transactions){
-      allData[k].transactions=allData[k].transactions.map(tx=>
-        tx.section===sec&&tx.category===oldName?{...tx,category:n}:tx
-      );
+    const[ky,km]=k.split("-").map(Number);
+    if(keyNum(ky,km)>=keyNum(yr,mi)){
+      if(allData[k][sec]&&allData[k][sec][oldName]!==undefined){
+        allData[k][sec][n]=allData[k][sec][oldName];
+        delete allData[k][sec][oldName];
+      }
+      // Migrer les transactions du mois courant et futurs
+      if(allData[k].transactions){
+        allData[k].transactions=allData[k].transactions.map(tx=>
+          tx.section===sec&&tx.category===oldName?{...tx,category:n}:tx
+        );
+      }
     }
   }
-  saveCats();save();renderCategories();
+  rebuildCATSShim();saveCats();save();renderCategories();
 }
 
 function switchTabDirect(tab,sec){
