@@ -308,9 +308,9 @@ const MONTHS_SHORT=["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct
 // ║  une couleur dans Transactions                               ║
 // ╚══════════════════════════════════════════════════════════════╝
 const DEFAULT_CATS_META={
-  income:[{name:"Salary"},{name:"Refunds"},{name:"Misc"}],
+  income:[{name:"Salary"},{name:"Refunds"},{name:"Savings"},{name:"Misc"}],
   savings:[{name:"BoursoPlus"},{name:"Crypto"},{name:"Wise"},{name:"Misc"}],
-  fixed:[{name:"Rent"},{name:"Cell Phone"},{name:"Subscriptions"},{name:"Groceries"},{name:"Taxes/Fees"},{name:"Insurance"},{name:"Fuel"},{name:"Misc"}],
+  fixed:[{name:"Rent"},{name:"Cell Phone"},{name:"Subscriptions"},{name:"Groceries"},{name:"Taxes/Fees"},{name:"Insurance"},{name:"Car"},{name:"Misc"}],
   variable:[{name:"Eating Out"},{name:"Shopping"},{name:"Health"},{name:"Gifts"},{name:"Pocket Money"},{name:"E-Vape"},{name:"Transport"},{name:"Activities"},{name:"Travel"},{name:"Misc"}],
   debt:[{name:"Boursorama"},{name:"Myriam"},{name:"Parent's Money"}]
 };
@@ -328,7 +328,10 @@ function getSavingsRunningTotal(cat){
     const[ky,km]=k.split("-").map(Number);
     if(keyNum(ky,km)<=keyNum(yr,mi)){
       const actual=Number(allData[k]?.savings?.[cat]?.actual||0);
-      total+=actual;
+      const withdrawals=(allData[k]?.transactions||[])
+        .filter(tx=>tx.section==="savings_withdrawal"&&tx.category===cat)
+        .reduce((a,tx)=>a+tx.amount,0);
+      total+=actual-withdrawals;
     }
   }
   return total;
@@ -398,10 +401,10 @@ for(const sec of Object.keys(DEFAULT_CATS_META)) CATS[sec]=DEFAULT_CATS_META[sec
 // ║  variable=Variables, debt=Dettes                             ║
 // ║  Change les codes hex pour modifier les couleurs globales    ║
 // ╚══════════════════════════════════════════════════════════════╝
-const COL={income:"#10b981",savings:"#8b5cf6",fixed:"#f59e0b",variable:"#3b82f6",debt:"#ef4444"};
-const COL_LIGHT={income:"#d1fae5",savings:"#ede9fe",fixed:"#fef3c7",variable:"#dbeafe",debt:"#fee2e2"};
-const COL_TEXT={income:"#065f46",savings:"#5b21b6",fixed:"#92400e",variable:"#1e40af",debt:"#991b1b"};
-const LBL={income:"Revenus",savings:"Épargne",fixed:"Fixes",variable:"Variables",debt:"Dettes"};
+const COL={income:"#10b981",savings:"#8b5cf6",fixed:"#f59e0b",variable:"#3b82f6",debt:"#ef4444",savings_withdrawal:"#8b5cf6"};
+const COL_LIGHT={income:"#d1fae5",savings:"#ede9fe",fixed:"#fef3c7",variable:"#dbeafe",debt:"#fee2e2",savings_withdrawal:"#ede9fe"};
+const COL_TEXT={income:"#065f46",savings:"#5b21b6",fixed:"#92400e",variable:"#1e40af",debt:"#991b1b",savings_withdrawal:"#5b21b6"};
+const LBL={income:"Revenus",savings:"Épargne",fixed:"Fixes",variable:"Variables",debt:"Dettes",savings_withdrawal:"Retrait épargne"};
 /* ── Clés de stockage localStorage ─────────────────────────────
    Si tu changes SK, tu perds les données existantes (nouveau départ)
    Utile si tu veux réinitialiser complètement l'app             */
@@ -530,6 +533,120 @@ function updatePlannedNote(sec,cat,val){
   md()[sec][cat].plannedNote=val.trim();save();
 }
 
+/* ── DÉCOMPOSITION DU PRÉVU ─────────────────────────────────── */
+// ⊕ : active le mode décomposition et initialise si besoin
+function addBreakdownMode(sec,cat){
+  const m=md();
+  if(!m[sec][cat]) m[sec][cat]={planned:0,actual:0};
+  if(!m[sec][cat].breakdown){
+    // Première activation : init tableau vide (sans fusionner le planned existant)
+    m[sec][cat].breakdown=[];
+    save();
+  }
+  renderSaisie();
+}
+
+// ≡ : affiche ou masque la liste des lignes
+function toggleBreakdownList(safeId){
+  if(!window._showBreakdown) window._showBreakdown={};
+  window._showBreakdown[safeId]=!window._showBreakdown[safeId];
+  renderSaisie();
+}
+
+// Ancienne fonction conservée pour compatibilité
+function toggleBreakdown(sec,cat){
+  addBreakdownMode(sec,cat);
+}
+
+function addBreakdown(sec,cat){
+  const safeId=`${sec}_${cat.replace(/[^a-z0-9]/gi,"_")}`;
+  const lbl=document.getElementById(`bd-lbl-${safeId}`)?.value.trim()||"";
+  const amt=parseFloat(document.getElementById(`bd-amt-${safeId}`)?.value)||0;
+  if(!amt) return;
+  const m=md();
+  if(!m[sec][cat].breakdown) m[sec][cat].breakdown=[];
+  m[sec][cat].breakdown.push({label:lbl,amount:amt});
+  // Sync planned with breakdown total
+  m[sec][cat].planned=Math.round(m[sec][cat].breakdown.reduce((a,b)=>a+(b.amount||0),0)*100)/100;
+  save();renderSaisie();
+}
+
+function removeBreakdown(sec,cat,idx){
+  const m=md();
+  if(!m[sec][cat]?.breakdown) return;
+  m[sec][cat].breakdown.splice(idx,1);
+  m[sec][cat].planned=Math.round(m[sec][cat].breakdown.reduce((a,b)=>a+(b.amount||0),0)*100)/100;
+  save();renderSaisie();
+}
+
+/* ── RÉCURRENCES : répéter un montant prévu sur plusieurs mois ─ */
+function toggleRecurrence(sec,cat){
+  // Affiche un prompt pour saisir le nombre de mois
+  const current=md()[sec][cat]?.recurrence||"";
+  const months=prompt(`Répéter le montant prévu de "${cat}" sur combien de mois ?\n(depuis le mois courant inclus)`, current||"");
+  if(months===null) return; // annulé
+  const n=parseInt(months);
+  if(!n||n<1){alert("Nombre de mois invalide.");return;}
+  applyRecurrence(sec,cat,n);
+}
+
+function applyRecurrence(sec,cat,months){
+  const sourceAmount=md()[sec][cat]?.planned||0;
+  if(!sourceAmount){alert("Remplis d'abord le montant prévu avant de le répéter.");return;}
+
+  // Appliquer sur les mois suivants
+  for(let i=0;i<months;i++){
+    let tm=mi+i, ty=yr;
+    while(tm>11){tm-=12;ty++;}
+    const k=`${ty}-${tm}`;
+    if(!allData[k]) allData[k]=emptyM();
+    if(!allData[k][sec][cat]) allData[k][sec][cat]={planned:0,actual:0};
+    allData[k][sec][cat].planned=sourceAmount;
+    allData[k][sec][cat].recurrence=months;
+  }
+  save();renderSaisie();
+  alert(`✅ Montant de ${fmt(sourceAmount)} répété sur ${months} mois !`);
+}
+
+function repeatBreakdownItem(sec,cat,idx){
+  const months=prompt(`Répéter ce montant sur combien de mois ?`,"");
+  if(months===null) return;
+  const n=parseInt(months);
+  if(!n||n<1){alert("Nombre de mois invalide.");return;}
+  const item=md()[sec][cat]?.breakdown?.[idx];
+  if(!item) return;
+  // Apply this single item's amount to future months
+  for(let i=0;i<n;i++){
+    let tm=mi+i, ty=yr;
+    while(tm>11){tm-=12;ty++;}
+    const k=`${ty}-${tm}`;
+    if(!allData[k]) allData[k]=emptyM();
+    if(!allData[k][sec][cat]) allData[k][sec][cat]={planned:0,actual:0};
+    if(!allData[k][sec][cat].breakdown) allData[k][sec][cat].breakdown=[];
+    // Ajoute ou met à jour cet item dans le breakdown du mois futur
+    const existing=allData[k][sec][cat].breakdown.find(b=>b.label===item.label);
+    if(existing) existing.amount=item.amount;
+    else allData[k][sec][cat].breakdown.push({label:item.label,amount:item.amount});
+    // Recalcule le total planned
+    allData[k][sec][cat].planned=Math.round(allData[k][sec][cat].breakdown.reduce((a,b)=>a+(b.amount||0),0)*100)/100;
+  }
+  item.recurrence=n;
+  save();renderSaisie();
+  alert(`✅ "${item.label||"Item"}" répété sur ${n} mois !`);
+}
+
+function cancelRecurrence(sec,cat){
+  if(!confirm(`Supprimer la récurrence de "${cat}" ?`)) return;
+  // Supprimer uniquement depuis le mois courant
+  for(const k of Object.keys(allData)){
+    const[ky,km]=k.split("-").map(Number);
+    if(keyNum(ky,km)>=keyNum(yr,mi)&&allData[k][sec]?.[cat]){
+      delete allData[k][sec][cat].recurrence;
+    }
+  }
+  save();renderSaisie();
+}
+
 /* ── TRANSACTIONS : ajout d'une transaction ────────────────── */
 function addTx(){
   const day=document.getElementById("tx-day").value;
@@ -540,16 +657,13 @@ function addTx(){
   if(!day||!sec||!cat||!amt)return;
   const tx={day:parseInt(day),section:sec,category:cat,amount:Math.round(parseFloat(amt)*100)/100,note:note||"",id:Date.now()};
   const m=md();m.transactions.push(tx);
-  // update actual
-  if(m[sec]&&m[sec][cat]!==undefined){
-    if(sec==="income"||sec==="savings"||sec==="debt"){
-      m[sec][cat].actual=Math.round(((Number(m[sec][cat].actual)||0)+parseFloat(amt))*100)/100;
-    } else {
-      m[sec][cat].actual=Math.round(((Number(m[sec][cat].actual)||0)+parseFloat(amt))*100)/100;
-    }
+
+  if(sec==="savings_withdrawal"){
+    // Ne pas toucher savings[cat].actual — le retrait est déduit dans getSavingsRunningTotal
+  } else if(m[sec]&&m[sec][cat]!==undefined){
+    m[sec][cat].actual=Math.round(((Number(m[sec][cat].actual)||0)+parseFloat(amt))*100)/100;
   }
   save();renderTx();
-  // reset
   ["tx-day","tx-amt","tx-note"].forEach(id=>document.getElementById(id).value="");
   document.getElementById("tx-sec").value="fixed";
   updateTxCatOptions("fixed");
@@ -558,7 +672,11 @@ function addTx(){
 function updateTxCatOptions(sec){
   const sel=document.getElementById("tx-cat");
   if(!sel)return;
-  sel.innerHTML=CATS[sec].map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
+  if(sec==="savings_withdrawal"){
+    sel.innerHTML=catsForMonth("savings",yr,mi).map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
+  } else {
+    sel.innerHTML=(CATS[sec]||[]).map(c=>`<option value="${esc(c)}">${esc(c)}</option>`).join("");
+  }
 }
 
 /* ── TRANSACTIONS : édition inline ─────────────────────────── */
@@ -586,16 +704,16 @@ function saveEditTx(id){
   const newAmt=parseFloat(document.getElementById("edit-amt").value)||tx.amount;
   const newNote=document.getElementById("edit-note").value.trim();
 
-  // Reverse old actual impact
+  // Reverse old actual impact (skip savings_withdrawal — not stored in actual)
   const oldSec=tx.section;
-  if(m[oldSec]&&m[oldSec][tx.category]!==undefined)
+  if(oldSec!=="savings_withdrawal"&&m[oldSec]&&m[oldSec][tx.category]!==undefined)
     m[oldSec][tx.category].actual=Math.max(0,(Number(m[oldSec][tx.category].actual)||0)-tx.amount);
 
   // Apply new values
   tx.day=newDay; tx.section=newSec; tx.category=newCat; tx.amount=newAmt; tx.note=newNote;
 
-  // Apply new actual impact
-  if(m[newSec]&&m[newSec][newCat]!==undefined)
+  // Apply new actual impact (skip savings_withdrawal — not stored in actual)
+  if(newSec!=="savings_withdrawal"&&m[newSec]&&m[newSec][newCat]!==undefined)
     m[newSec][newCat].actual=(Number(m[newSec][newCat].actual)||0)+newAmt;
 
   window._editingTxId=null;
@@ -608,7 +726,9 @@ function removeTx(id){
   const tx=m.transactions.find(t=>t.id===id);if(!tx)return;
   m.transactions=m.transactions.filter(t=>t.id!==id);
   const sec=tx.section;
-  if(m[sec]&&m[sec][tx.category]!==undefined){
+  if(sec==="savings_withdrawal"){
+    // Ne pas toucher savings[cat].actual — le retrait est déduit dans getSavingsRunningTotal
+  } else if(m[sec]&&m[sec][tx.category]!==undefined){
     m[sec][tx.category].actual=Math.round(Math.max(0,(Number(m[sec][tx.category].actual)||0)-tx.amount)*100)/100;
   }
   save();renderTx();
@@ -619,7 +739,7 @@ function removeTx(id){
 function renderDashboard(){
   const m=md();
   const tI=sum(m.income),tF=sum(m.fixed),tV=sum(m.variable),tS=sum(m.savings),tD=sum(m.debt);
-  const tE=tF+tV+tD,net=tI-tE-tS;
+  const tE=tF+tV+tD,net=Math.round((tI-tE-tS)*100)/100;
   const pI=sumP(m.income),pF=sumP(m.fixed),pV=sumP(m.variable),pS=sumP(m.savings);
   const soldeDebut=getSoldeDebut(yr,mi);
   const soldeFin=soldeDebut+net;
@@ -694,29 +814,65 @@ function renderDashboard(){
       </div>
     </div>`;
 
+  // KPI avec sous-titres explicatifs
+  const kpiHtmlFull=kpis.map(k=>{
+    const subtitles={
+      "Revenus":"Total encaissé ce mois",
+      "Dépenses":"Fixes + Variables + Dettes",
+      "Épargne":"Mis de côté ce mois",
+      "Solde Net":"Revenus − Dépenses − Épargne"
+    };
+    return `<div class="kpi">
+      <div class="kpi-accent" style="background:${k.c}"></div>
+      <div class="kpi-label">${k.l}</div>
+      <div style="font-size:11px;color:#c4c9d4;margin-bottom:8px;font-style:italic">${subtitles[k.l]||""}</div>
+      <div class="kpi-value" style="color:${k.c}">${fmt(k.v)}</div>
+      ${k.p!==undefined?`<div class="kpi-planned">Prévu : ${fmt(k.p)}</div>`:``}
+      ${k.diff!==undefined?`<div class="kpi-pct" style="color:${k.diff>=0?green:red}">${fmtS(k.diff)}</div>`:""}
+    </div>`;
+  }).join("");
+
+  // Épargne cumulée
+  const savingsHtml=catsForMonth("savings",yr,mi).map(cat=>{
+    const running=getSavingsRunningTotal(cat);
+    const monthly=m.savings[cat]?.actual||0;
+    return `<div style="background:#f9fafb;border-radius:10px;padding:14px;border:1px solid #e5e7eb">
+      <div style="font-size:11px;color:#9ca3af;font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">${esc(cat)}</div>
+      <div style="font-size:18px;font-weight:700;color:#8b5cf6">${fmt(running)}</div>
+      <div style="font-size:11px;color:#9ca3af;margin-top:4px">Ce mois : <span style="color:${monthly>=0?"#10b981":"#ef4444"};font-weight:600">${monthly>=0?"+":""}${fmt(monthly)}</span></div>
+    </div>`;
+  }).join("");
+
   document.getElementById("pane-dashboard").innerHTML=`
     <div class="page-title">${MONTHS[mi]} ${yr}</div>
     <div class="page-sub">Vue d'ensemble de votre budget mensuel</div>
+
+    <!-- Solde début / fin -->
     ${soldeHtml}
-    <div class="kpi-grid">${kpiHtml}</div>
-    <div class="pct-row">${pctHtml}</div>
-    <div class="sec-grid">${secHtml}</div>
-    <div class="charts-row">
-      <div class="card"><div class="card-title">Répartition des dépenses</div><div class="chart-wrap"><canvas id="pieChart"></canvas></div></div>
-      <div class="card"><div class="card-title">Variables : Prévu vs Réel</div><div class="chart-wrap"><canvas id="barChart"></canvas></div></div>
+
+    <!-- 4 KPI principaux avec explications -->
+    <div class="kpi-grid" style="margin-bottom:24px">${kpiHtmlFull}</div>
+
+    <!-- Graphiques -->
+    <div class="charts-row" style="margin-bottom:24px">
+      <div class="card">
+        <div class="card-title">Répartition des sorties</div>
+        <div style="font-size:11px;color:#9ca3af;margin-bottom:12px;font-style:italic">Comment se répartissent tes dépenses + épargne</div>
+        <div class="chart-wrap"><canvas id="pieChart"></canvas></div>
+      </div>
+      <div class="card">
+        <div class="card-title">Variables : Prévu vs Réel</div>
+        <div style="font-size:11px;color:#9ca3af;margin-bottom:12px;font-style:italic">Barres claires = prévu · Barres bleues = réel</div>
+        <div class="chart-wrap"><canvas id="barChart"></canvas></div>
+      </div>
     </div>
+
+    <!-- Épargne cumulée -->
     <div class="card" style="margin-bottom:20px">
-      <div class="card-title">💰 Épargne cumulée (tous les mois)</div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px;margin-top:4px">
-        ${catsForMonth("savings",yr,mi).map(cat=>{
-          const running=getSavingsRunningTotal(cat);
-          const monthly=m.savings[cat]?.actual||0;
-          return `<div style="background:#f9fafb;border-radius:10px;padding:14px;border:1px solid #e5e7eb">
-            <div style="font-size:11px;color:#9ca3af;font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">${esc(cat)}</div>
-            <div style="font-size:18px;font-weight:700;color:#8b5cf6">${fmt(running)}</div>
-            <div style="font-size:11px;color:#9ca3af;margin-top:4px">Ce mois : <span style="color:${monthly>=0?"#10b981":"#ef4444"};font-weight:600">${monthly>=0?"+":""}${fmt(monthly)}</span></div>
-          </div>`;
-        }).join("")}
+      <div class="card-title">💰 Épargne cumulée</div>
+      <div style="font-size:11px;color:#9ca3af;margin-bottom:14px;font-style:italic">Total accumulé depuis le début sur chaque compte</div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:12px">
+        ${savingsHtml}
       </div>
     </div>`;
 
@@ -791,18 +947,75 @@ function renderSaisie(){
       const display=joined.length>MAX?joined.slice(0,MAX)+"…":joined;
       txNoteEl=`<span style="font-size:11px;color:#9ca3af;font-style:italic" title="${esc(joined)}">${esc(display)}</span>`;
     }
+    // Sous-entrées du prévu (décomposition)
+    const breakdown=m[curSection][cat]?.breakdown; // undefined si mode non activé
+    const breakdownItems=breakdown||[];
+    const breakdownActive=Array.isArray(breakdown); // true dès que ⊕ a été cliqué
+    const breakdownTotal=Math.round(breakdownItems.reduce((a,b)=>a+(b.amount||0),0)*100)/100;
+    const hasItems=breakdownItems.length>0; // true seulement si au moins 1 ligne
+    const safeId=`${curSection}_${cat.replace(/[^a-z0-9]/gi,'_')}`;
+    const catRec=m[curSection][cat]?.recurrence||null;
+    const showBreakdown=window._showBreakdown&&window._showBreakdown[safeId];
+
+    // Liste des lignes (visible si ≡ actif)
+    const breakdownListHtml=hasItems&&showBreakdown?`
+      <div style="margin-top:8px;padding:10px 12px;background:#f9fafb;border-radius:8px;border:1px solid #e5e7eb">
+        ${breakdownItems.map((item,idx)=>`
+          <div style="display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:8px;margin-bottom:${idx<breakdownItems.length-1?"6px":"0"}">
+            <span style="font-size:12px;color:#374151;font-weight:500">${esc(item.label||"Sans label")}</span>
+            <span style="font-size:12px;color:#0ea5e9;font-weight:700">${fmt(item.amount||0)}</span>
+            <button onclick="repeatBreakdownItem('${curSection}','${esc(cat)}',${idx})" title="Répéter ce montant"
+              style="background:none;border:1px solid #e5e7eb;border-radius:5px;color:${item.recurrence?"#f59e0b":"#9ca3af"};cursor:pointer;font-size:11px;padding:2px 5px">🔁${item.recurrence?` ${item.recurrence}m`:""}</span>
+            <button onclick="removeBreakdown('${curSection}','${esc(cat)}',${idx})" style="background:none;border:none;color:#d1d5db;cursor:pointer;font-size:15px;padding:0;line-height:1">×</button>
+          </div>`).join("")}
+        <div style="border-top:1px dashed #e5e7eb;margin-top:8px;padding-top:6px;display:flex;justify-content:space-between;align-items:center">
+          <span style="font-size:11px;color:#9ca3af">Total prévu</span>
+          <span style="font-size:12px;font-weight:700;color:#374151">${fmt(breakdownTotal)}</span>
+        </div>
+      </div>`:
+      hasItems&&!showBreakdown?`<div style="margin-top:4px"><span style="font-size:11px;color:#9ca3af">${breakdownItems.length} ligne${breakdownItems.length>1?"s":""} · ${fmt(breakdownTotal)}</span></div>`
+      :"";
+
+    // Formulaire d'ajout — visible dès que breakdown activé (même vide)
+    const addFormHtml=breakdownActive?`
+      <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
+        <input id="bd-lbl-${safeId}" class="inp" type="text" placeholder="Label…" style="flex:1;font-size:12px;padding:5px 8px">
+        <input id="bd-amt-${safeId}" class="inp inp-r" type="number" placeholder="0" style="width:72px;font-size:12px;padding:5px 8px">
+        <button onclick="addBreakdown('${curSection}','${esc(cat)}')" style="background:#0ea5e9;border:none;border-radius:6px;color:#fff;font-size:13px;padding:5px 10px;cursor:pointer;font-family:inherit;font-weight:700">+</button>
+      </div>`:"";
+
     return `<div class="tbl-row" style="grid-template-columns:${cols}">
+      <!-- Col 1: Catégorie + boutons ⊕ ≡ + notes + breakdown -->
       <div style="min-width:0">
-        <div style="font-size:14px;color:#374151;font-weight:500;margin-bottom:3px">${esc(cat)}</div>
+        <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
+          <span style="font-size:14px;color:#374151;font-weight:500">${esc(cat)}</span>
+          <button onclick="addBreakdownMode('${curSection}','${esc(cat)}')" title="Ajouter une ligne"
+            style="background:none;border:1px solid ${breakdownActive?"#0ea5e9":"#e5e7eb"};border-radius:5px;color:${breakdownActive?"#0ea5e9":"#9ca3af"};cursor:pointer;font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0">⊕</button>
+          ${hasItems?`<button onclick="toggleBreakdownList('${safeId}')" title="Afficher/masquer les lignes"
+            style="background:none;border:1px solid ${showBreakdown?"#374151":"#e5e7eb"};border-radius:5px;color:${showBreakdown?"#374151":"#9ca3af"};cursor:pointer;font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0">≡</button>`:""}
+        </div>
         <div style="margin-top:2px">${txNoteEl}</div>
+        ${breakdownListHtml}
+        ${addFormHtml}
       </div>
-      <div>
-        <input class="inp" type="text" value="${esc(plannedNote)}" placeholder="Note prévisionnelle…"
-          onchange="updatePlannedNote('${curSection}','${esc(cat)}',this.value)"
-          style="font-size:13px;color:#374151;font-style:${plannedNote?'normal':'italic'}">
+      <!-- Col 2: Prévu + 🔁 -->
+      <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
+        <div style="display:flex;align-items:center;gap:4px">
+          ${!breakdownActive
+            ?`<input class="inp inp-r" type="number" value="${planned||""}" placeholder="0" onchange="updateField('${curSection}','${esc(cat)}','planned',this.value)" style="width:80px">`
+            :hasItems
+              ?`<span style="font-size:14px;font-weight:700;color:#374151;min-width:80px;text-align:right">${fmt(breakdownTotal)}</span>`
+              :`<input class="inp inp-r" type="number" value="${planned||""}" placeholder="0" onchange="updateField('${curSection}','${esc(cat)}','planned',this.value)" style="width:80px">`}
+          <button onclick="toggleRecurrence('${curSection}','${esc(cat)}')" title="Répéter le total"
+            style="background:none;border:1px solid ${catRec?"#f59e0b":"#e5e7eb"};border-radius:5px;color:${catRec?"#f59e0b":"#9ca3af"};cursor:pointer;font-size:12px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0">🔁</button>
+        </div>
+        ${catRec?`<span style="font-size:10px;color:#f59e0b">Total · ${catRec}m <button onclick="cancelRecurrence('${curSection}','${esc(cat)}')" style="background:none;border:none;color:#d1d5db;cursor:pointer;font-size:11px;padding:0">×</button></span>`:""}
       </div>
-      <div style="text-align:right"><input class="inp inp-r" type="number" value="${planned||""}" placeholder="0" onchange="updateField('${curSection}','${esc(cat)}','planned',this.value)" style="width:100px"></div>
-      <div style="text-align:right"><input class="inp inp-r" type="number" value="${actual||""}" placeholder="0" onchange="updateField('${curSection}','${esc(cat)}','actual',this.value)" style="width:100px"></div>
+      <!-- Col 3: Réel -->
+      <div style="text-align:right">
+        <input class="inp inp-r" type="number" value="${actual||""}" placeholder="0" onchange="updateField('${curSection}','${esc(cat)}','actual',this.value)" style="width:100px">
+      </div>
+      <!-- Col 4: Écart -->
       <div style="text-align:right;font-size:14px;font-weight:600;color:${diff>=0?green:red}">${diff>=0?"+":""}${fmt(diff)}</div>
     </div>`;
   }).join("");
@@ -879,7 +1092,6 @@ function renderSaisie(){
     <div class="tbl-wrap">
       <div class="tbl-hd" style="grid-template-columns:${cols}">
         <span>Catégorie <span style="font-weight:400;color:#cbd5e1">· notes transactions</span></span>
-        <span style="color:#0ea5e9">Note prévisionnelle</span>
         <span style="text-align:right;display:block">Prévu (€)</span>
         <span style="text-align:right;display:block">Réel (€)</span>
         <span style="text-align:right;display:block">Écart</span>
@@ -887,7 +1099,6 @@ function renderSaisie(){
       ${rows}
       <div class="tbl-ft" style="grid-template-columns:${cols}">
         <span style="font-size:13px;font-weight:700;color:${COL[curSection]}">Total ${LBL[curSection]}</span>
-        <span></span>
         <span style="text-align:right;display:block;font-size:14px;font-weight:700">${fmt(tP)}</span>
         <span style="text-align:right;display:block;font-size:14px;font-weight:700">${fmt(tA)}</span>
         <span style="text-align:right;display:block;font-size:14px;font-weight:700;color:${tDiff>=0?green:red}">${tDiff>=0?"+":""}${fmt(tDiff)}</span>
@@ -907,7 +1118,7 @@ const CAT_COLORS={
   "Salary":"#f0fdf4","Refunds":"#f0fdf9","Misc":"#f9fafb",
   "Rent":"#fff7ed","Cell Phone":"#fef9ee","Subscriptions":"#fefce8",
   "Groceries":"#f0fdf4","Taxes/Fees":"#fdf4ff","Insurance":"#fff1f2",
-  "Fuel":"#fff7ed",
+  "Car":"#fff7ed",
   "Eating Out":"#fff1f2","Shopping":"#fdf4ff","Health":"#f0fdfa",
   "Gifts":"#fdf2f8","Pocket Money":"#fffbeb","E-Vape":"#f5f3ff",
   "Transport":"#eff6ff","Activities":"#f0fdf4","Travel":"#ecfeff",
@@ -1004,10 +1215,10 @@ function renderTx(){
     </div>
     <div class="tbl-wrap">
       <div class="tx-hd" style="grid-template-columns:${cols}">
-        <span style="font-size:11px;letter-spacing:.06em;text-transform:uppercase">${sortBtn("day","Jour")}</span>
-        <span style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Section</span>
-        <span style="font-size:11px;letter-spacing:.06em;text-transform:uppercase">${sortBtn("category","Catégorie")}</span>
-        <span style="font-size:11px;letter-spacing:.06em;text-transform:uppercase;text-align:right;display:block">${sortBtn("amount","Montant")}</span>
+        ${sortBtn("day","Jour")}
+        ${sortBtn("section","Section")}
+        ${sortBtn("category","Catégorie")}
+        ${sortBtn("amount","Montant")}
         <span style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.06em;text-transform:uppercase">Note</span>
         <span></span><span></span>
       </div>
@@ -1043,7 +1254,7 @@ function renderYearly(){
     <div class="kpi"><div class="kpi-accent" style="background:${totNet>=0?green:red}"></div><div class="kpi-label">Solde net annuel</div><div class="kpi-value" style="color:${totNet>=0?green:red}">${fmt(totNet)}</div></div>`;
 
   const monthCards=months.map(({i,tI,tF,tV,tS,tD})=>{
-    const tE=tF+tV+tD,net=tI-tE-tS;
+    const net=Math.round((tI-tE-tS)*100)/100;
     const hasData=tI>0||tE>0;
     return `<div class="yr-card" style="${!hasData?"opacity:.4":""}">
       <div class="yr-card-head">
@@ -1180,6 +1391,33 @@ function renderTab(){
 }
 
 
+/* ── MIGRATION : resynchronise savings[cat].actual après le fix savings_withdrawal ──
+   Avant le fix, chaque retrait soustrayait actual. On recalcule actual
+   uniquement à partir des transactions de type "savings" (hors retraits).
+   Idempotente : peut être rejouée sans risque.                          */
+const SK_MIGRATED="budget-migration-sw-v1";
+function migrateSavingsWithdrawal(){
+  if(localStorage.getItem(SK_MIGRATED)==="1") return;
+  for(const k of Object.keys(allData)){
+    const month=allData[k];
+    if(!month||!month.savings) continue;
+    // Reset all savings actual à 0, puis recalcule depuis les transactions income/savings
+    for(const cat of Object.keys(month.savings)){
+      month.savings[cat].actual=0;
+    }
+    // Rejouer uniquement les transactions section==="savings" (dépôts)
+    for(const tx of (month.transactions||[])){
+      if(tx.section==="savings"&&month.savings[tx.category]!==undefined){
+        month.savings[tx.category].actual=
+          Math.round(((Number(month.savings[tx.category].actual)||0)+tx.amount)*100)/100;
+      }
+      // savings_withdrawal → on ne touche rien (géré par getSavingsRunningTotal)
+    }
+  }
+  save();
+  localStorage.setItem(SK_MIGRATED,"1");
+}
+
 /* ── INITIALISATION : point d'entrée de l'app ───────────────── */
 /* render() est appelé une seule fois au chargement de la page   */
 function render(){
@@ -1190,6 +1428,7 @@ function render(){
 }
 
 checkPin();
+migrateSavingsWithdrawal();
 render();
 </script>
 </body>
