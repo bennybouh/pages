@@ -1254,8 +1254,9 @@ function renderYearly(){
     <div class="kpi"><div class="kpi-accent" style="background:${totNet>=0?green:red}"></div><div class="kpi-label">Solde net annuel</div><div class="kpi-value" style="color:${totNet>=0?green:red}">${fmt(totNet)}</div></div>`;
 
   const monthCards=months.map(({i,tI,tF,tV,tS,tD})=>{
-    const net=Math.round((tI-tE-tS)*100)/100;
-    const hasData=tI>0||tE>0;
+    const mE=Math.round((tF+tV+tD)*100)/100;
+    const net=Math.round((tI-mE-tS)*100)/100;
+    const hasData=tI>0||mE>0;
     return `<div class="yr-card" style="${!hasData?"opacity:.4":""}">
       <div class="yr-card-head">
         <span class="yr-card-month">${MONTHS_SHORT[i]}</span>
@@ -1263,7 +1264,7 @@ function renderYearly(){
       </div>
       <div class="yr-card-body">
         <div class="yr-row"><span style="color:#9ca3af;font-size:13px">Revenus</span><span style="color:${green};font-weight:600;font-size:13px">${fmt(tI)}</span></div>
-        <div class="yr-row"><span style="color:#9ca3af;font-size:13px">Dépenses</span><span style="color:${red};font-weight:600;font-size:13px">${fmt(tE)}</span></div>
+        <div class="yr-row"><span style="color:#9ca3af;font-size:13px">Dépenses</span><span style="color:${red};font-weight:600;font-size:13px">${fmt(mE)}</span></div>
         <div class="yr-row"><span style="color:#9ca3af;font-size:13px">Épargne</span><span style="color:#8b5cf6;font-weight:600;font-size:13px">${fmt(tS)}</span></div>
       </div>
     </div>`;
@@ -1277,12 +1278,10 @@ function renderYearly(){
 }
 
 /* ── CATÉGORIES : affichage et gestion ──────────────────────── */
-/* Pour ajouter/supprimer/renommer des catégories depuis l'interface */
+/* Pour ajouter/supprimer/renommer/réordonner des catégories     */
 function renderCategories(){
   const secHtml=Object.entries(CATS_META).map(([sec,allCats])=>{
-    // Show active cats + recently deleted with restore option
     const activeCats=allCats.filter(c=>!c.deletedAt||keyNum(...c.deletedAt.split("-").map(Number))>keyNum(yr,mi));
-    const cats=activeCats;
     return `
     <div class="card" style="margin-bottom:16px">
       <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
@@ -1293,21 +1292,77 @@ function renderCategories(){
         </div>
         <button onclick="addCategory('${sec}')" style="background:#f0f9ff;border:1px solid #bae6fd;color:#0284c7;border-radius:8px;padding:6px 12px;font-size:12px;font-family:inherit;cursor:pointer;font-weight:600">+ Ajouter</button>
       </div>
-      <div style="display:flex;flex-wrap:wrap;gap:8px">
-        ${cats.map(catObj=>{const cat=typeof catObj==="string"?catObj:catObj.name; return `
-          <div style="display:flex;align-items:center;gap:6px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:6px 10px">
-            <span style="font-size:13px;color:#374151;font-weight:500">${esc(cat)}</span>
-            <button onclick="renameCategory('${sec}','${esc(cat)}')" style="background:none;border:none;color:#9ca3af;cursor:pointer;font-size:14px;padding:0 2px" title="Renommer">✏️</button>
-            <button onclick="deleteCategory('${sec}','${esc(cat)}')" style="background:none;border:none;color:#fca5a5;cursor:pointer;font-size:14px;padding:0 2px" title="Supprimer">×</button>
-          </div>`;}).join("")}
+      <div id="catlist-${sec}" style="display:flex;flex-direction:column;gap:6px">
+        ${activeCats.map((catObj,idx)=>{
+          const cat=typeof catObj==="string"?catObj:catObj.name;
+          const safecat=esc(cat);
+          return `
+          <div draggable="true"
+            ondragstart="catDragStart(event,'${sec}',${idx})"
+            ondragover="catDragOver(event)"
+            ondrop="catDrop(event,'${sec}',${idx})"
+            ondragleave="catDragLeave(event)"
+            style="display:flex;align-items:center;gap:8px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:8px 12px;cursor:grab;transition:background .15s">
+            <span style="color:#d1d5db;font-size:14px;cursor:grab;flex-shrink:0">⠿</span>
+            <span style="font-size:13px;color:#374151;font-weight:500;flex:1">${safecat}</span>
+            <button onclick="moveCat('${sec}',${idx},-1)" ${idx===0?"disabled":""} title="Monter"
+              style="background:none;border:1px solid #e5e7eb;border-radius:5px;color:${idx===0?"#e5e7eb":"#9ca3af"};cursor:${idx===0?"default":"pointer"};font-size:12px;width:24px;height:24px;display:flex;align-items:center;justify-content:center">↑</button>
+            <button onclick="moveCat('${sec}',${idx},1)" ${idx===activeCats.length-1?"disabled":""} title="Descendre"
+              style="background:none;border:1px solid #e5e7eb;border-radius:5px;color:${idx===activeCats.length-1?"#e5e7eb":"#9ca3af"};cursor:${idx===activeCats.length-1?"default":"pointer"};font-size:12px;width:24px;height:24px;display:flex;align-items:center;justify-content:center">↓</button>
+            <button onclick="renameCategory('${sec}','${safecat}')" style="background:none;border:none;color:#9ca3af;cursor:pointer;font-size:14px;padding:0 2px" title="Renommer">✏️</button>
+            <button onclick="deleteCategory('${sec}','${safecat}')" style="background:none;border:none;color:#fca5a5;cursor:pointer;font-size:16px;padding:0 2px;line-height:1" title="Supprimer">×</button>
+          </div>`;
+        }).join("")}
       </div>
     </div>`;
   }).join("");
 
   document.getElementById("pane-categories").innerHTML=`
     <div class="page-title">Gestion des catégories</div>
-    <div class="page-sub">Ajoutez, renommez ou supprimez vos catégories</div>
+    <div class="page-sub">Glisse les catégories pour les réordonner, ou utilise ↑↓</div>
     ${secHtml}`;
+}
+
+/* ── Réordonnancement : boutons ↑↓ ─────────────────────────── */
+function moveCat(sec,idx,dir){
+  const active=CATS_META[sec].filter(c=>!c.deletedAt||keyNum(...c.deletedAt.split("-").map(Number))>keyNum(yr,mi));
+  const deleted=CATS_META[sec].filter(c=>c.deletedAt&&keyNum(...c.deletedAt.split("-").map(Number))<=keyNum(yr,mi));
+  const newIdx=idx+dir;
+  if(newIdx<0||newIdx>=active.length) return;
+  [active[idx],active[newIdx]]=[active[newIdx],active[idx]];
+  CATS_META[sec]=[...active,...deleted];
+  rebuildCATSShim();saveCats();renderCategories();
+}
+
+/* ── Réordonnancement : drag & drop ─────────────────────────── */
+let _dragSec=null, _dragIdx=null;
+function catDragStart(e,sec,idx){
+  _dragSec=sec; _dragIdx=idx;
+  e.dataTransfer.effectAllowed="move";
+  e.currentTarget.style.opacity="0.4";
+}
+function catDragOver(e){
+  e.preventDefault();
+  e.dataTransfer.dropEffect="move";
+  e.currentTarget.style.background="#f0f9ff";
+  e.currentTarget.style.borderColor="#bae6fd";
+}
+function catDragLeave(e){
+  e.currentTarget.style.background="#f9fafb";
+  e.currentTarget.style.borderColor="#e5e7eb";
+}
+function catDrop(e,sec,toIdx){
+  e.preventDefault();
+  e.currentTarget.style.background="#f9fafb";
+  e.currentTarget.style.borderColor="#e5e7eb";
+  if(_dragSec!==sec||_dragIdx===null||_dragIdx===toIdx) return;
+  const active=CATS_META[sec].filter(c=>!c.deletedAt||keyNum(...c.deletedAt.split("-").map(Number))>keyNum(yr,mi));
+  const deleted=CATS_META[sec].filter(c=>c.deletedAt&&keyNum(...c.deletedAt.split("-").map(Number))<=keyNum(yr,mi));
+  const [moved]=active.splice(_dragIdx,1);
+  active.splice(toIdx,0,moved);
+  CATS_META[sec]=[...active,...deleted];
+  _dragSec=null; _dragIdx=null;
+  rebuildCATSShim();saveCats();renderCategories();
 }
 
 /* Ajouter une catégorie — elle n'apparaît qu'à partir du mois courant */
