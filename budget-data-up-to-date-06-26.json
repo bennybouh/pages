@@ -3,7 +3,7 @@
     "income": {
       "Salary": {
         "planned": 1758.4,
-        "actual": 1758.74,
+        "actual": 2536.25,
         "breakdown": [
           {
             "label": "France Travail",
@@ -17,7 +17,7 @@
       },
       "Refunds": {
         "planned": 0,
-        "actual": 22.7
+        "actual": 52.7
       },
       "Misc": {
         "planned": 0,
@@ -30,7 +30,7 @@
     },
     "savings": {
       "BoursoPlus": {
-        "planned": 350,
+        "planned": 220,
         "actual": 0
       },
       "Crypto": {
@@ -67,7 +67,7 @@
       },
       "Subscriptions": {
         "planned": 19.98,
-        "actual": 19.98,
+        "actual": 19.980000000000004,
         "breakdown": [
           {
             "label": "Youtube",
@@ -114,8 +114,18 @@
     },
     "variable": {
       "Eating Out": {
-        "planned": 450,
-        "actual": 404.49
+        "planned": 550,
+        "actual": 404.49,
+        "breakdown": [
+          {
+            "label": "Restaurant",
+            "amount": 450
+          },
+          {
+            "label": "Turkish restaurant",
+            "amount": 100
+          }
+        ]
       },
       "Shopping": {
         "planned": 0,
@@ -123,7 +133,7 @@
       },
       "Health": {
         "planned": 580,
-        "actual": 73.4
+        "actual": 81.15
       },
       "Gifts": {
         "planned": 0,
@@ -154,8 +164,22 @@
         "actual": 21.5
       },
       "Activities": {
-        "planned": 30,
-        "actual": 30
+        "planned": 60,
+        "actual": 132,
+        "breakdown": [
+          {
+            "label": "Escape Game",
+            "amount": 30
+          },
+          {
+            "label": "tete dans les nuages",
+            "amount": 20
+          },
+          {
+            "label": "Winamax",
+            "amount": 10
+          }
+        ]
       },
       "Travel": {
         "planned": 0,
@@ -422,15 +446,15 @@
         "id": 1781089662046
       },
       {
-        "day": 9,
+        "day": 11,
         "section": "fixed",
         "category": "Groceries",
         "amount": 12.4,
-        "note": "Pharmacie (Shampoo)",
+        "note": "Auchan (Shampoo)",
         "id": 1781089687871
       },
       {
-        "day": 9,
+        "day": 11,
         "section": "variable",
         "category": "E-Vape",
         "amount": 100.1,
@@ -438,7 +462,7 @@
         "id": 1781089706899
       },
       {
-        "day": 9,
+        "day": 10,
         "section": "variable",
         "category": "Eating Out",
         "amount": 18,
@@ -446,7 +470,7 @@
         "id": 1781089759404
       },
       {
-        "day": 9,
+        "day": 10,
         "section": "fixed",
         "category": "Groceries",
         "amount": 4,
@@ -454,7 +478,7 @@
         "id": 1781089775032
       },
       {
-        "day": 9,
+        "day": 10,
         "section": "variable",
         "category": "Eating Out",
         "amount": 46.89,
@@ -462,7 +486,7 @@
         "id": 1781089792758
       },
       {
-        "day": 10,
+        "day": 11,
         "section": "fixed",
         "category": "Subscriptions",
         "amount": 2.99,
@@ -476,6 +500,46 @@
         "amount": 0.07,
         "note": "REGUL",
         "id": 1781094944364
+      },
+      {
+        "day": 99,
+        "section": "savings_withdrawal",
+        "category": "Wise",
+        "amount": 547.99,
+        "note": "REGUL",
+        "id": 1781175580763
+      },
+      {
+        "day": 11,
+        "section": "income",
+        "category": "Salary",
+        "amount": 777.51,
+        "note": "CAF",
+        "id": 1781608753633
+      },
+      {
+        "day": 15,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 30,
+        "note": "Ele's (MysteryRoom)",
+        "id": 1781608801907
+      },
+      {
+        "day": 15,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 102,
+        "note": "Mysteroom",
+        "id": 1781608821787
+      },
+      {
+        "day": 16,
+        "section": "variable",
+        "category": "Health",
+        "amount": 7.75,
+        "note": "Pharmacie Haloui",
+        "id": 1781608847575
       }
     ]
   },
