@@ -357,7 +357,7 @@ function getSoldeDebut(y,m){
   // Otherwise calculate solde fin of previous month
   let pm=m-1, py=y;
   if(pm<0){pm=11;py--;}
-  const prev=allData[`${py}-${pm}`]||emptyM();
+  const prev=allData[`${py}-${pm}`]||emptyM(py,pm);
   const pI=sum(prev.income),pF=sum(prev.fixed),pV=sum(prev.variable),pS=sum(prev.savings),pD=sum(prev.debt);
   const pNet=pI-(pF+pV+pD)-pS;
   return getSoldeDebut(py,pm)+pNet;
@@ -442,11 +442,11 @@ const save=()=>{try{localStorage.setItem(SK,JSON.stringify(allData));}catch{}};
 const saveCats=()=>{try{localStorage.setItem(SK_CATS,JSON.stringify(CATS_META));}catch{}};
 const key=()=>`${yr}-${mi}`;
 const md=()=>{if(!allData[key()])allData[key()]=emptyM();return allData[key()];};
-function emptyM(){
+function emptyM(y=yr,m=mi){
   const d={};
   for(const sec of Object.keys(CATS_META)){
     d[sec]={};
-    for(const c of catsForMonth(sec,yr,mi)) d[sec][c]={planned:0,actual:0};
+    for(const c of catsForMonth(sec,y,m)) d[sec][c]={planned:0,actual:0};
   }
   d.transactions=[];return d;
 }
@@ -456,6 +456,10 @@ const pct=(a,b)=>b>0?Math.round((a/b)*100):0;
 const sum=o=>Math.round(Object.values(o||{}).reduce((a,v)=>a+Number(v?.actual||0),0)*100)/100;
 const sumP=o=>Math.round(Object.values(o||{}).reduce((a,v)=>a+Number(v?.planned||0),0)*100)/100;
 const esc=s=>String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");
+/* escJs : pour interpoler une valeur dans une string JS simple-quotée à
+   l'intérieur d'un attribut onclick/onchange. Échappe \ et ' pour le JS,
+   puis échappe le HTML. Sans ça, "Parent's Money" casse tous les boutons. */
+const escJs=s=>esc(String(s).replace(/\\/g,"\\\\").replace(/'/g,"\\'"));
 const green="#10b981",red="#ef4444",gray="#9ca3af";
 
 /* ── NAVIGATION : changement de mois ───────────────────────── */
@@ -579,6 +583,26 @@ function removeBreakdown(sec,cat,idx){
   save();renderSaisie();
 }
 
+function startBreakdownEdit(safeId,idx){
+  window._editBdId=`${safeId}_${idx}`;
+  renderSaisie();
+}
+function cancelBreakdownEdit(){
+  window._editBdId=null;
+  renderSaisie();
+}
+function saveBreakdownEdit(sec,cat,idx,safeId){
+  const newLbl=document.getElementById(`bd-edit-lbl-${safeId}-${idx}`)?.value.trim()||"";
+  const newAmt=parseFloat(document.getElementById(`bd-edit-amt-${safeId}-${idx}`)?.value)||0;
+  const m=md();
+  if(!m[sec][cat]?.breakdown) return;
+  m[sec][cat].breakdown[idx].label=newLbl;
+  m[sec][cat].breakdown[idx].amount=newAmt;
+  m[sec][cat].planned=Math.round(m[sec][cat].breakdown.reduce((a,b)=>a+(b.amount||0),0)*100)/100;
+  window._editBdId=null;
+  save();renderSaisie();
+}
+
 /* ── RÉCURRENCES : répéter un montant prévu sur plusieurs mois ─ */
 function toggleRecurrence(sec,cat){
   // Affiche un prompt pour saisir le nombre de mois
@@ -599,7 +623,7 @@ function applyRecurrence(sec,cat,months){
     let tm=mi+i, ty=yr;
     while(tm>11){tm-=12;ty++;}
     const k=`${ty}-${tm}`;
-    if(!allData[k]) allData[k]=emptyM();
+    if(!allData[k]) allData[k]=emptyM(ty,tm);
     if(!allData[k][sec][cat]) allData[k][sec][cat]={planned:0,actual:0};
     allData[k][sec][cat].planned=sourceAmount;
     allData[k][sec][cat].recurrence=months;
@@ -620,7 +644,7 @@ function repeatBreakdownItem(sec,cat,idx){
     let tm=mi+i, ty=yr;
     while(tm>11){tm-=12;ty++;}
     const k=`${ty}-${tm}`;
-    if(!allData[k]) allData[k]=emptyM();
+    if(!allData[k]) allData[k]=emptyM(ty,tm);
     if(!allData[k][sec][cat]) allData[k][sec][cat]={planned:0,actual:0};
     if(!allData[k][sec][cat].breakdown) allData[k][sec][cat].breakdown=[];
     // Ajoute ou met à jour cet item dans le breakdown du mois futur
@@ -727,7 +751,7 @@ function removeTx(id){
   m.transactions=m.transactions.filter(t=>t.id!==id);
   const sec=tx.section;
   if(sec==="savings_withdrawal"){
-    // Ne pas toucher savings[cat].actual — le retrait est déduit dans getSavingsRunningTotal
+    // Ne pas toucher savings[cat].actual — géré par getSavingsRunningTotal
   } else if(m[sec]&&m[sec][tx.category]!==undefined){
     m[sec][tx.category].actual=Math.round(Math.max(0,(Number(m[sec][tx.category].actual)||0)-tx.amount)*100)/100;
   }
@@ -919,13 +943,12 @@ function renderSaisie(){
       ${LBL[s]}
     </button>`).join("");
 
-  // Aggregate notes from transactions per category
-  const txNotes={};
+  // Transactions par catégorie (avec id pour édition inline)
+  const txByCat={};
   (m.transactions||[]).forEach(tx=>{
-    if(tx.section===curSection&&tx.note&&tx.note.trim()){
-      if(!txNotes[tx.category])txNotes[tx.category]=[];
-      if(!txNotes[tx.category].includes(tx.note.trim()))
-        txNotes[tx.category].push(tx.note.trim());
+    if(tx.section===curSection){
+      if(!txByCat[tx.category]) txByCat[tx.category]=[];
+      txByCat[tx.category].push(tx);
     }
   });
 
@@ -936,16 +959,21 @@ function renderSaisie(){
     const actual=m[curSection][cat]?.actual||0;
     const plannedNote=m[curSection][cat]?.plannedNote||"";
     const diff=curSection==="income"?actual-planned:planned-actual;
-    const notes=txNotes[cat]||[];
+    const txs=txByCat[cat]||[];
     let txNoteEl="";
-    if(notes.length===0){
+    if(txs.length===0){
       txNoteEl=`<span style="font-size:11px;color:#d1d5db;font-style:italic">—</span>`;
     } else {
+      const notes=[...new Set(txs.map(tx=>tx.note).filter(n=>n&&n.trim()))];
       const joined=notes.join(" · ");
-      // Nombre max de caractères affichés pour les notes de transactions (augmente si besoin)
       const MAX=200;
       const display=joined.length>MAX?joined.slice(0,MAX)+"…":joined;
-      txNoteEl=`<span style="font-size:11px;color:#9ca3af;font-style:italic" title="${esc(joined)}">${esc(display)}</span>`;
+      const count=txs.length;
+      const total=Math.round(txs.reduce((a,tx)=>a+tx.amount,0)*100)/100;
+      txNoteEl=`<div>
+        ${display?`<span style="font-size:11px;color:#9ca3af;font-style:italic" title="${esc(joined)}">${esc(display)}</span>`:""}
+        <span style="font-size:11px;color:#c4b5fd">${count} ligne${count>1?"s":""} · ${fmt(total)}</span>
+      </div>`;
     }
     // Sous-entrées du prévu (décomposition)
     const breakdown=m[curSection][cat]?.breakdown; // undefined si mode non activé
@@ -960,14 +988,28 @@ function renderSaisie(){
     // Liste des lignes (visible si ≡ actif)
     const breakdownListHtml=hasItems&&showBreakdown?`
       <div style="margin-top:8px;padding:10px 12px;background:#f9fafb;border-radius:8px;border:1px solid #e5e7eb">
-        ${breakdownItems.map((item,idx)=>`
-          <div style="display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:8px;margin-bottom:${idx<breakdownItems.length-1?"6px":"0"}">
-            <span style="font-size:12px;color:#374151;font-weight:500">${esc(item.label||"Sans label")}</span>
-            <span style="font-size:12px;color:#0ea5e9;font-weight:700">${fmt(item.amount||0)}</span>
-            <button onclick="repeatBreakdownItem('${curSection}','${esc(cat)}',${idx})" title="Répéter ce montant"
-              style="background:none;border:1px solid #e5e7eb;border-radius:5px;color:${item.recurrence?"#f59e0b":"#9ca3af"};cursor:pointer;font-size:11px;padding:2px 5px">🔁${item.recurrence?` ${item.recurrence}m`:""}</span>
-            <button onclick="removeBreakdown('${curSection}','${esc(cat)}',${idx})" style="background:none;border:none;color:#d1d5db;cursor:pointer;font-size:15px;padding:0;line-height:1">×</button>
-          </div>`).join("")}
+        ${breakdownItems.map((item,idx)=>{
+          const editingBd=window._editBdId===`${safeId}_${idx}`;
+          if(editingBd) return `
+            <div style="display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:8px;margin-bottom:${idx<breakdownItems.length-1?"6px":"0"}">
+              <input id="bd-edit-lbl-${safeId}-${idx}" class="inp" type="text" value="${esc(item.label||"")}" placeholder="Label…" style="font-size:12px;padding:4px 8px">
+              <input id="bd-edit-amt-${safeId}-${idx}" class="inp inp-r" type="number" value="${item.amount||0}" style="width:80px;font-size:12px;padding:4px 8px">
+              <button onclick="saveBreakdownEdit('${curSection}','${escJs(cat)}',${idx},'${safeId}')"
+                style="background:#0ea5e9;border:none;border-radius:6px;color:#fff;font-size:12px;padding:4px 10px;cursor:pointer;font-weight:700">✓</button>
+              <button onclick="cancelBreakdownEdit()"
+                style="background:#f3f4f6;border:none;border-radius:6px;color:#6b7280;font-size:12px;padding:4px 8px;cursor:pointer">✕</button>
+            </div>`;
+          return `
+            <div style="display:grid;grid-template-columns:1fr auto auto auto auto;align-items:center;gap:8px;margin-bottom:${idx<breakdownItems.length-1?"6px":"0"}">
+              <span style="font-size:12px;color:#374151;font-weight:500">${esc(item.label||"Sans label")}</span>
+              <span style="font-size:12px;color:#0ea5e9;font-weight:700">${fmt(item.amount||0)}</span>
+              <button onclick="startBreakdownEdit('${safeId}',${idx})" title="Modifier"
+                style="background:none;border:none;color:#d1d5db;cursor:pointer;font-size:13px;padding:0">✏️</button>
+              <button onclick="repeatBreakdownItem('${curSection}','${escJs(cat)}',${idx})" title="Répéter ce montant"
+                style="background:none;border:1px solid #e5e7eb;border-radius:5px;color:${item.recurrence?"#f59e0b":"#9ca3af"};cursor:pointer;font-size:11px;padding:2px 5px">🔁${item.recurrence?` ${item.recurrence}m`:""}</button>
+              <button onclick="removeBreakdown('${curSection}','${escJs(cat)}',${idx})" style="background:none;border:none;color:#d1d5db;cursor:pointer;font-size:15px;padding:0;line-height:1">×</button>
+            </div>`;
+        }).join("")}
         <div style="border-top:1px dashed #e5e7eb;margin-top:8px;padding-top:6px;display:flex;justify-content:space-between;align-items:center">
           <span style="font-size:11px;color:#9ca3af">Total prévu</span>
           <span style="font-size:12px;font-weight:700;color:#374151">${fmt(breakdownTotal)}</span>
@@ -981,7 +1023,7 @@ function renderSaisie(){
       <div style="display:flex;align-items:center;gap:6px;margin-top:6px">
         <input id="bd-lbl-${safeId}" class="inp" type="text" placeholder="Label…" style="flex:1;font-size:12px;padding:5px 8px">
         <input id="bd-amt-${safeId}" class="inp inp-r" type="number" placeholder="0" style="width:72px;font-size:12px;padding:5px 8px">
-        <button onclick="addBreakdown('${curSection}','${esc(cat)}')" style="background:#0ea5e9;border:none;border-radius:6px;color:#fff;font-size:13px;padding:5px 10px;cursor:pointer;font-family:inherit;font-weight:700">+</button>
+        <button onclick="addBreakdown('${curSection}','${escJs(cat)}')" style="background:#0ea5e9;border:none;border-radius:6px;color:#fff;font-size:13px;padding:5px 10px;cursor:pointer;font-family:inherit;font-weight:700">+</button>
       </div>`:"";
 
     return `<div class="tbl-row" style="grid-template-columns:${cols}">
@@ -989,7 +1031,7 @@ function renderSaisie(){
       <div style="min-width:0">
         <div style="display:flex;align-items:center;gap:6px;margin-bottom:3px">
           <span style="font-size:14px;color:#374151;font-weight:500">${esc(cat)}</span>
-          <button onclick="addBreakdownMode('${curSection}','${esc(cat)}')" title="Ajouter une ligne"
+          <button onclick="addBreakdownMode('${curSection}','${escJs(cat)}')" title="Ajouter une ligne"
             style="background:none;border:1px solid ${breakdownActive?"#0ea5e9":"#e5e7eb"};border-radius:5px;color:${breakdownActive?"#0ea5e9":"#9ca3af"};cursor:pointer;font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0">⊕</button>
           ${hasItems?`<button onclick="toggleBreakdownList('${safeId}')" title="Afficher/masquer les lignes"
             style="background:none;border:1px solid ${showBreakdown?"#374151":"#e5e7eb"};border-radius:5px;color:${showBreakdown?"#374151":"#9ca3af"};cursor:pointer;font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0">≡</button>`:""}
@@ -1002,18 +1044,18 @@ function renderSaisie(){
       <div style="display:flex;flex-direction:column;align-items:flex-end;gap:4px">
         <div style="display:flex;align-items:center;gap:4px">
           ${!breakdownActive
-            ?`<input class="inp inp-r" type="number" value="${planned||""}" placeholder="0" onchange="updateField('${curSection}','${esc(cat)}','planned',this.value)" style="width:80px">`
+            ?`<input class="inp inp-r" type="number" value="${planned||""}" placeholder="0" onchange="updateField('${curSection}','${escJs(cat)}','planned',this.value)" style="width:80px">`
             :hasItems
               ?`<span style="font-size:14px;font-weight:700;color:#374151;min-width:80px;text-align:right">${fmt(breakdownTotal)}</span>`
-              :`<input class="inp inp-r" type="number" value="${planned||""}" placeholder="0" onchange="updateField('${curSection}','${esc(cat)}','planned',this.value)" style="width:80px">`}
-          <button onclick="toggleRecurrence('${curSection}','${esc(cat)}')" title="Répéter le total"
+              :`<input class="inp inp-r" type="number" value="${planned||""}" placeholder="0" onchange="updateField('${curSection}','${escJs(cat)}','planned',this.value)" style="width:80px">`}
+          <button onclick="toggleRecurrence('${curSection}','${escJs(cat)}')" title="Répéter le total"
             style="background:none;border:1px solid ${catRec?"#f59e0b":"#e5e7eb"};border-radius:5px;color:${catRec?"#f59e0b":"#9ca3af"};cursor:pointer;font-size:12px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0">🔁</button>
         </div>
-        ${catRec?`<span style="font-size:10px;color:#f59e0b">Total · ${catRec}m <button onclick="cancelRecurrence('${curSection}','${esc(cat)}')" style="background:none;border:none;color:#d1d5db;cursor:pointer;font-size:11px;padding:0">×</button></span>`:""}
+        ${catRec?`<span style="font-size:10px;color:#f59e0b">Total · ${catRec}m <button onclick="cancelRecurrence('${curSection}','${escJs(cat)}')" style="background:none;border:none;color:#d1d5db;cursor:pointer;font-size:11px;padding:0">×</button></span>`:""}
       </div>
       <!-- Col 3: Réel -->
       <div style="text-align:right">
-        <input class="inp inp-r" type="number" value="${actual||""}" placeholder="0" onchange="updateField('${curSection}','${esc(cat)}','actual',this.value)" style="width:100px">
+        <input class="inp inp-r" type="number" value="${actual||""}" placeholder="0" onchange="updateField('${curSection}','${escJs(cat)}','actual',this.value)" style="width:100px">
       </div>
       <!-- Col 4: Écart -->
       <div style="text-align:right;font-size:14px;font-weight:600;color:${diff>=0?green:red}">${diff>=0?"+":""}${fmt(diff)}</div>
@@ -1042,31 +1084,68 @@ function renderSaisie(){
 
   const balanceHtml=`
     <div style="background:#fff;border-radius:14px;border:1px solid #e5e7eb;padding:20px;margin-bottom:20px">
-      <div style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:14px">Balance mensuelle</div>
-      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:16px;margin-bottom:18px">
+      <div style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px">Balance mensuelle</div>
+      <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin-bottom:20px">
+
         <!-- Prévu -->
-        <div style="text-align:center">
-          <div style="font-size:11px;color:#9ca3af;margin-bottom:6px;font-weight:500">Prévu</div>
-          <div style="font-size:22px;font-weight:700;color:${balP>=0?green:red}">${balP>=0?"+":""}${fmt(balP)}</div>
-          <div style="font-size:11px;color:#9ca3af;margin-top:4px">${fmt(allP.inc)} revenus</div>
+        <div style="padding-right:20px">
+          <div style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px">Prévu</div>
+          <div style="font-size:24px;font-weight:700;color:${balP>=0?green:red};margin-bottom:10px">${balP>=0?"+":""}${fmt(balP)}</div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:12px;color:#9ca3af">Revenus</span>
+            <span style="font-size:12px;font-weight:600;color:#10b981">${fmt(allP.inc)}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:12px;color:#9ca3af">Dépenses</span>
+            <span style="font-size:12px;font-weight:600;color:#ef4444">−${fmt(allP.exp)}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between">
+            <span style="font-size:12px;color:#9ca3af">Épargne</span>
+            <span style="font-size:12px;font-weight:600;color:#8b5cf6">−${fmt(allP.sav)}</span>
+          </div>
         </div>
+
         <!-- Réel -->
-        <div style="text-align:center;border-left:1px solid #f3f4f6;border-right:1px solid #f3f4f6">
-          <div style="font-size:11px;color:#9ca3af;margin-bottom:6px;font-weight:500">Réel</div>
-          <div style="font-size:22px;font-weight:700;color:${balA>=0?green:red}">${balA>=0?"+":""}${fmt(balA)}</div>
-          <div style="font-size:11px;color:#9ca3af;margin-top:4px">${fmt(allA.inc)} revenus</div>
+        <div style="padding:0 20px;border-left:1px solid #f3f4f6;border-right:1px solid #f3f4f6">
+          <div style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px">Réel</div>
+          <div style="font-size:24px;font-weight:700;color:${balA>=0?green:red};margin-bottom:10px">${balA>=0?"+":""}${fmt(balA)}</div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:12px;color:#9ca3af">Revenus</span>
+            <span style="font-size:12px;font-weight:600;color:#10b981">${fmt(allA.inc)}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:12px;color:#9ca3af">Dépenses</span>
+            <span style="font-size:12px;font-weight:600;color:#ef4444">−${fmt(allA.exp)}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between">
+            <span style="font-size:12px;color:#9ca3af">Épargne</span>
+            <span style="font-size:12px;font-weight:600;color:#8b5cf6">−${fmt(allA.sav)}</span>
+          </div>
         </div>
+
         <!-- Écart -->
-        <div style="text-align:center">
-          <div style="font-size:11px;color:#9ca3af;margin-bottom:6px;font-weight:500">Écart</div>
-          <div style="font-size:22px;font-weight:700;color:${balEcart>=0?green:red}">${balEcart>=0?"+":""}${fmt(balEcart)}</div>
-          <div style="font-size:11px;color:#9ca3af;margin-top:4px">vs prévu</div>
+        <div style="padding-left:20px">
+          <div style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px">Écart réel vs prévu</div>
+          <div style="font-size:24px;font-weight:700;color:${balEcart>=0?green:red};margin-bottom:10px">${balEcart>=0?"+":""}${fmt(balEcart)}</div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:12px;color:#9ca3af">Revenus</span>
+            <span style="font-size:12px;font-weight:600;color:${allA.inc-allP.inc>=0?green:red}">${allA.inc-allP.inc>=0?"+":""}${fmt(allA.inc-allP.inc)}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between;margin-bottom:4px">
+            <span style="font-size:12px;color:#9ca3af">Dépenses</span>
+            <span style="font-size:12px;font-weight:600;color:${allP.exp-allA.exp>=0?green:red}">${allP.exp-allA.exp>=0?"+":""}${fmt(allP.exp-allA.exp)}</span>
+          </div>
+          <div style="display:flex;justify-content:space-between">
+            <span style="font-size:12px;color:#9ca3af">Épargne</span>
+            <span style="font-size:12px;font-weight:600;color:${allA.sav-allP.sav>=0?green:red}">${allA.sav-allP.sav>=0?"+":""}${fmt(allA.sav-allP.sav)}</span>
+          </div>
         </div>
+
       </div>
       <!-- Barres de progression -->
       <div style="margin-bottom:8px">
         <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-          <span style="font-size:11px;color:#9ca3af">Dépenses + épargne / revenus <b style="color:#374151">prévu</b></span>
+          <span style="font-size:11px;color:#9ca3af">Budget alloué <b style="color:#374151">prévu</b> · dépenses + épargne / revenus</span>
           <span style="font-size:11px;font-weight:700;color:${barColorP}">${allP.inc>0?depPct+"%":"—"}</span>
         </div>
         <div style="background:#f3f4f6;border-radius:6px;height:8px;overflow:hidden">
@@ -1075,7 +1154,7 @@ function renderSaisie(){
       </div>
       <div>
         <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-          <span style="font-size:11px;color:#9ca3af">Dépenses + épargne / revenus <b style="color:#374151">réel</b></span>
+          <span style="font-size:11px;color:#9ca3af">Budget consommé <b style="color:#374151">réel</b> · dépenses + épargne / revenus</span>
           <span style="font-size:11px;font-weight:700;color:${barColorA}">${allA.inc>0?depPctReal+"%":"—"}</span>
         </div>
         <div style="background:#f3f4f6;border-radius:6px;height:8px;overflow:hidden">
@@ -1235,7 +1314,7 @@ function renderTx(){
 function renderYearly(){
   const months=MONTHS.map((_,i)=>{
     const k=`${yr}-${i}`;
-    const m=allData[k]||emptyM();
+    const m=allData[k]||emptyM(yr,i);
     return {
       i,m,
       tI:sum(m.income),tF:sum(m.fixed),tV:sum(m.variable),tS:sum(m.savings),tD:sum(m.debt)
@@ -1295,22 +1374,22 @@ function renderCategories(){
       <div id="catlist-${sec}" style="display:flex;flex-direction:column;gap:6px">
         ${activeCats.map((catObj,idx)=>{
           const cat=typeof catObj==="string"?catObj:catObj.name;
-          const safecat=esc(cat);
           return `
           <div draggable="true"
             ondragstart="catDragStart(event,'${sec}',${idx})"
+            ondragend="catDragEnd(event)"
             ondragover="catDragOver(event)"
             ondrop="catDrop(event,'${sec}',${idx})"
             ondragleave="catDragLeave(event)"
             style="display:flex;align-items:center;gap:8px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:8px;padding:8px 12px;cursor:grab;transition:background .15s">
             <span style="color:#d1d5db;font-size:14px;cursor:grab;flex-shrink:0">⠿</span>
-            <span style="font-size:13px;color:#374151;font-weight:500;flex:1">${safecat}</span>
+            <span style="font-size:13px;color:#374151;font-weight:500;flex:1">${esc(cat)}</span>
             <button onclick="moveCat('${sec}',${idx},-1)" ${idx===0?"disabled":""} title="Monter"
               style="background:none;border:1px solid #e5e7eb;border-radius:5px;color:${idx===0?"#e5e7eb":"#9ca3af"};cursor:${idx===0?"default":"pointer"};font-size:12px;width:24px;height:24px;display:flex;align-items:center;justify-content:center">↑</button>
             <button onclick="moveCat('${sec}',${idx},1)" ${idx===activeCats.length-1?"disabled":""} title="Descendre"
               style="background:none;border:1px solid #e5e7eb;border-radius:5px;color:${idx===activeCats.length-1?"#e5e7eb":"#9ca3af"};cursor:${idx===activeCats.length-1?"default":"pointer"};font-size:12px;width:24px;height:24px;display:flex;align-items:center;justify-content:center">↓</button>
-            <button onclick="renameCategory('${sec}','${safecat}')" style="background:none;border:none;color:#9ca3af;cursor:pointer;font-size:14px;padding:0 2px" title="Renommer">✏️</button>
-            <button onclick="deleteCategory('${sec}','${safecat}')" style="background:none;border:none;color:#fca5a5;cursor:pointer;font-size:16px;padding:0 2px;line-height:1" title="Supprimer">×</button>
+            <button onclick="renameCategory('${sec}','${escJs(cat)}')" style="background:none;border:none;color:#9ca3af;cursor:pointer;font-size:14px;padding:0 2px" title="Renommer">✏️</button>
+            <button onclick="deleteCategory('${sec}','${escJs(cat)}')" style="background:none;border:none;color:#fca5a5;cursor:pointer;font-size:16px;padding:0 2px;line-height:1" title="Supprimer">×</button>
           </div>`;
         }).join("")}
       </div>
@@ -1319,7 +1398,7 @@ function renderCategories(){
 
   document.getElementById("pane-categories").innerHTML=`
     <div class="page-title">Gestion des catégories</div>
-    <div class="page-sub">Glisse les catégories pour les réordonner, ou utilise ↑↓</div>
+    <div class="page-sub">Glisse les catégories pour les réordonner, ou utilise ↑↓ · l'ordre s'applique à tous les mois</div>
     ${secHtml}`;
 }
 
@@ -1341,6 +1420,9 @@ function catDragStart(e,sec,idx){
   e.dataTransfer.effectAllowed="move";
   e.currentTarget.style.opacity="0.4";
 }
+function catDragEnd(e){
+  e.currentTarget.style.opacity="1";
+}
 function catDragOver(e){
   e.preventDefault();
   e.dataTransfer.dropEffect="move";
@@ -1355,7 +1437,7 @@ function catDrop(e,sec,toIdx){
   e.preventDefault();
   e.currentTarget.style.background="#f9fafb";
   e.currentTarget.style.borderColor="#e5e7eb";
-  if(_dragSec!==sec||_dragIdx===null||_dragIdx===toIdx) return;
+  if(_dragSec!==sec||_dragIdx===null||_dragIdx===toIdx){_dragSec=null;_dragIdx=null;return;}
   const active=CATS_META[sec].filter(c=>!c.deletedAt||keyNum(...c.deletedAt.split("-").map(Number))>keyNum(yr,mi));
   const deleted=CATS_META[sec].filter(c=>c.deletedAt&&keyNum(...c.deletedAt.split("-").map(Number))<=keyNum(yr,mi));
   const [moved]=active.splice(_dragIdx,1);
@@ -1446,33 +1528,6 @@ function renderTab(){
 }
 
 
-/* ── MIGRATION : resynchronise savings[cat].actual après le fix savings_withdrawal ──
-   Avant le fix, chaque retrait soustrayait actual. On recalcule actual
-   uniquement à partir des transactions de type "savings" (hors retraits).
-   Idempotente : peut être rejouée sans risque.                          */
-const SK_MIGRATED="budget-migration-sw-v1";
-function migrateSavingsWithdrawal(){
-  if(localStorage.getItem(SK_MIGRATED)==="1") return;
-  for(const k of Object.keys(allData)){
-    const month=allData[k];
-    if(!month||!month.savings) continue;
-    // Reset all savings actual à 0, puis recalcule depuis les transactions income/savings
-    for(const cat of Object.keys(month.savings)){
-      month.savings[cat].actual=0;
-    }
-    // Rejouer uniquement les transactions section==="savings" (dépôts)
-    for(const tx of (month.transactions||[])){
-      if(tx.section==="savings"&&month.savings[tx.category]!==undefined){
-        month.savings[tx.category].actual=
-          Math.round(((Number(month.savings[tx.category].actual)||0)+tx.amount)*100)/100;
-      }
-      // savings_withdrawal → on ne touche rien (géré par getSavingsRunningTotal)
-    }
-  }
-  save();
-  localStorage.setItem(SK_MIGRATED,"1");
-}
-
 /* ── INITIALISATION : point d'entrée de l'app ───────────────── */
 /* render() est appelé une seule fois au chargement de la page   */
 function render(){
@@ -1483,7 +1538,6 @@ function render(){
 }
 
 checkPin();
-migrateSavingsWithdrawal();
 render();
 </script>
 </body>
