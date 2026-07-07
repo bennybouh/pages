@@ -194,6 +194,7 @@ select.inp{cursor:pointer}
     <button class="nav-item" onclick="switchTab('saisie',this)"><span class="icon">✏️</span>Saisie</button>
     <button class="nav-item" onclick="switchTab('transactions',this)"><span class="icon">📋</span>Transactions</button>
     <button class="nav-item" onclick="switchTab('yearly',this)"><span class="icon">📅</span>Vue annuelle</button>
+    <button class="nav-item" onclick="switchTab('recap',this)"><span class="icon">📊</span>Récap annuel</button>
     <button class="nav-item" onclick="switchTab('categories',this)"><span class="icon">⚙️</span>Catégories</button>
   </div>
   <div class="month-nav">
@@ -221,6 +222,7 @@ select.inp{cursor:pointer}
   <div id="pane-saisie" style="display:none"></div>
   <div id="pane-transactions" style="display:none"></div>
   <div id="pane-yearly" style="display:none"></div>
+  <div id="pane-recap" style="display:none"></div>
   <div id="pane-categories" style="display:none"></div>
 </div>
 
@@ -809,7 +811,8 @@ function renderDashboard(){
   // Solde de départ HTML - toujours éditable via petit bouton ✏️
   const soldeHtml=`
     <div style="display:grid;grid-template-columns:1fr 1fr;gap:16px;margin-bottom:20px">
-      <div style="background:#fff;border-radius:14px;padding:20px;border:1px solid #e5e7eb;position:relative;overflow:hidden">
+      <div style="background:#fff;border-radius:14px;padding:20px;border:1px solid #e5e7eb;position:relative;overflow:hidden"
+        title="Solde début de mois : ${fmt(soldeDebut)}&#10;= Solde fin du mois précédent&#10;Se cumule automatiquement de mois en mois&#10;Modifie le solde initial via ✏️ si nécessaire">
         <div style="position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;background:#64748b"></div>
         <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:10px">
           <div style="font-size:12px;color:#9ca3af;font-weight:500">Solde début de mois</div>
@@ -830,7 +833,8 @@ function renderDashboard(){
         </div>
         <div style="font-size:12px;color:#d1d5db;margin-top:4px" id="balance-sub-label">Solde initial · modifiable via ✏️</div>
       </div>
-      <div style="background:#fff;border-radius:14px;padding:20px;border:1px solid #e5e7eb;position:relative;overflow:hidden">
+      <div style="background:#fff;border-radius:14px;padding:20px;border:1px solid #e5e7eb;position:relative;overflow:hidden"
+        title="Solde fin de mois : ${fmt(soldeFin)}&#10;= Solde début (${fmt(soldeDebut)}) + Solde net (${fmt(net)})&#10;Revenus (${fmt(tI)}) − Dépenses (${fmt(tE)}) − Épargne (${fmt(tS)})&#10;Ce montant devient le solde début du mois suivant">
         <div style="position:absolute;top:0;left:0;right:0;height:3px;border-radius:14px 14px 0 0;background:${soldeFin>=0?"#10b981":"#ef4444"}"></div>
         <div style="font-size:12px;color:#9ca3af;font-weight:500;margin-bottom:10px">Solde fin de mois</div>
         <div style="font-size:24px;font-weight:700;color:${soldeFin>=0?green:red}">${fmt(soldeFin)}</div>
@@ -846,7 +850,13 @@ function renderDashboard(){
       "Épargne":"Mis de côté ce mois",
       "Solde Net":"Revenus − Dépenses − Épargne"
     };
-    return `<div class="kpi">
+    const tooltips={
+      "Revenus":`Revenus réels ce mois : ${fmt(tI)}\nPrévu : ${fmt(pI)}\nÉcart : ${tI>=pI?"+":""}${fmt(tI-pI)}`,
+      "Dépenses":`Dépenses réelles (Fixes + Variables + Dettes) : ${fmt(tE)}\nPrévu : ${fmt(pF+pV)}\nÉcart : ${(pF+pV)-tE>=0?"+":""}${fmt((pF+pV)-tE)}`,
+      "Épargne":`Épargne réelle ce mois : ${fmt(tS)}\nPrévu : ${fmt(pS)}\nÉcart : ${tS>=pS?"+":""}${fmt(tS-pS)}`,
+      "Solde Net":`Revenus (${fmt(tI)}) − Dépenses (${fmt(tE)}) − Épargne (${fmt(tS)})\n= ${fmt(net)}\nPositif = il te reste de l'argent non alloué`
+    };
+    return `<div class="kpi" title="${tooltips[k.l]||""}">
       <div class="kpi-accent" style="background:${k.c}"></div>
       <div class="kpi-label">${k.l}</div>
       <div style="font-size:11px;color:#c4c9d4;margin-bottom:8px;font-style:italic">${subtitles[k.l]||""}</div>
@@ -860,7 +870,8 @@ function renderDashboard(){
   const savingsHtml=catsForMonth("savings",yr,mi).map(cat=>{
     const running=getSavingsRunningTotal(cat);
     const monthly=m.savings[cat]?.actual||0;
-    return `<div style="background:#f9fafb;border-radius:10px;padding:14px;border:1px solid #e5e7eb">
+    return `<div style="background:#f9fafb;border-radius:10px;padding:14px;border:1px solid #e5e7eb"
+      title="Épargne cumulée sur ${cat}\nTotal accumulé depuis le début : ${fmt(running)}\nDépôt ce mois : ${monthly>=0?"+":""}${fmt(monthly)}\nLes retraits épargne sont déduits du cumulé">
       <div style="font-size:11px;color:#9ca3af;font-weight:500;text-transform:uppercase;letter-spacing:.06em;margin-bottom:6px">${esc(cat)}</div>
       <div style="font-size:18px;font-weight:700;color:#8b5cf6">${fmt(running)}</div>
       <div style="font-size:11px;color:#9ca3af;margin-top:4px">Ce mois : <span style="color:${monthly>=0?"#10b981":"#ef4444"};font-weight:600">${monthly>=0?"+":""}${fmt(monthly)}</span></div>
@@ -1088,55 +1099,55 @@ function renderSaisie(){
       <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:0;margin-bottom:20px">
 
         <!-- Prévu -->
-        <div style="padding-right:20px">
+        <div style="padding-right:20px" title="Solde prévu : ${fmt(balP)}&#10;= Revenus prévus (${fmt(allP.inc)}) − Dépenses prévues (${fmt(allP.exp)}) − Épargne prévue (${fmt(allP.sav)})&#10;Idéalement proche de 0 (budget à zéro)">
           <div style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px">Prévu</div>
           <div style="font-size:24px;font-weight:700;color:${balP>=0?green:red};margin-bottom:10px">${balP>=0?"+":""}${fmt(balP)}</div>
           <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:12px;color:#9ca3af">Revenus</span>
+            <span style="font-size:12px;color:#9ca3af" title="Total des revenus planifiés ce mois">Revenus</span>
             <span style="font-size:12px;font-weight:600;color:#10b981">${fmt(allP.inc)}</span>
           </div>
           <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:12px;color:#9ca3af">Dépenses</span>
+            <span style="font-size:12px;color:#9ca3af" title="Fixes + Variables + Dettes prévus">Dépenses</span>
             <span style="font-size:12px;font-weight:600;color:#ef4444">−${fmt(allP.exp)}</span>
           </div>
           <div style="display:flex;justify-content:space-between">
-            <span style="font-size:12px;color:#9ca3af">Épargne</span>
+            <span style="font-size:12px;color:#9ca3af" title="Épargne planifiée ce mois">Épargne</span>
             <span style="font-size:12px;font-weight:600;color:#8b5cf6">−${fmt(allP.sav)}</span>
           </div>
         </div>
 
         <!-- Réel -->
-        <div style="padding:0 20px;border-left:1px solid #f3f4f6;border-right:1px solid #f3f4f6">
+        <div style="padding:0 20px;border-left:1px solid #f3f4f6;border-right:1px solid #f3f4f6" title="Solde réel : ${fmt(balA)}&#10;= Revenus réels (${fmt(allA.inc)}) − Dépenses réelles (${fmt(allA.exp)}) − Épargne réelle (${fmt(allA.sav)})&#10;Ce qui s'est vraiment passé ce mois">
           <div style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px">Réel</div>
           <div style="font-size:24px;font-weight:700;color:${balA>=0?green:red};margin-bottom:10px">${balA>=0?"+":""}${fmt(balA)}</div>
           <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:12px;color:#9ca3af">Revenus</span>
+            <span style="font-size:12px;color:#9ca3af" title="Total des revenus encaissés">Revenus</span>
             <span style="font-size:12px;font-weight:600;color:#10b981">${fmt(allA.inc)}</span>
           </div>
           <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:12px;color:#9ca3af">Dépenses</span>
+            <span style="font-size:12px;color:#9ca3af" title="Fixes + Variables + Dettes réels">Dépenses</span>
             <span style="font-size:12px;font-weight:600;color:#ef4444">−${fmt(allA.exp)}</span>
           </div>
           <div style="display:flex;justify-content:space-between">
-            <span style="font-size:12px;color:#9ca3af">Épargne</span>
+            <span style="font-size:12px;color:#9ca3af" title="Épargne effectivement mise de côté">Épargne</span>
             <span style="font-size:12px;font-weight:600;color:#8b5cf6">−${fmt(allA.sav)}</span>
           </div>
         </div>
 
         <!-- Écart -->
-        <div style="padding-left:20px">
+        <div style="padding-left:20px" title="Écart réel vs prévu : ${fmt(balEcart)}&#10;= Solde réel (${fmt(balA)}) − Solde prévu (${fmt(balP)})&#10;Positif = tu as mieux géré que prévu&#10;Négatif = tu as dépassé ton budget">
           <div style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.04em;text-transform:uppercase;margin-bottom:10px">Écart réel vs prévu</div>
           <div style="font-size:24px;font-weight:700;color:${balEcart>=0?green:red};margin-bottom:10px">${balEcart>=0?"+":""}${fmt(balEcart)}</div>
           <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:12px;color:#9ca3af">Revenus</span>
+            <span style="font-size:12px;color:#9ca3af" title="Revenus réels vs prévus — positif = plus que prévu">Revenus</span>
             <span style="font-size:12px;font-weight:600;color:${allA.inc-allP.inc>=0?green:red}">${allA.inc-allP.inc>=0?"+":""}${fmt(allA.inc-allP.inc)}</span>
           </div>
           <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-            <span style="font-size:12px;color:#9ca3af">Dépenses</span>
+            <span style="font-size:12px;color:#9ca3af" title="Dépenses réelles vs prévues — positif = moins dépensé que prévu">Dépenses</span>
             <span style="font-size:12px;font-weight:600;color:${allP.exp-allA.exp>=0?green:red}">${allP.exp-allA.exp>=0?"+":""}${fmt(allP.exp-allA.exp)}</span>
           </div>
           <div style="display:flex;justify-content:space-between">
-            <span style="font-size:12px;color:#9ca3af">Épargne</span>
+            <span style="font-size:12px;color:#9ca3af" title="Épargne réelle vs prévue — positif = plus épargné que prévu">Épargne</span>
             <span style="font-size:12px;font-weight:600;color:${allA.sav-allP.sav>=0?green:red}">${allA.sav-allP.sav>=0?"+":""}${fmt(allA.sav-allP.sav)}</span>
           </div>
         </div>
@@ -1145,7 +1156,7 @@ function renderSaisie(){
       <!-- Barres de progression -->
       <div style="margin-bottom:8px">
         <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-          <span style="font-size:11px;color:#9ca3af">Budget alloué <b style="color:#374151">prévu</b> · dépenses + épargne / revenus</span>
+          <span style="font-size:11px;color:#9ca3af" title="Part des revenus prévus déjà allouée aux dépenses et à l'épargne&#10;100% = budget à zéro (idéal)&#10;Rouge si > 100% = dépenses prévues supérieures aux revenus">Budget alloué <b style="color:#374151">prévu</b> · dépenses + épargne / revenus</span>
           <span style="font-size:11px;font-weight:700;color:${barColorP}">${allP.inc>0?depPct+"%":"—"}</span>
         </div>
         <div style="background:#f3f4f6;border-radius:6px;height:8px;overflow:hidden">
@@ -1154,7 +1165,7 @@ function renderSaisie(){
       </div>
       <div>
         <div style="display:flex;justify-content:space-between;margin-bottom:4px">
-          <span style="font-size:11px;color:#9ca3af">Budget consommé <b style="color:#374151">réel</b> · dépenses + épargne / revenus</span>
+          <span style="font-size:11px;color:#9ca3af" title="Part des revenus réels déjà consommée ce mois&#10;Augmente au fur et à mesure des saisies&#10;Rouge si > 100% = tu dépenses plus que tu ne gagnes">Budget consommé <b style="color:#374151">réel</b> · dépenses + épargne / revenus</span>
           <span style="font-size:11px;font-weight:700;color:${barColorA}">${allA.inc>0?depPctReal+"%":"—"}</span>
         </div>
         <div style="background:#f3f4f6;border-radius:6px;height:8px;overflow:hidden">
@@ -1171,16 +1182,16 @@ function renderSaisie(){
     <div class="tbl-wrap">
       <div class="tbl-hd" style="grid-template-columns:${cols}">
         <span>Catégorie <span style="font-weight:400;color:#cbd5e1">· notes transactions</span></span>
-        <span style="text-align:right;display:block">Prévu (€)</span>
-        <span style="text-align:right;display:block">Réel (€)</span>
-        <span style="text-align:right;display:block">Écart</span>
+        <span style="text-align:right;display:block" title="Montant planifié pour cette catégorie ce mois">Prévu (€)</span>
+        <span style="text-align:right;display:block" title="Montant réellement dépensé / encaissé, calculé depuis les transactions">Réel (€)</span>
+        <span style="text-align:right;display:block" title="Écart = Prévu − Réel&#10;Vert = dans le budget&#10;Rouge = dépassement">Écart</span>
       </div>
       ${rows}
       <div class="tbl-ft" style="grid-template-columns:${cols}">
         <span style="font-size:13px;font-weight:700;color:${COL[curSection]}">Total ${LBL[curSection]}</span>
-        <span style="text-align:right;display:block;font-size:14px;font-weight:700">${fmt(tP)}</span>
-        <span style="text-align:right;display:block;font-size:14px;font-weight:700">${fmt(tA)}</span>
-        <span style="text-align:right;display:block;font-size:14px;font-weight:700;color:${tDiff>=0?green:red}">${tDiff>=0?"+":""}${fmt(tDiff)}</span>
+        <span style="text-align:right;display:block;font-size:14px;font-weight:700" title="Total prévu pour ${LBL[curSection]} ce mois : ${fmt(tP)}">${fmt(tP)}</span>
+        <span style="text-align:right;display:block;font-size:14px;font-weight:700" title="Total réel pour ${LBL[curSection]} ce mois : ${fmt(tA)}">${fmt(tA)}</span>
+        <span style="text-align:right;display:block;font-size:14px;font-weight:700;color:${tDiff>=0?green:red}" title="Écart total ${LBL[curSection]} : ${tDiff>=0?"+":""}${fmt(tDiff)}&#10;${tDiff>=0?"✓ Dans le budget":"⚠ Dépassement"}">${tDiff>=0?"+":""}${fmt(tDiff)}</span>
       </div>
     </div>`;
 }
@@ -1356,6 +1367,285 @@ function renderYearly(){
     <div class="yearly-grid">${monthCards}</div>`;
 }
 
+/* ── RÉCAP ANNUEL ────────────────────────────────────────────── */
+const SK_VALIDATED="budget-validated-months";
+const MONTHS_SHORT_R=["Jan","Fév","Mar","Avr","Mai","Jun","Jul","Aoû","Sep","Oct","Nov","Déc"];
+const SECS_R=["income","fixed","variable","savings","debt"];
+const SEC_LBL_R={income:"Revenus",fixed:"Fixes",variable:"Variables",savings:"Épargne",debt:"Dettes"};
+const SEC_COL_R={income:"#10b981",fixed:"#f59e0b",variable:"#3b82f6",savings:"#8b5cf6",debt:"#ef4444"};
+
+const fmtR=n=>{const abs=Math.abs(n);const s=abs.toLocaleString("fr-FR",{minimumFractionDigits:2,maximumFractionDigits:2});return (n<0?"−":"")+s+" €";};
+const fmtSignR=n=>(n>0?"+":"")+fmtR(n);
+const pctR=(a,b)=>b>0?Math.round(a/b*100):0;
+
+const openSecsR=new Set();
+const sortStateR={};
+let recapYr=yr;
+
+function loadValidated(){try{return JSON.parse(localStorage.getItem(SK_VALIDATED)||"{}");}catch{return {};}}
+function saveValidated(v){localStorage.setItem(SK_VALIDATED,JSON.stringify(v));}
+
+function toggleSectionR(sec){
+  openSecsR.has(sec)?openSecsR.delete(sec):openSecsR.add(sec);
+  const body=document.getElementById("rbody-"+sec);
+  const chev=document.getElementById("rchev-"+sec);
+  if(body) body.style.display=openSecsR.has(sec)?"block":"none";
+  if(chev) chev.style.transform=openSecsR.has(sec)?"rotate(90deg)":"";
+}
+function toggleAllR(){
+  const allOpen=SECS_R.every(s=>openSecsR.has(s));
+  SECS_R.forEach(s=>{
+    allOpen?openSecsR.delete(s):openSecsR.add(s);
+    const body=document.getElementById("rbody-"+s);
+    const chev=document.getElementById("rchev-"+s);
+    if(body) body.style.display=openSecsR.has(s)?"block":"none";
+    if(chev) chev.style.transform=openSecsR.has(s)?"rotate(90deg)":"";
+  });
+  const btn=document.getElementById("rtoggle-all-btn");
+  if(btn) btn.textContent=allOpen?"Tout ouvrir":"Tout fermer";
+}
+function sortByR(sec,col){
+  if(!sortStateR[sec]||sortStateR[sec].col!==col) sortStateR[sec]={col,dir:-1};
+  else sortStateR[sec].dir*=-1;
+  renderRecap();
+}
+function toggleMonthR(mi){
+  const v=loadValidated();
+  const key=`${recapYr}-${mi}`;
+  if(v[key]) delete v[key]; else v[key]=true;
+  saveValidated(v);
+  renderRecap();
+}
+function changeRecapYr(y){
+  recapYr=Number(y);
+  renderRecap();
+}
+
+function renderRecap(){
+  recapYr=recapYr||yr;
+  const validated=loadValidated();
+
+  // Available years
+  const yrSet=new Set();
+  Object.keys(allData).forEach(k=>{const[y]=k.split("-");yrSet.add(Number(y));});
+  const yrList=[...yrSet].sort((a,b)=>b-a);
+  if(!yrList.includes(recapYr)) recapYr=yrList[0]||yr;
+
+  const yearSelHtml=`<select onchange="changeRecapYr(this.value)" style="background:#f3f4f6;border:1px solid #e5e7eb;border-radius:8px;padding:5px 10px;font-size:13px;font-family:inherit;color:#374151;cursor:pointer">
+    ${yrList.map(y=>`<option value="${y}"${y===recapYr?" selected":""}>${y}</option>`).join("")}
+  </select>`;
+
+  // Months with data
+  const monthHasData=Array.from({length:12},(_,mi)=>{
+    const m=allData[`${recapYr}-${mi}`];
+    if(!m) return false;
+    return SECS_R.some(sec=>m[sec]&&Object.values(m[sec]).some(v=>v.actual>0||v.planned>0));
+  });
+  const validatedMonths=Array.from({length:12},(_,mi)=>!!validated[`${recapYr}-${mi}`]);
+  const validatedCount=validatedMonths.filter(Boolean).length;
+
+  // Months checklist
+  const monthsHtml=`
+    <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px 20px;margin-bottom:18px">
+      <div style="font-size:11px;color:#9ca3af;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:12px">Mois validés — ${validatedCount}/12 inclus dans le récap</div>
+      <div style="display:grid;grid-template-columns:repeat(12,1fr);gap:6px">
+        ${Array.from({length:12},(_,mi)=>{
+          const isVal=validatedMonths[mi];
+          const hasData=monthHasData[mi];
+          return `<div onclick="toggleMonthR(${mi})" title="${isVal?"Retirer":"Ajouter"}${!hasData?" · aucune donnée":""}"
+            style="display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;border-radius:8px;border:1px solid ${isVal?"#86efac":"#e5e7eb"};background:${isVal?"#f0fdf4":"#fff"};cursor:pointer;transition:all .2s;${!hasData?"opacity:.4":""}">
+            <span style="font-size:10px;font-weight:700;color:${isVal?"#16a34a":"#6b7280"};text-transform:uppercase;letter-spacing:.04em">${MONTHS_SHORT_R[mi]}</span>
+            <div style="width:18px;height:18px;border-radius:50%;border:2px solid ${isVal?"#22c55e":"#d1d5db"};background:${isVal?"#22c55e":"transparent"};display:flex;align-items:center;justify-content:center;font-size:10px;color:${isVal?"#fff":"transparent"};transition:all .2s">✓</div>
+          </div>`;
+        }).join("")}
+      </div>
+      <div style="display:flex;gap:16px;margin-top:10px;font-size:11px;color:#9ca3af">
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#22c55e;display:inline-block"></span>Validé · inclus</span>
+        <span style="display:flex;align-items:center;gap:4px"><span style="width:8px;height:8px;border-radius:50%;background:#d1d5db;display:inline-block"></span>Non validé · exclu</span>
+      </div>
+    </div>`;
+
+  if(validatedCount===0){
+    document.getElementById("pane-recap").innerHTML=`
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+        <div><div class="page-title">Récap annuel</div><div class="page-sub">Prévu · Réel · Écart · % par catégorie</div></div>
+        ${yearSelHtml}
+      </div>
+      ${monthsHtml}
+      <div style="background:#fffbeb;border:1px solid #fde68a;border-radius:10px;padding:14px 18px;font-size:13px;color:#92400e">⚠️ Aucun mois validé — coche les mois à inclure dans le récap ci-dessus.</div>`;
+    return;
+  }
+
+  // Aggregate validated months
+  const totals={};
+  SECS_R.forEach(s=>{totals[s]={};});
+  for(let mi=0;mi<12;mi++){
+    if(!validatedMonths[mi]) continue;
+    const m=allData[`${recapYr}-${mi}`];
+    if(!m) continue;
+    SECS_R.forEach(sec=>{
+      if(!m[sec]) return;
+      Object.entries(m[sec]).forEach(([cat,v])=>{
+        if(!totals[sec][cat]) totals[sec][cat]={planned:0,actual:0};
+        totals[sec][cat].planned+=Number(v.planned||0);
+        totals[sec][cat].actual+=Number(v.actual||0);
+      });
+    });
+  }
+
+  const secTotals={};
+  SECS_R.forEach(sec=>{
+    let p=0,a=0;
+    Object.values(totals[sec]).forEach(v=>{p+=v.planned;a+=v.actual;});
+    secTotals[sec]={planned:Math.round(p*100)/100,actual:Math.round(a*100)/100};
+  });
+
+  const totalIncome=secTotals.income;
+  const totalExp=SECS_R.filter(s=>s!=="income").reduce((acc,s)=>({planned:acc.planned+secTotals[s].planned,actual:acc.actual+secTotals[s].actual}),{planned:0,actual:0});
+  const netA=Math.round((totalIncome.actual-totalExp.actual)*100)/100;
+  const netP=Math.round((totalIncome.planned-totalExp.planned)*100)/100;
+
+  // Summary cards
+  const summaryHtml=`
+    <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-bottom:18px">
+      ${[
+        {lbl:`Revenus (${validatedCount} mois)`,val:totalIncome.actual,col:"#10b981",sub:`Prévu : ${fmtR(totalIncome.planned)}`,tip:`Total revenus encaissés sur ${validatedCount} mois validés\nRéel : ${fmtR(totalIncome.actual)}\nPrévu : ${fmtR(totalIncome.planned)}\nÉcart : ${fmtSignR(totalIncome.actual-totalIncome.planned)}`},
+        {lbl:"Dépenses + Épargne",val:totalExp.actual,col:"#ef4444",sub:`Prévu : ${fmtR(totalExp.planned)}`,tip:`Total dépenses et épargne sur ${validatedCount} mois validés\nRéel : ${fmtR(totalExp.actual)}\nPrévu : ${fmtR(totalExp.planned)}\nPositif = moins dépensé que prévu`},
+        {lbl:"Solde net",val:netA,col:netA>=0?"#10b981":"#ef4444",sub:`Prévu : ${fmtSignR(netP)}`,tip:`Solde net = Revenus − Dépenses − Épargne\n= ${fmtR(totalIncome.actual)} − ${fmtR(totalExp.actual)}\n= ${fmtSignR(netA)}\nPositif = argent non alloué sur la période`}
+      ].map(c=>`
+        <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px 20px" title="${c.tip}">
+          <div style="font-size:11px;color:#9ca3af;font-weight:600;letter-spacing:.06em;text-transform:uppercase;margin-bottom:6px">${c.lbl}</div>
+          <div style="font-size:24px;font-weight:800;color:${c.col};letter-spacing:-.5px">${fmtR(c.val)}</div>
+          <div style="font-size:12px;color:#9ca3af;margin-top:4px">${c.sub}</div>
+        </div>`).join("")}
+    </div>`;
+
+  // Pct chart
+  const expSecs=SECS_R.filter(s=>s!=="income");
+  const maxAct=Math.max(...expSecs.map(s=>secTotals[s].actual),1);
+  const pctChartHtml=`
+    <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;padding:16px 20px;margin-bottom:18px">
+      <div style="font-size:11px;color:#9ca3af;font-weight:700;text-transform:uppercase;letter-spacing:.06em;margin-bottom:14px">Répartition des dépenses & épargne</div>
+      <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px">
+        ${expSecs.map(sec=>{
+          const a=secTotals[sec].actual,p=secTotals[sec].planned;
+          const hA=Math.max(Math.round((a/maxAct)*68),a>0?2:0);
+          const hP=Math.max(Math.round((p/maxAct)*68),p>0?2:0);
+          return `<div style="text-align:center">
+            <div style="font-size:11px;color:#6b7280;font-weight:600;margin-bottom:8px">${SEC_LBL_R[sec]}</div>
+            <div style="height:72px;display:flex;align-items:flex-end;justify-content:center;gap:5px">
+              <div style="width:20px;height:${hP}px;border-radius:4px 4px 0 0;background:#e2e8f0" title="Prévu : ${fmtR(p)}"></div>
+              <div style="width:20px;height:${hA}px;border-radius:4px 4px 0 0;background:${SEC_COL_R[sec]}" title="Réel : ${fmtR(a)}"></div>
+            </div>
+            <div style="font-size:13px;font-weight:700;color:#374151;margin-top:6px">${pctR(a,totalIncome.actual)}%</div>
+            <div style="font-size:11px;color:#9ca3af">${fmtR(a)}</div>
+          </div>`;
+        }).join("")}
+      </div>
+    </div>`;
+
+  // Section blocks
+  const sectionsHtml=SECS_R.map(sec=>{
+    const allCats=Object.entries(totals[sec]).filter(([,v])=>v.planned!==0||v.actual!==0);
+    if(!allCats.length) return "";
+    const st=secTotals[sec];
+    const diffSec=sec==="income"?st.actual-st.planned:st.planned-st.actual;
+    const isOpen=openSecsR.has(sec);
+    const ss=sortStateR[sec];
+
+    const sorted=[...allCats].sort((a,b)=>{
+      if(!ss) return 0;
+      const va=a[1],vb=b[1];
+      if(ss.col==="planned") return (vb.planned-va.planned)*ss.dir;
+      if(ss.col==="actual") return (vb.actual-va.actual)*ss.dir;
+      if(ss.col==="diff"){
+        const da=sec==="income"?va.actual-va.planned:va.planned-va.actual;
+        const db=sec==="income"?vb.actual-vb.planned:vb.planned-vb.actual;
+        return (db-da)*ss.dir;
+      }
+      return 0;
+    });
+
+    const arrow=col=>ss?.col===col?(ss.dir===-1?"↓":"↑"):"";
+    const colStyle=col=>`text-align:right;color:rgba(255,255,255,${ss?.col===col?"1":".65"});font-size:11px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;cursor:pointer;${ss?.col===col?"text-decoration:underline":""}`;
+
+    const catsHtml=sorted.map(([cat,v])=>{
+      const diff=sec==="income"?v.actual-v.planned:v.planned-v.actual;
+      const diffCol=diff>0?"#10b981":diff<0?"#ef4444":"#9ca3af";
+      const pctSec=pctR(v.actual,st.actual);
+      const pctInc=pctR(v.actual,totalIncome.actual);
+      return `<div style="display:grid;grid-template-columns:1fr 110px 110px 110px 80px;align-items:start;padding:10px 20px 10px 38px;border-top:1px solid #f3f4f6;transition:background .12s" onmouseover="this.style.background='#fafafa'" onmouseout="this.style.background=''">
+        <div>
+          <div style="font-size:13px;color:#374151;font-weight:500">${esc(cat)}</div>
+          <div style="display:flex;gap:5px;margin-top:3px">
+            <span style="font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;background:#f3f4f6;color:#6b7280" title="${esc(cat)} représente ${pctSec}% du total ${SEC_LBL_R[sec]} (${fmtR(st.actual)})">${pctSec}% sect.</span>
+            <span style="font-size:10px;font-weight:600;padding:1px 6px;border-radius:4px;background:#ede9fe;color:#7c3aed" title="${esc(cat)} représente ${pctInc}% des revenus totaux (${fmtR(totalIncome.actual)})">${pctInc}% rev.</span>
+          </div>
+        </div>
+        <div style="font-size:13px;font-weight:600;text-align:right;color:#94a3b8" title="Prévu pour ${esc(cat)} : ${fmtR(v.planned)}">${fmtR(v.planned)}</div>
+        <div style="font-size:13px;font-weight:600;text-align:right;color:#1e293b" title="Réel pour ${esc(cat)} : ${fmtR(v.actual)}">${fmtR(v.actual)}</div>
+        <div style="font-size:13px;font-weight:600;text-align:right;color:${diffCol}" title="Écart ${esc(cat)} : ${fmtSignR(diff)}&#10;${diff>=0?"✓ Dans le budget":"⚠ Dépassement"}">${fmtSignR(diff)}</div>
+        <div style="font-size:12px;font-weight:600;text-align:right;color:#9ca3af" title="${esc(cat)} = ${pctSec}% de ${SEC_LBL_R[sec]}">${pctSec}%</div>
+      </div>`;
+    }).join("");
+
+    return `
+      <div style="background:#fff;border:1px solid #e5e7eb;border-radius:12px;overflow:hidden;margin-bottom:10px">
+        <div style="display:grid;grid-template-columns:1fr 110px 110px 110px 80px;align-items:center;padding:13px 20px;cursor:pointer;background:${SEC_COL_R[sec]}" onclick="toggleSectionR('${sec}')">
+          <div style="display:flex;align-items:center;gap:8px">
+            <span id="rchev-${sec}" style="font-size:11px;color:rgba(255,255,255,.8);transition:transform .25s;${isOpen?"transform:rotate(90deg)":""}">▶</span>
+            <span style="width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.4);flex-shrink:0;display:inline-block"></span>
+            <span style="font-size:14px;font-weight:700;color:#fff">${SEC_LBL_R[sec]}</span>
+            <span style="background:rgba(255,255,255,.2);border-radius:6px;padding:1px 7px;font-size:11px;font-weight:600;color:#fff">${allCats.length} cat.</span>
+          </div>
+          <div style="${colStyle("planned")}" onclick="event.stopPropagation();sortByR('${sec}','planned')">Prévu${arrow("planned")}</div>
+          <div style="${colStyle("actual")}" onclick="event.stopPropagation();sortByR('${sec}','actual')">Réel${arrow("actual")}</div>
+          <div style="${colStyle("diff")}" onclick="event.stopPropagation();sortByR('${sec}','diff')">Écart${arrow("diff")}</div>
+          <div style="text-align:right;font-size:14px;font-weight:800;color:#fff">${fmtR(st.actual)}</div>
+        </div>
+        <div id="rbody-${sec}" style="display:${isOpen?"block":"none"}">
+          <div style="display:grid;grid-template-columns:1fr 110px 110px 110px 80px;padding:7px 20px 7px 38px;background:#f8fafc;border-top:1px solid #f3f4f6">
+            <div style="font-size:10px;color:#9ca3af;font-weight:700;text-transform:uppercase;letter-spacing:.06em">Catégorie</div>
+            ${["planned","actual","diff"].map(col=>`<div onclick="sortByR('${sec}','${col}')" style="font-size:10px;color:${ss?.col===col?"#374151":"#9ca3af"};font-weight:700;text-transform:uppercase;letter-spacing:.06em;text-align:right;cursor:pointer;padding:2px 0">${col==="planned"?"Prévu":col==="actual"?"Réel":"Écart"}${arrow(col)}</div>`).join("")}
+            <div style="font-size:10px;color:#9ca3af;font-weight:700;text-transform:uppercase;letter-spacing:.06em;text-align:right">% sect.</div>
+          </div>
+          ${catsHtml}
+          <div style="display:grid;grid-template-columns:1fr 110px 110px 110px 80px;align-items:center;padding:9px 20px 9px 38px;border-top:2px solid #f3f4f6;background:#fafafa">
+            <div style="font-size:11px;color:#9ca3af;font-weight:700;text-transform:uppercase;letter-spacing:.04em">Total ${SEC_LBL_R[sec]}</div>
+            <div style="font-size:12px;font-weight:700;text-align:right;color:#94a3b8">${fmtR(st.planned)}</div>
+            <div style="font-size:12px;font-weight:700;text-align:right">${fmtR(st.actual)}</div>
+            <div style="font-size:12px;font-weight:700;text-align:right;color:${diffSec>=0?"#10b981":"#ef4444"}">${fmtSignR(diffSec)}</div>
+            <div></div>
+          </div>
+        </div>
+      </div>`;
+  }).join("");
+
+  // Grand total
+  const gtDiff=totalExp.planned-totalExp.actual;
+  const grandHtml=`
+    <div style="background:#1e293b;border-radius:12px;padding:15px 20px;display:grid;grid-template-columns:1fr 110px 110px 110px 80px;align-items:center;margin-bottom:24px">
+      <div style="font-size:13px;font-weight:700;color:#fff">Total Dépenses + Épargne</div>
+      <div style="font-size:13px;font-weight:800;text-align:right;color:#94a3b8">${fmtR(totalExp.planned)}</div>
+      <div style="font-size:13px;font-weight:800;text-align:right;color:#fff">${fmtR(totalExp.actual)}</div>
+      <div style="font-size:13px;font-weight:800;text-align:right;color:${gtDiff>0?"#34d399":gtDiff<0?"#f87171":"#94a3b8"}">${fmtSignR(gtDiff)}</div>
+      <div></div>
+    </div>`;
+
+  const toolbar=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px">
+      <button id="rtoggle-all-btn" onclick="toggleAllR()" style="font-size:12px;color:#9ca3af;cursor:pointer;padding:5px 10px;border:1px solid #e5e7eb;border-radius:6px;background:#fff;font-family:inherit">Tout ouvrir</button>
+      <span style="font-size:12px;color:#9ca3af">Clic sur Prévu / Réel / Écart pour trier</span>
+    </div>`;
+
+  document.getElementById("pane-recap").innerHTML=`
+    <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:16px">
+      <div><div class="page-title">Récap annuel</div><div class="page-sub">Prévu · Réel · Écart · % par catégorie — mois validés uniquement</div></div>
+      ${yearSelHtml}
+    </div>
+    ${summaryHtml}${monthsHtml}${pctChartHtml}${toolbar}${sectionsHtml}${grandHtml}`;
+}
+
 /* ── CATÉGORIES : affichage et gestion ──────────────────────── */
 /* Pour ajouter/supprimer/renommer/réordonner des catégories     */
 function renderCategories(){
@@ -1482,28 +1772,22 @@ function renameCategory(sec,oldName){
   const n=newName.trim();
   if(CATS_META[sec].find(c=>c.name===n&&!c.deletedAt)){alert("Ce nom existe déjà.");return;}
 
-  // Stratégie : on garde l'ancienne entrée pour le passé, on crée une nouvelle pour le futur
-  // 1. Marquer l'ancienne comme supprimée à partir du mois courant
+  // Renomme directement l'entrée dans CATS_META (pas de split passé/futur)
   const oldEntry=CATS_META[sec].find(c=>c.name===oldName&&!c.deletedAt);
-  if(oldEntry) oldEntry.deletedAt=`${yr}-${mi}`;
+  if(oldEntry) oldEntry.name=n;
 
-  // 2. Créer une nouvelle entrée avec le nouveau nom à partir du mois courant
-  CATS_META[sec].push({name:n, addedAt:`${yr}-${mi}`});
-
-  // 3. Migrer les données uniquement pour le mois courant et futurs
+  // Migre toutes les données de TOUS les mois (passés + courant + futurs)
   for(const k of Object.keys(allData)){
-    const[ky,km]=k.split("-").map(Number);
-    if(keyNum(ky,km)>=keyNum(yr,mi)){
-      if(allData[k][sec]&&allData[k][sec][oldName]!==undefined){
-        allData[k][sec][n]=allData[k][sec][oldName];
-        delete allData[k][sec][oldName];
-      }
-      // Migrer les transactions du mois courant et futurs
-      if(allData[k].transactions){
-        allData[k].transactions=allData[k].transactions.map(tx=>
-          tx.section===sec&&tx.category===oldName?{...tx,category:n}:tx
-        );
-      }
+    // Migrer les clés de section
+    if(allData[k][sec]&&allData[k][sec][oldName]!==undefined){
+      allData[k][sec][n]=allData[k][sec][oldName];
+      delete allData[k][sec][oldName];
+    }
+    // Migrer les transactions
+    if(allData[k].transactions){
+      allData[k].transactions=allData[k].transactions.map(tx=>
+        tx.section===sec&&tx.category===oldName?{...tx,category:n}:tx
+      );
     }
   }
   rebuildCATSShim();saveCats();save();renderCategories();
@@ -1524,6 +1808,7 @@ function renderTab(){
   else if(curTab==="saisie")renderSaisie();
   else if(curTab==="transactions")renderTx();
   else if(curTab==="yearly")renderYearly();
+  else if(curTab==="recap")renderRecap();
   else if(curTab==="categories")renderCategories();
 }
 

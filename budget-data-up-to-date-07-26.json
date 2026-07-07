@@ -3426,7 +3426,7 @@
     "income": {
       "Salary": {
         "planned": 1174,
-        "actual": 674.52,
+        "actual": 1343.94,
         "breakdown": [
           {
             "label": "AAH",
@@ -3440,7 +3440,7 @@
       },
       "Refunds": {
         "planned": 50,
-        "actual": 0,
+        "actual": 50,
         "breakdown": [
           {
             "label": "Kermesse ticket",
@@ -3492,7 +3492,7 @@
       },
       "Cell Phone": {
         "planned": 21.99,
-        "actual": 0,
+        "actual": 21.99,
         "breakdown": [
           {
             "label": "Bouygues",
@@ -3520,7 +3520,7 @@
       },
       "Taxes/Fees": {
         "planned": 160.99,
-        "actual": 0,
+        "actual": 0.99,
         "breakdown": [
           {
             "label": "BoursoProtect",
@@ -3546,7 +3546,7 @@
       },
       "Insurance": {
         "planned": 75.32,
-        "actual": 0,
+        "actual": 75.32,
         "breakdown": [
           {
             "label": "Harmonie Mutuelle",
@@ -3598,7 +3598,7 @@
       },
       "Health": {
         "planned": 602,
-        "actual": 532,
+        "actual": 602,
         "breakdown": [
           {
             "label": "Dr Schramm",
@@ -3621,7 +3621,7 @@
         ]
       },
       "Pocket Money": {
-        "planned": 90,
+        "planned": 180,
         "actual": 0,
         "breakdown": [
           {
@@ -3631,6 +3631,10 @@
           {
             "label": "Cash out",
             "amount": 50
+          },
+          {
+            "label": "Money from June",
+            "amount": 90
           }
         ]
       },
@@ -3689,6 +3693,62 @@
         "amount": 532,
         "note": "Clinique St George",
         "id": 1783100858407
+      },
+      {
+        "day": 7,
+        "section": "income",
+        "category": "Salary",
+        "amount": 669.42,
+        "note": "AAH",
+        "id": 1783439989510
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 13.7,
+        "note": "Mutex",
+        "id": 1783440038615
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 61.62,
+        "note": "Harmonie Mutuelle",
+        "id": 1783440072187
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Cell Phone",
+        "amount": 21.99,
+        "note": "Bouygues",
+        "id": 1783440085458
+      },
+      {
+        "day": 7,
+        "section": "variable",
+        "category": "Health",
+        "amount": 70,
+        "note": "Dr Schramm",
+        "id": 1783440220901
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Taxes/Fees",
+        "amount": 0.99,
+        "note": "BoursoProtect",
+        "id": 1783440236009
+      },
+      {
+        "day": 7,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 50,
+        "note": "Vir Sepa Stripe (Kermesse ticket)",
+        "id": 1783440283889
       }
     ]
   },
