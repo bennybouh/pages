@@ -558,6 +558,11 @@ function toggleBreakdownList(safeId){
   window._showBreakdown[safeId]=!window._showBreakdown[safeId];
   renderSaisie();
 }
+function toggleTxList(safeId){
+  if(!window._showTxList) window._showTxList={};
+  window._showTxList[safeId]=!window._showTxList[safeId];
+  renderSaisie();
+}
 
 // Ancienne fonction conservée pour compatibilité
 function toggleBreakdown(sec,cat){
@@ -577,6 +582,12 @@ function addBreakdown(sec,cat){
   save();renderSaisie();
 }
 
+function toggleBreakdownCheck(sec,cat,idx){
+  const m=md();
+  if(!m[sec][cat]?.breakdown) return;
+  m[sec][cat].breakdown[idx].checked=!m[sec][cat].breakdown[idx].checked;
+  save();renderSaisie();
+}
 function removeBreakdown(sec,cat,idx){
   const m=md();
   if(!m[sec][cat]?.breakdown) return;
@@ -986,21 +997,45 @@ function renderSaisie(){
         <span style="font-size:11px;color:#c4b5fd">${count} ligne${count>1?"s":""} · ${fmt(total)}</span>
       </div>`;
     }
+
     // Sous-entrées du prévu (décomposition)
-    const breakdown=m[curSection][cat]?.breakdown; // undefined si mode non activé
+    const breakdown=m[curSection][cat]?.breakdown;
     const breakdownItems=breakdown||[];
-    const breakdownActive=Array.isArray(breakdown); // true dès que ⊕ a été cliqué
+    const breakdownActive=Array.isArray(breakdown);
     const breakdownTotal=Math.round(breakdownItems.reduce((a,b)=>a+(b.amount||0),0)*100)/100;
-    const hasItems=breakdownItems.length>0; // true seulement si au moins 1 ligne
+    const hasItems=breakdownItems.length>0;
     const safeId=`${curSection}_${cat.replace(/[^a-z0-9]/gi,'_')}`;
     const catRec=m[curSection][cat]?.recurrence||null;
     const showBreakdown=window._showBreakdown&&window._showBreakdown[safeId];
+
+    // Liste transactions inline (📋) — après safeId
+    const showTxList=window._showTxList&&window._showTxList[safeId];
+    const txListHtml=txs.length>0&&showTxList?`
+      <div style="margin-top:8px;background:#f8fafc;border:1px solid #e5e7eb;border-radius:8px;overflow:hidden">
+        <div style="display:grid;grid-template-columns:36px 1fr auto;padding:5px 10px;background:#f3f4f6;border-bottom:1px solid #e5e7eb">
+          <span style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em">Jour</span>
+          <span style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em">Note</span>
+          <span style="font-size:10px;font-weight:700;color:#9ca3af;text-transform:uppercase;letter-spacing:.06em;text-align:right">Montant</span>
+        </div>
+        ${txs.sort((a,b)=>a.day-b.day).map(tx=>`
+          <div style="display:grid;grid-template-columns:36px 1fr auto;align-items:center;padding:6px 10px;border-bottom:1px solid #f3f4f6">
+            <span style="font-size:12px;color:#9ca3af;font-weight:500">${tx.day}</span>
+            <span style="font-size:12px;color:#374151">${tx.note?esc(tx.note):`<span style='color:#d1d5db;font-style:italic'>—</span>`}</span>
+            <span style="font-size:12px;font-weight:700;color:${tx.section==='income'?'#10b981':'#374151'}">${tx.section==='income'?'+':'−'}${fmt(tx.amount)}</span>
+          </div>`).join("")}
+        <div style="display:grid;grid-template-columns:1fr auto;padding:6px 10px;background:#f3f4f6">
+          <span style="font-size:11px;color:#9ca3af;font-weight:600">Total</span>
+          <span style="font-size:12px;font-weight:800;color:#374151">${fmt(Math.round(txs.reduce((a,t)=>a+t.amount,0)*100)/100)}</span>
+        </div>
+      </div>`:"";
+
 
     // Liste des lignes (visible si ≡ actif)
     const breakdownListHtml=hasItems&&showBreakdown?`
       <div style="margin-top:8px;padding:10px 12px;background:#f9fafb;border-radius:8px;border:1px solid #e5e7eb">
         ${breakdownItems.map((item,idx)=>{
           const editingBd=window._editBdId===`${safeId}_${idx}`;
+          const checked=!!item.checked;
           if(editingBd) return `
             <div style="display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:8px;margin-bottom:${idx<breakdownItems.length-1?"6px":"0"}">
               <input id="bd-edit-lbl-${safeId}-${idx}" class="inp" type="text" value="${esc(item.label||"")}" placeholder="Label…" style="font-size:12px;padding:4px 8px">
@@ -1011,9 +1046,13 @@ function renderSaisie(){
                 style="background:#f3f4f6;border:none;border-radius:6px;color:#6b7280;font-size:12px;padding:4px 8px;cursor:pointer">✕</button>
             </div>`;
           return `
-            <div style="display:grid;grid-template-columns:1fr auto auto auto auto;align-items:center;gap:8px;margin-bottom:${idx<breakdownItems.length-1?"6px":"0"}">
-              <span style="font-size:12px;color:#374151;font-weight:500">${esc(item.label||"Sans label")}</span>
-              <span style="font-size:12px;color:#0ea5e9;font-weight:700">${fmt(item.amount||0)}</span>
+            <div style="display:grid;grid-template-columns:20px 1fr auto auto auto auto;align-items:center;gap:8px;margin-bottom:${idx<breakdownItems.length-1?"6px":"0"}">
+              <div onclick="toggleBreakdownCheck('${curSection}','${escJs(cat)}',${idx})" title="${checked?"Marquer comme non payé":"Marquer comme payé"}"
+                style="width:18px;height:18px;border-radius:4px;border:2px solid ${checked?"#10b981":"#d1d5db"};background:${checked?"#10b981":"#fff"};display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .2s">
+                ${checked?`<span style="color:#fff;font-size:11px;font-weight:700;line-height:1">✓</span>`:""}
+              </div>
+              <span style="font-size:12px;color:${checked?"#9ca3af":"#374151"};font-weight:500;text-decoration:${checked?"line-through":"none"}">${esc(item.label||"Sans label")}</span>
+              <span style="font-size:12px;color:${checked?"#9ca3af":"#0ea5e9"};font-weight:700">${fmt(item.amount||0)}</span>
               <button onclick="startBreakdownEdit('${safeId}',${idx})" title="Modifier"
                 style="background:none;border:none;color:#d1d5db;cursor:pointer;font-size:13px;padding:0">✏️</button>
               <button onclick="repeatBreakdownItem('${curSection}','${escJs(cat)}',${idx})" title="Répéter ce montant"
@@ -1046,9 +1085,12 @@ function renderSaisie(){
             style="background:none;border:1px solid ${breakdownActive?"#0ea5e9":"#e5e7eb"};border-radius:5px;color:${breakdownActive?"#0ea5e9":"#9ca3af"};cursor:pointer;font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0">⊕</button>
           ${hasItems?`<button onclick="toggleBreakdownList('${safeId}')" title="Afficher/masquer les lignes"
             style="background:none;border:1px solid ${showBreakdown?"#374151":"#e5e7eb"};border-radius:5px;color:${showBreakdown?"#374151":"#9ca3af"};cursor:pointer;font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0">≡</button>`:""}
+          ${txs.length>0?`<button onclick="toggleTxList('${safeId}')" title="Voir les transactions"
+            style="background:none;border:1px solid ${showTxList?"#8b5cf6":"#e5e7eb"};border-radius:5px;color:${showTxList?"#8b5cf6":"#9ca3af"};cursor:pointer;font-size:13px;width:22px;height:22px;display:flex;align-items:center;justify-content:center;flex-shrink:0">📋</button>`:""}
         </div>
         <div style="margin-top:2px">${txNoteEl}</div>
         ${breakdownListHtml}
+        ${txListHtml}
         ${addFormHtml}
       </div>
       <!-- Col 2: Prévu + 🔁 -->

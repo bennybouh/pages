@@ -1,0 +1,7525 @@
+{
+  "2026-5": {
+    "income": {
+      "Salary": {
+        "planned": 1758.4,
+        "actual": 2536.25,
+        "breakdown": [
+          {
+            "label": "France Travail",
+            "amount": 1445.4
+          },
+          {
+            "label": "AAH",
+            "amount": 313
+          }
+        ]
+      },
+      "Refunds": {
+        "planned": 30,
+        "actual": 141.7,
+        "breakdown": [
+          {
+            "label": "Escape Game (Ele's)",
+            "amount": 30
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0.07
+      },
+      "Savings": {
+        "planned": 0,
+        "actual": 500
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Tokimo": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cell Phone": {
+        "planned": 21.99,
+        "actual": 21.99,
+        "breakdown": [
+          {
+            "label": "Bouygues",
+            "amount": 21.99
+          }
+        ]
+      },
+      "Subscriptions": {
+        "planned": 19.98,
+        "actual": 19.98,
+        "breakdown": [
+          {
+            "label": "Youtube",
+            "amount": 16.99
+          },
+          {
+            "label": "iCloud",
+            "amount": 2.99
+          }
+        ]
+      },
+      "Groceries": {
+        "planned": 20,
+        "actual": 16.4
+      },
+      "Insurance": {
+        "planned": 75.32,
+        "actual": 75.32,
+        "breakdown": [
+          {
+            "label": "Harmonie Mutuelle",
+            "amount": 75.32
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0.99,
+        "actual": 0.99,
+        "breakdown": [
+          {
+            "label": "BoursoProtect",
+            "amount": 0.99
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 550,
+        "actual": 404.49,
+        "breakdown": [
+          {
+            "label": "Restaurant",
+            "amount": 450
+          },
+          {
+            "label": "Turkish restaurant",
+            "amount": 100
+          }
+        ]
+      },
+      "Shopping": {
+        "planned": 620.2,
+        "actual": 617.19,
+        "breakdown": [
+          {
+            "label": "Refund Ines for parfum",
+            "amount": 195
+          },
+          {
+            "label": "Ergo Chair",
+            "amount": 310.2
+          },
+          {
+            "label": "Shoes",
+            "amount": 115
+          }
+        ]
+      },
+      "Health": {
+        "planned": 80,
+        "actual": 81.15,
+        "breakdown": []
+      },
+      "Gifts": {
+        "planned": 50,
+        "actual": 50,
+        "breakdown": [
+          {
+            "label": "Olivia's BD",
+            "amount": 50
+          }
+        ]
+      },
+      "E-Vape": {
+        "planned": 100,
+        "actual": 100.1
+      },
+      "Transport": {
+        "planned": 20,
+        "actual": 21.5
+      },
+      "Activities": {
+        "planned": 130,
+        "actual": 132,
+        "breakdown": [
+          {
+            "label": "tete dans les nuages",
+            "amount": 20
+          },
+          {
+            "label": "Winamax",
+            "amount": 10
+          },
+          {
+            "label": "Escape Game",
+            "amount": 100
+          }
+        ]
+      },
+      "Travel": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0,
+        "breakdown": []
+      },
+      "Cash Money": {
+        "planned": 90,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Ele & Ben enjoy money",
+            "amount": 40,
+            "recurrence": 11
+          },
+          {
+            "label": "Cash out",
+            "amount": 50,
+            "recurrence": 12
+          }
+        ]
+      }
+    },
+    "debt": {
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Myriam": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": [
+      {
+        "day": 1,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 18,
+        "note": "Cafe des Bains",
+        "id": 1781089152609
+      },
+      {
+        "day": 1,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 120,
+        "note": "Comme un Dimanche",
+        "id": 1781089163028
+      },
+      {
+        "day": 1,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 1.5,
+        "note": "Escota",
+        "id": 1781089181120
+      },
+      {
+        "day": 1,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 1.5,
+        "note": "Escota",
+        "id": 1781089189738
+      },
+      {
+        "day": 1,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 3.5,
+        "note": "Escota",
+        "id": 1781089197822
+      },
+      {
+        "day": 1,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 3.5,
+        "note": "Escota",
+        "id": 1781089207878
+      },
+      {
+        "day": 1,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 12,
+        "note": "Hotel Valescure",
+        "id": 1781089226760
+      },
+      {
+        "day": 1,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 54.6,
+        "note": "Hotel Valescure",
+        "id": 1781089241294
+      },
+      {
+        "day": 1,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 4.3,
+        "note": "Escota",
+        "id": 1781089256522
+      },
+      {
+        "day": 1,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 0.7,
+        "note": "Escota",
+        "id": 1781089268686
+      },
+      {
+        "day": 1,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 3.5,
+        "note": "Escota",
+        "id": 1781089276962
+      },
+      {
+        "day": 1,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 45,
+        "note": "Hotel Valescure",
+        "id": 1781089289838
+      },
+      {
+        "day": 1,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 80,
+        "note": "Jardin des Plumes",
+        "id": 1781089304542
+      },
+      {
+        "day": 1,
+        "section": "income",
+        "category": "Savings",
+        "amount": 500,
+        "note": "BoursoPlus",
+        "id": 1781089330649
+      },
+      {
+        "day": 1,
+        "section": "savings_withdrawal",
+        "category": "BoursoPlus",
+        "amount": 500,
+        "note": "",
+        "id": 1781089336007
+      },
+      {
+        "day": 2,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 1,
+        "note": "Escota",
+        "id": 1781089346988
+      },
+      {
+        "day": 2,
+        "section": "variable",
+        "category": "Health",
+        "amount": 50,
+        "note": "Maranice",
+        "id": 1781089460543
+      },
+      {
+        "day": 2,
+        "section": "variable",
+        "category": "Health",
+        "amount": 23.4,
+        "note": "Pharmacie",
+        "id": 1781089474314
+      },
+      {
+        "day": 3,
+        "section": "income",
+        "category": "Salary",
+        "amount": 1445.4,
+        "note": "France Travail",
+        "id": 1781089488266
+      },
+      {
+        "day": 3,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 2,
+        "note": "Clinique",
+        "id": 1781089504813
+      },
+      {
+        "day": 3,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 10,
+        "note": "Winamax",
+        "id": 1781089515014
+      },
+      {
+        "day": 4,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 22.7,
+        "note": "Harmonie",
+        "id": 1781089529140
+      },
+      {
+        "day": 5,
+        "section": "income",
+        "category": "Salary",
+        "amount": 313.34,
+        "note": "AAH",
+        "id": 1781089543815
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 13.7,
+        "note": "Mutex",
+        "id": 1781089561193
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 61.62,
+        "note": "Harmonie",
+        "id": 1781089572221
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Cell Phone",
+        "amount": 21.99,
+        "note": "Bouygues",
+        "id": 1781089583656
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Taxes / Fines",
+        "amount": 0.99,
+        "note": "BoursoProtect",
+        "id": 1781089596771
+      },
+      {
+        "day": 8,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 20,
+        "note": "Cap 3000 (Tete dans les nuages)",
+        "id": 1781089624764
+      },
+      {
+        "day": 8,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 10,
+        "note": "Panasia (Coca)",
+        "id": 1781089645910
+      },
+      {
+        "day": 9,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 16.99,
+        "note": "Apple (Youtube)",
+        "id": 1781089662046
+      },
+      {
+        "day": 11,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 12.4,
+        "note": "Auchan (Shampoo)",
+        "id": 1781089687871
+      },
+      {
+        "day": 11,
+        "section": "variable",
+        "category": "E-Vape",
+        "amount": 100.1,
+        "note": "Dragon's Vape",
+        "id": 1781089706899
+      },
+      {
+        "day": 10,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 18,
+        "note": "Le Relax (Cafe)",
+        "id": 1781089759404
+      },
+      {
+        "day": 10,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 4,
+        "note": "Maison Plantes",
+        "id": 1781089775032
+      },
+      {
+        "day": 10,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 46.89,
+        "note": "Tigermilk",
+        "id": 1781089792758
+      },
+      {
+        "day": 11,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 2.99,
+        "note": "Apple (iCloud)",
+        "id": 1781089811519
+      },
+      {
+        "day": 99,
+        "section": "income",
+        "category": "Misc",
+        "amount": 0.07,
+        "note": "REGUL",
+        "id": 1781094944364
+      },
+      {
+        "day": 11,
+        "section": "income",
+        "category": "Salary",
+        "amount": 777.51,
+        "note": "CAF",
+        "id": 1781608753633
+      },
+      {
+        "day": 15,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 30,
+        "note": "Ele's (MysteryRoom)",
+        "id": 1781608801907
+      },
+      {
+        "day": 15,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 102,
+        "note": "Mysteroom",
+        "id": 1781608821787
+      },
+      {
+        "day": 18,
+        "section": "variable",
+        "category": "Health",
+        "amount": 7.75,
+        "note": "Pharmacie Haloui",
+        "id": 1781608847575
+      },
+      {
+        "day": 22,
+        "section": "variable",
+        "category": "Gifts",
+        "amount": 50,
+        "note": "Leetchi (Olivia's BD)",
+        "id": 1782336965481
+      },
+      {
+        "day": 24,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 195,
+        "note": "Vir Ines (Parfum)",
+        "id": 1782337014816
+      },
+      {
+        "day": 25,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 310.2,
+        "note": "Sihoo",
+        "id": 1782747369125
+      },
+      {
+        "day": 26,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 89,
+        "note": "URSSAF",
+        "id": 1782747409338
+      },
+      {
+        "day": 28,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 111.99,
+        "note": "Nike",
+        "id": 1782747432837
+      }
+    ]
+  },
+  "2026-4": {
+    "income": {
+      "Salary": {
+        "planned": 0,
+        "actual": 1614.2
+      },
+      "Refunds": {
+        "planned": 0,
+        "actual": 28.68
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Savings": {
+        "planned": 0,
+        "actual": 500
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Tokimo": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cell Phone": {
+        "planned": 21.99,
+        "actual": 22.22,
+        "breakdown": [
+          {
+            "label": "Bouygues",
+            "amount": 21.99
+          }
+        ]
+      },
+      "Subscriptions": {
+        "planned": 19.98,
+        "actual": 19.98,
+        "breakdown": [
+          {
+            "label": "Youtube",
+            "amount": 16.99
+          },
+          {
+            "label": "iCloud",
+            "amount": 2.99
+          }
+        ]
+      },
+      "Groceries": {
+        "planned": 0,
+        "actual": 656.96
+      },
+      "Insurance": {
+        "planned": 75.32,
+        "actual": 75.32,
+        "breakdown": [
+          {
+            "label": "Harmonie Mutuelle",
+            "amount": 75.32
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 70.05
+      },
+      "Taxes / Fines": {
+        "planned": 0.99,
+        "actual": 17.85,
+        "breakdown": [
+          {
+            "label": "BoursoProtect",
+            "amount": 0.99
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 0,
+        "actual": 209
+      },
+      "Shopping": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Health": {
+        "planned": 0,
+        "actual": 1084.88
+      },
+      "Gifts": {
+        "planned": 0,
+        "actual": 0
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Transport": {
+        "planned": 0,
+        "actual": 13
+      },
+      "Activities": {
+        "planned": 0,
+        "actual": 194
+      },
+      "Travel": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 80
+      },
+      "Cash Money": {
+        "planned": 0,
+        "actual": 0,
+        "breakdown": []
+      }
+    },
+    "debt": {
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Myriam": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": [
+      {
+        "day": 4,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 128,
+        "note": "OGCN boutique",
+        "id": 1781088174338
+      },
+      {
+        "day": 4,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 27.62,
+        "note": "Super U",
+        "id": 1781088196387
+      },
+      {
+        "day": 4,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 46.53,
+        "note": "Puharre (Boucherie)",
+        "id": 1781088276891
+      },
+      {
+        "day": 5,
+        "section": "income",
+        "category": "Salary",
+        "amount": 313.34,
+        "note": "AAH",
+        "id": 1781088296512
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 13.7,
+        "note": "Mutex",
+        "id": 1781088309657
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 61.62,
+        "note": "Harmonie",
+        "id": 1781088326755
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Cell Phone",
+        "amount": 22.22,
+        "note": "Bouygues",
+        "id": 1781088337955
+      },
+      {
+        "day": 7,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 26,
+        "note": "OGCN",
+        "id": 1781088370177
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Taxes / Fines",
+        "amount": 0.99,
+        "note": "BoursoProtect",
+        "id": 1781088383335
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Taxes / Fines",
+        "amount": 16.86,
+        "note": "La Poste",
+        "id": 1781088399908
+      },
+      {
+        "day": 11,
+        "section": "income",
+        "category": "Salary",
+        "amount": 1300.86,
+        "note": "France Travail",
+        "id": 1781088419949
+      },
+      {
+        "day": 11,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 2.99,
+        "note": "Apple (iCloud)",
+        "id": 1781088438122
+      },
+      {
+        "day": 11,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 10,
+        "note": "Winamax",
+        "id": 1781088455727
+      },
+      {
+        "day": 11,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 10,
+        "note": "Winamax",
+        "id": 1781088463408
+      },
+      {
+        "day": 11,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 16.99,
+        "note": "Apple (Youtube)",
+        "id": 1781088491963
+      },
+      {
+        "day": 11,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 120,
+        "note": "Fora (Magma)",
+        "id": 1781088692397
+      },
+      {
+        "day": 11,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 45,
+        "note": "Exode",
+        "id": 1781088703121
+      },
+      {
+        "day": 12,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 30.1,
+        "note": "Pharmacie",
+        "id": 1781088733043
+      },
+      {
+        "day": 12,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 10,
+        "note": "Winamax",
+        "id": 1781088743082
+      },
+      {
+        "day": 15,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 35.01,
+        "note": "Auchan",
+        "id": 1781088765287
+      },
+      {
+        "day": 18,
+        "section": "variable",
+        "category": "Misc",
+        "amount": 80,
+        "note": "Virement Ele",
+        "id": 1781088796009
+      },
+      {
+        "day": 18,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 15,
+        "note": "Vibes",
+        "id": 1781088806881
+      },
+      {
+        "day": 18,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 56.37,
+        "note": "Super U",
+        "id": 1781088820312
+      },
+      {
+        "day": 18,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 3.2,
+        "note": "CHU",
+        "id": 1781088833592
+      },
+      {
+        "day": 20,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 10,
+        "note": "Winamax",
+        "id": 1781088848103
+      },
+      {
+        "day": 21,
+        "section": "variable",
+        "category": "Health",
+        "amount": 14.88,
+        "note": "Cabinet imagerie",
+        "id": 1781088869293
+      },
+      {
+        "day": 21,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 9,
+        "note": "Le Relax (Cafe)",
+        "id": 1781088890450
+      },
+      {
+        "day": 22,
+        "section": "variable",
+        "category": "Health",
+        "amount": 1000,
+        "note": "Dr Schramm",
+        "id": 1781088906482
+      },
+      {
+        "day": 22,
+        "section": "variable",
+        "category": "Health",
+        "amount": 70,
+        "note": "Dr Schramm",
+        "id": 1781088915582
+      },
+      {
+        "day": 26,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 13.8,
+        "note": "Harmonie",
+        "id": 1781088935888
+      },
+      {
+        "day": 26,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 65,
+        "note": "Povera",
+        "id": 1781088943614
+      },
+      {
+        "day": 26,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 6.3,
+        "note": "Parking",
+        "id": 1781088968040
+      },
+      {
+        "day": 26,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 29.21,
+        "note": "Poissonier",
+        "id": 1781088983931
+      },
+      {
+        "day": 26,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 19,
+        "note": "Boite a Fromage",
+        "id": 1781088999225
+      },
+      {
+        "day": 26,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 3.5,
+        "note": "Escota",
+        "id": 1781089011506
+      },
+      {
+        "day": 27,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 14.88,
+        "note": "Harmonie",
+        "id": 1781089027618
+      },
+      {
+        "day": 28,
+        "section": "income",
+        "category": "Savings",
+        "amount": 500,
+        "note": "BoursoPlus",
+        "id": 1781089053543
+      },
+      {
+        "day": 28,
+        "section": "savings_withdrawal",
+        "category": "BoursoPlus",
+        "amount": 500,
+        "note": "",
+        "id": 1781089062954
+      },
+      {
+        "day": 29,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 368.12,
+        "note": "Greenwhey",
+        "id": 1781089086671
+      },
+      {
+        "day": 29,
+        "section": "fixed",
+        "category": "Car",
+        "amount": 70.05,
+        "note": "Fuel",
+        "id": 1781094219050
+      }
+    ]
+  },
+  "2026-3": {
+    "income": {
+      "Salary": {
+        "planned": 0,
+        "actual": 703.35
+      },
+      "Refunds": {
+        "planned": 0,
+        "actual": 144.65
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Savings": {
+        "planned": 0,
+        "actual": 1300
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Tokimo": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cell Phone": {
+        "planned": 21.99,
+        "actual": 24.61,
+        "breakdown": [
+          {
+            "label": "Bouygues",
+            "amount": 21.99
+          }
+        ]
+      },
+      "Subscriptions": {
+        "planned": 19.98,
+        "actual": 19.98,
+        "breakdown": [
+          {
+            "label": "Youtube",
+            "amount": 16.99
+          },
+          {
+            "label": "iCloud",
+            "amount": 2.99
+          }
+        ]
+      },
+      "Groceries": {
+        "planned": 0,
+        "actual": 137.91
+      },
+      "Insurance": {
+        "planned": 75.32,
+        "actual": 75.32,
+        "breakdown": [
+          {
+            "label": "Harmonie Mutuelle",
+            "amount": 75.32
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0.99,
+        "actual": 0.99,
+        "breakdown": [
+          {
+            "label": "BoursoProtect",
+            "amount": 0.99
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 0,
+        "actual": 383.4
+      },
+      "Shopping": {
+        "planned": 349.99,
+        "actual": 933.19,
+        "breakdown": [
+          {
+            "label": "TUF",
+            "amount": 349.99
+          }
+        ]
+      },
+      "Health": {
+        "planned": 0,
+        "actual": 43.03
+      },
+      "Gifts": {
+        "planned": 0,
+        "actual": 0
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Transport": {
+        "planned": 0,
+        "actual": 9.8
+      },
+      "Activities": {
+        "planned": 0,
+        "actual": 26
+      },
+      "Travel": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 30
+      },
+      "Cash Money": {
+        "planned": 0,
+        "actual": 50,
+        "breakdown": []
+      }
+    },
+    "debt": {
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Myriam": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": [
+      {
+        "day": 1,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 20.74,
+        "note": "Harmonie Mutuelle",
+        "id": 1780925083257
+      },
+      {
+        "day": 2,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 45,
+        "note": "Vibes",
+        "id": 1780925095326
+      },
+      {
+        "day": 7,
+        "section": "income",
+        "category": "Salary",
+        "amount": 175.7,
+        "note": "CPAM (Arret maladie)",
+        "id": 1780925135299
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 61.62,
+        "note": "Harmonie",
+        "id": 1780925155318
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Cell Phone",
+        "amount": 24.61,
+        "note": "Bouygues",
+        "id": 1780925168905
+      },
+      {
+        "day": 7,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 38.39,
+        "note": "GOG",
+        "id": 1780925197385
+      },
+      {
+        "day": 7,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 36.6,
+        "note": "Tayac Patisserie",
+        "id": 1780925244933
+      },
+      {
+        "day": 7,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 11,
+        "note": "Ice cream",
+        "id": 1780925314613
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Taxes / Fines",
+        "amount": 0.99,
+        "note": "BoursoProtect",
+        "id": 1780925327626
+      },
+      {
+        "day": 7,
+        "section": "income",
+        "category": "Salary",
+        "amount": 527.65,
+        "note": "AAH",
+        "id": 1780925351392
+      },
+      {
+        "day": 7,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 4.2,
+        "note": "CHU",
+        "id": 1780925367343
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 50.42,
+        "note": "La Laiterie Metin",
+        "id": 1780925397640
+      },
+      {
+        "day": 8,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 26,
+        "note": "OGCN",
+        "id": 1780925416322
+      },
+      {
+        "day": 8,
+        "section": "variable",
+        "category": "Health",
+        "amount": 3.68,
+        "note": "Pharmacie",
+        "id": 1780925432979
+      },
+      {
+        "day": 8,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 1.2,
+        "note": "Pain",
+        "id": 1780925455310
+      },
+      {
+        "day": 9,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 16.99,
+        "note": "Apple (Youtube)",
+        "id": 1780925471147
+      },
+      {
+        "day": 10,
+        "section": "variable",
+        "category": "Health",
+        "amount": 39.35,
+        "note": "Dentiste",
+        "id": 1780925488016
+      },
+      {
+        "day": 10,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 4.35,
+        "note": "Intermarche",
+        "id": 1780925527410
+      },
+      {
+        "day": 13,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 13.7,
+        "note": "Mutex",
+        "id": 1780925542148
+      },
+      {
+        "day": 13,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 2.99,
+        "note": "Apple (iCloud)",
+        "id": 1780925563717
+      },
+      {
+        "day": 13,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 31.34,
+        "note": "Super U",
+        "id": 1780925575612
+      },
+      {
+        "day": 17,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 23.91,
+        "note": "CPAM",
+        "id": 1780925598501
+      },
+      {
+        "day": 17,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 19.73,
+        "note": "Vinted",
+        "id": 1780925619649
+      },
+      {
+        "day": 20,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 2.62,
+        "note": "Super U",
+        "id": 1780925639839
+      },
+      {
+        "day": 20,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 5.6,
+        "note": "Sta Mars",
+        "id": 1780925694966
+      },
+      {
+        "day": 20,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 4.99,
+        "note": "HP inc",
+        "id": 1780925728911
+      },
+      {
+        "day": 20,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 100,
+        "note": "Pauma (les epicuriens)",
+        "id": 1780925752958
+      },
+      {
+        "day": 20,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 15.8,
+        "note": "The original Foca",
+        "id": 1780925769509
+      },
+      {
+        "day": 20,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 50,
+        "note": "Povera",
+        "id": 1780925789817
+      },
+      {
+        "day": 20,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 40,
+        "note": "Dry bar",
+        "id": 1780925805687
+      },
+      {
+        "day": 20,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 42.99,
+        "note": "Gourmandiz",
+        "id": 1780925821469
+      },
+      {
+        "day": 20,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 100,
+        "note": "Virement Ines (for my BD)",
+        "id": 1780925836219
+      },
+      {
+        "day": 21,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 204.85,
+        "note": "Thule",
+        "id": 1780925881602
+      },
+      {
+        "day": 24,
+        "section": "variable",
+        "category": "Cash Money",
+        "amount": 50,
+        "note": "",
+        "id": 1780925900393
+      },
+      {
+        "day": 28,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 349.99,
+        "note": "Sofinco (TUF)",
+        "id": 1780925952280
+      },
+      {
+        "day": 29,
+        "section": "variable",
+        "category": "Misc",
+        "amount": 30,
+        "note": "Virement Ines",
+        "id": 1780925984925
+      },
+      {
+        "day": 29,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 85,
+        "note": "Virafeuil",
+        "id": 1780926029714
+      },
+      {
+        "day": 29,
+        "section": "savings_withdrawal",
+        "category": "BoursoPlus",
+        "amount": 300,
+        "note": "",
+        "id": 1780926044487
+      },
+      {
+        "day": 30,
+        "section": "savings_withdrawal",
+        "category": "BoursoPlus",
+        "amount": 500,
+        "note": "",
+        "id": 1780926056779
+      },
+      {
+        "day": 30,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 58.13,
+        "note": "Pull&Bear",
+        "id": 1780926076422
+      },
+      {
+        "day": 30,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 262.1,
+        "note": "Mango",
+        "id": 1780926094595
+      },
+      {
+        "day": 27,
+        "section": "savings_withdrawal",
+        "category": "BoursoPlus",
+        "amount": 500,
+        "note": "",
+        "id": 1780937454233
+      },
+      {
+        "day": 27,
+        "section": "income",
+        "category": "Savings",
+        "amount": 500,
+        "note": "BoursoPlus",
+        "id": 1781088047093
+      },
+      {
+        "day": 29,
+        "section": "income",
+        "category": "Savings",
+        "amount": 300,
+        "note": "BoursoPlus",
+        "id": 1781088057969
+      },
+      {
+        "day": 30,
+        "section": "income",
+        "category": "Savings",
+        "amount": 500,
+        "note": "BoursoPlus",
+        "id": 1781088069170
+      }
+    ]
+  },
+  "2026-2": {
+    "income": {
+      "Salary": {
+        "planned": 1250,
+        "actual": 1533.14,
+        "breakdown": [
+          {
+            "label": "France Travail",
+            "amount": 1000
+          },
+          {
+            "label": "AAH",
+            "amount": 250
+          }
+        ]
+      },
+      "Refunds": {
+        "planned": 1257,
+        "actual": 1316.6,
+        "breakdown": [
+          {
+            "label": "Airplane ticket NZ",
+            "amount": 1257
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Savings": {
+        "planned": 4000,
+        "actual": 4000,
+        "breakdown": [
+          {
+            "label": "to Invest",
+            "amount": 1500
+          },
+          {
+            "label": "NZ Trip",
+            "amount": 2500
+          }
+        ]
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 2000,
+        "actual": 2000,
+        "breakdown": [
+          {
+            "label": "Extra money",
+            "amount": 2000
+          }
+        ]
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 300,
+        "actual": 300,
+        "breakdown": [
+          {
+            "label": "",
+            "amount": 300
+          }
+        ]
+      },
+      "Tokimo": {
+        "planned": 100,
+        "actual": 100,
+        "breakdown": [
+          {
+            "label": "New project",
+            "amount": 100
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Invest": {
+        "planned": 1000,
+        "actual": 1000,
+        "breakdown": [
+          {
+            "label": "Open Fortuneo Account",
+            "amount": 1000
+          }
+        ]
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cell Phone": {
+        "planned": 21.99,
+        "actual": 21.99,
+        "breakdown": [
+          {
+            "label": "Bouygues",
+            "amount": 21.99
+          }
+        ]
+      },
+      "Subscriptions": {
+        "planned": 19.98,
+        "actual": 19.98,
+        "breakdown": [
+          {
+            "label": "Youtube",
+            "amount": 16.99
+          },
+          {
+            "label": "iCloud",
+            "amount": 2.99
+          }
+        ]
+      },
+      "Groceries": {
+        "planned": 50,
+        "actual": 52.84,
+        "breakdown": [
+          {
+            "label": "",
+            "amount": 50
+          }
+        ]
+      },
+      "Insurance": {
+        "planned": 75.32,
+        "actual": 75.32,
+        "breakdown": [
+          {
+            "label": "Harmonie Mutuelle",
+            "amount": 75.32
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0.99,
+        "actual": 0.99,
+        "breakdown": [
+          {
+            "label": "BoursoProtect",
+            "amount": 0.99,
+            "recurrence": 10
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 75,
+        "actual": 124.5,
+        "breakdown": [
+          {
+            "label": "",
+            "amount": 75
+          }
+        ]
+      },
+      "Shopping": {
+        "planned": 349.99,
+        "actual": 425.46,
+        "breakdown": [
+          {
+            "label": "TUF",
+            "amount": 349.99
+          }
+        ]
+      },
+      "Health": {
+        "planned": 0,
+        "actual": 20.74
+      },
+      "Gifts": {
+        "planned": 150,
+        "actual": 208.98,
+        "breakdown": [
+          {
+            "label": "Ele's BD present",
+            "amount": 150
+          }
+        ]
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Transport": {
+        "planned": 10,
+        "actual": 2.2,
+        "breakdown": [
+          {
+            "label": "",
+            "amount": 10
+          }
+        ]
+      },
+      "Activities": {
+        "planned": 26,
+        "actual": 36,
+        "breakdown": [
+          {
+            "label": "OGCN",
+            "amount": 26
+          }
+        ]
+      },
+      "Travel": {
+        "planned": 2600,
+        "actual": 2513.92,
+        "breakdown": [
+          {
+            "label": "NZ fly ticket",
+            "amount": 2600
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cash Money": {
+        "planned": 0,
+        "actual": 50
+      }
+    },
+    "debt": {
+      "Boursorama": {
+        "planned": 261.65,
+        "actual": 261.55
+      },
+      "Myriam": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": [
+      {
+        "day": 2,
+        "section": "savings",
+        "category": "Invest",
+        "amount": 1000,
+        "note": "Fortuneo",
+        "id": 1780922790109
+      },
+      {
+        "day": 4,
+        "section": "income",
+        "category": "Salary",
+        "amount": 915.42,
+        "note": "France Travail",
+        "id": 1780922811515
+      },
+      {
+        "day": 4,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 10,
+        "note": "FDJ`",
+        "id": 1780922827437
+      },
+      {
+        "day": 5,
+        "section": "income",
+        "category": "Salary",
+        "amount": 291.42,
+        "note": "CAF",
+        "id": 1780922846185
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 13.7,
+        "note": "Mutex",
+        "id": 1780922859472
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 61.62,
+        "note": "Harmonie",
+        "id": 1780922874150
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Cell Phone",
+        "amount": 21.99,
+        "note": "Bouygues",
+        "id": 1780922886090
+      },
+      {
+        "day": 5,
+        "section": "variable",
+        "category": "Gifts",
+        "amount": 148.98,
+        "note": "Fujifilm",
+        "id": 1780922917479
+      },
+      {
+        "day": 6,
+        "section": "fixed",
+        "category": "Taxes / Fines",
+        "amount": 0.99,
+        "note": "BoursoProtect",
+        "id": 1780922932831
+      },
+      {
+        "day": 9,
+        "section": "debt",
+        "category": "Boursorama",
+        "amount": 261.55,
+        "note": "",
+        "id": 1780923029181
+      },
+      {
+        "day": 9,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 26,
+        "note": "OGCN",
+        "id": 1780923043363
+      },
+      {
+        "day": 9,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 16.99,
+        "note": "Apple (Youtube)",
+        "id": 1780923061444
+      },
+      {
+        "day": 9,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 42.49,
+        "note": "GOG (Mount & Blade)",
+        "id": 1780923086634
+      },
+      {
+        "day": 9,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 34.5,
+        "note": "Delicity",
+        "id": 1780923106435
+      },
+      {
+        "day": 11,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 2.99,
+        "note": "Apple (iCloud)",
+        "id": 1780923143725
+      },
+      {
+        "day": 16,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 2.2,
+        "note": "CHU",
+        "id": 1780923198859
+      },
+      {
+        "day": 17,
+        "section": "variable",
+        "category": "Gifts",
+        "amount": 60,
+        "note": "Fleuriste",
+        "id": 1780923230964
+      },
+      {
+        "day": 19,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 1257,
+        "note": "Virement Eleftheria (NZ Trip)",
+        "id": 1780923415239
+      },
+      {
+        "day": 20,
+        "section": "income",
+        "category": "Salary",
+        "amount": 326.3,
+        "note": "CPAM (arret maladie)",
+        "id": 1780923447004
+      },
+      {
+        "day": 20,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 6.9,
+        "note": "Carrefour TNL",
+        "id": 1780923485080
+      },
+      {
+        "day": 20,
+        "section": "savings",
+        "category": "Tokimo",
+        "amount": 100,
+        "note": "",
+        "id": 1780923501515
+      },
+      {
+        "day": 20,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 25.94,
+        "note": "Amazon (Brush)",
+        "id": 1780923530793
+      },
+      {
+        "day": 20,
+        "section": "variable",
+        "category": "Travel",
+        "amount": 2513.92,
+        "note": "GoVoyage (NZ Trip)",
+        "id": 1780923563282
+      },
+      {
+        "day": 20,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 29.99,
+        "note": "Micromania (Controller)",
+        "id": 1780923599146
+      },
+      {
+        "day": 20,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 2.99,
+        "note": "Steam",
+        "id": 1780923622949
+      },
+      {
+        "day": 25,
+        "section": "savings",
+        "category": "BoursoPlus",
+        "amount": 2000,
+        "note": "",
+        "id": 1780923685561
+      },
+      {
+        "day": 20,
+        "section": "savings",
+        "category": "Wise",
+        "amount": 300,
+        "note": "",
+        "id": 1780924054801
+      },
+      {
+        "day": 2,
+        "section": "savings_withdrawal",
+        "category": "BoursoPlus",
+        "amount": 1500,
+        "note": "",
+        "id": 1780924373232
+      },
+      {
+        "day": 19,
+        "section": "savings_withdrawal",
+        "category": "BoursoPlus",
+        "amount": 2500,
+        "note": "",
+        "id": 1780924388819
+      },
+      {
+        "day": 26,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 65,
+        "note": "Peixes Cave",
+        "id": 1780924852053
+      },
+      {
+        "day": 27,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 39.6,
+        "note": "OGCN (PSG game)",
+        "id": 1780924888455
+      },
+      {
+        "day": 27,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 25,
+        "note": "Comme un dimanche",
+        "id": 1780924904966
+      },
+      {
+        "day": 27,
+        "section": "variable",
+        "category": "Health",
+        "amount": 20.74,
+        "note": "Azuradiologie",
+        "id": 1780924935367
+      },
+      {
+        "day": 27,
+        "section": "variable",
+        "category": "Cash Money",
+        "amount": 50,
+        "note": "",
+        "id": 1780924950268
+      },
+      {
+        "day": 30,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 349.99,
+        "note": "Sofinco (TUF)",
+        "id": 1780924979888
+      },
+      {
+        "day": 30,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 20,
+        "note": "Virement Ines",
+        "id": 1780925000842
+      },
+      {
+        "day": 31,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 20,
+        "note": "Auchan",
+        "id": 1780925030392
+      },
+      {
+        "day": 2,
+        "section": "income",
+        "category": "Savings",
+        "amount": 1500,
+        "note": "",
+        "id": 1780941374731
+      },
+      {
+        "day": 19,
+        "section": "income",
+        "category": "Savings",
+        "amount": 2500,
+        "note": "",
+        "id": 1780941395753
+      }
+    ]
+  },
+  "2026-1": {
+    "income": {
+      "Salary": {
+        "planned": 1695.4,
+        "actual": 1736.89,
+        "breakdown": [
+          {
+            "label": "France Travail",
+            "amount": 1445.4
+          },
+          {
+            "label": "AAH",
+            "amount": 250
+          }
+        ]
+      },
+      "Refunds": {
+        "planned": 137.99,
+        "actual": 137.99,
+        "breakdown": [
+          {
+            "label": "Ines",
+            "amount": 10
+          },
+          {
+            "label": "Fnac(SSD)",
+            "amount": 127.99
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Savings": {
+        "planned": 0,
+        "actual": 107.65
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 150,
+        "actual": 150,
+        "breakdown": [
+          {
+            "label": "",
+            "amount": 150
+          }
+        ]
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Tokimo": {
+        "planned": 400,
+        "actual": 400,
+        "breakdown": [
+          {
+            "label": "Open Tokimo",
+            "amount": 400
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 0,
+        "actual": 0,
+        "breakdown": []
+      },
+      "Cell Phone": {
+        "planned": 21.99,
+        "actual": 22.22,
+        "breakdown": [
+          {
+            "label": "Bouygues",
+            "amount": 21.99
+          }
+        ]
+      },
+      "Subscriptions": {
+        "planned": 19.98,
+        "actual": 19.98,
+        "breakdown": [
+          {
+            "label": "Youtube",
+            "amount": 16.99
+          },
+          {
+            "label": "iCloud",
+            "amount": 2.99
+          }
+        ]
+      },
+      "Groceries": {
+        "planned": 50,
+        "actual": 48.48,
+        "breakdown": [
+          {
+            "label": "",
+            "amount": 50
+          }
+        ]
+      },
+      "Insurance": {
+        "planned": 75.32,
+        "actual": 75.32,
+        "breakdown": [
+          {
+            "label": "Harmonie Mutuelle",
+            "amount": 75.32
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Fuel/ Car": {
+        "planned": 50,
+        "actual": 50.03,
+        "breakdown": [
+          {
+            "label": "Fuel",
+            "amount": 50
+          }
+        ]
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 17.2,
+        "actual": 52.2,
+        "breakdown": [
+          {
+            "label": "",
+            "amount": 0.99
+          },
+          {
+            "label": "",
+            "amount": 16.21
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 10.3,
+        "actual": 10.3,
+        "breakdown": [
+          {
+            "label": "",
+            "amount": 10.3
+          }
+        ]
+      },
+      "Shopping": {
+        "planned": 527.98,
+        "actual": 550.96,
+        "breakdown": [
+          {
+            "label": "TUF",
+            "amount": 349.99,
+            "recurrence": 3
+          },
+          {
+            "label": "SSD",
+            "amount": 127.99
+          },
+          {
+            "label": "Video Game",
+            "amount": 50
+          }
+        ]
+      },
+      "Health": {
+        "planned": 190.21,
+        "actual": 190.21,
+        "breakdown": [
+          {
+            "label": "Greenwhey",
+            "amount": 190.21
+          }
+        ]
+      },
+      "Gifts": {
+        "planned": 0,
+        "actual": 0
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 43.8
+      },
+      "Transport": {
+        "planned": 15,
+        "actual": 5,
+        "breakdown": [
+          {
+            "label": "",
+            "amount": 15
+          }
+        ]
+      },
+      "Activities": {
+        "planned": 26,
+        "actual": 26,
+        "breakdown": [
+          {
+            "label": "OGCN",
+            "amount": 26
+          }
+        ]
+      },
+      "Travel": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cash Money": {
+        "planned": 0,
+        "actual": 150,
+        "breakdown": []
+      }
+    },
+    "debt": {
+      "Boursorama": {
+        "planned": 261.65,
+        "actual": 261.65,
+        "recurrence": 3
+      },
+      "Myriam": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": [
+      {
+        "day": 2,
+        "section": "fixed",
+        "category": "Taxes / Fines",
+        "amount": 16.21,
+        "note": "Comptable Public",
+        "id": 1780920069094
+      },
+      {
+        "day": 2,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 2.5,
+        "note": "Distributeur 42",
+        "id": 1780920087602
+      },
+      {
+        "day": 3,
+        "section": "income",
+        "category": "Salary",
+        "amount": 1445.4,
+        "note": "France Travail",
+        "id": 1780920102644
+      },
+      {
+        "day": 5,
+        "section": "income",
+        "category": "Salary",
+        "amount": 291.49,
+        "note": "CAF",
+        "id": 1780920119756
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 13.7,
+        "note": "Mutex",
+        "id": 1780920152243
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 61.62,
+        "note": "Harmonie",
+        "id": 1780920169509
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Cell Phone",
+        "amount": 22.22,
+        "note": "Bouygues",
+        "id": 1780920188608
+      },
+      {
+        "day": 6,
+        "section": "fixed",
+        "category": "Taxes / Fines",
+        "amount": 0.99,
+        "note": "BoursoProtect",
+        "id": 1780920208014
+      },
+      {
+        "day": 9,
+        "section": "debt",
+        "category": "Boursorama",
+        "amount": 261.65,
+        "note": "",
+        "id": 1780920233823
+      },
+      {
+        "day": 9,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 10,
+        "note": "Virement Ines",
+        "id": 1780920256094
+      },
+      {
+        "day": 9,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 16.99,
+        "note": "Youtube (Apple)",
+        "id": 1780920282150
+      },
+      {
+        "day": 10,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 26,
+        "note": "OGCN",
+        "id": 1780920307376
+      },
+      {
+        "day": 10,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 127.99,
+        "note": "Fnac Market",
+        "id": 1780920335568
+      },
+      {
+        "day": 11,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 2.99,
+        "note": "iCloud (Apple)",
+        "id": 1780920359664
+      },
+      {
+        "day": 12,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 127.99,
+        "note": "Amazon (SSD)",
+        "id": 1780920390526
+      },
+      {
+        "day": 12,
+        "section": "fixed",
+        "category": "Fuel/ Car",
+        "amount": 50.03,
+        "note": "Fuel",
+        "id": 1780920447969
+      },
+      {
+        "day": 12,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 0.6,
+        "note": "Distributeur 42",
+        "id": 1780920464882
+      },
+      {
+        "day": 16,
+        "section": "savings",
+        "category": "Crypto",
+        "amount": 150,
+        "note": "Kraken",
+        "id": 1780920492262
+      },
+      {
+        "day": 16,
+        "section": "income",
+        "category": "Savings",
+        "amount": 107.65,
+        "note": "From Crypto.com",
+        "id": 1780920538448
+      },
+      {
+        "day": 18,
+        "section": "variable",
+        "category": "E-Vape",
+        "amount": 43.8,
+        "note": "Dragon's Vape",
+        "id": 1780920558286
+      },
+      {
+        "day": 18,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 38.48,
+        "note": "Pharmacie",
+        "id": 1780920576738
+      },
+      {
+        "day": 19,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 7.2,
+        "note": "Selecta",
+        "id": 1780920598124
+      },
+      {
+        "day": 19,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 54.99,
+        "note": "Steam (DBZ)",
+        "id": 1780920623117
+      },
+      {
+        "day": 23,
+        "section": "savings",
+        "category": "Tokimo",
+        "amount": 400,
+        "note": "",
+        "id": 1780920652326
+      },
+      {
+        "day": 17,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 17.99,
+        "note": "H&M",
+        "id": 1780920679203
+      },
+      {
+        "day": 17,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 5,
+        "note": "Corvesy",
+        "id": 1780920705823
+      },
+      {
+        "day": 24,
+        "section": "variable",
+        "category": "Cash Money",
+        "amount": 150,
+        "note": "Virement Ines",
+        "id": 1780920725855
+      },
+      {
+        "day": 25,
+        "section": "variable",
+        "category": "Health",
+        "amount": 190.21,
+        "note": "Greenwhey",
+        "id": 1780920747943
+      },
+      {
+        "day": 27,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 10,
+        "note": "Virement Ines",
+        "id": 1780920765673
+      },
+      {
+        "day": 28,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 349.99,
+        "note": "Sofinco Fnac",
+        "id": 1780920786633
+      },
+      {
+        "day": 28,
+        "section": "fixed",
+        "category": "Taxes / Fines",
+        "amount": 35,
+        "note": "Amende Papa",
+        "id": 1780920816679
+      }
+    ]
+  },
+  "2026-0": {
+    "income": {
+      "Salary": {
+        "planned": 1511.36,
+        "actual": 4198.18
+      },
+      "Refunds": {
+        "planned": 70,
+        "actual": 70
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 2500,
+        "actual": 2500
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 150,
+        "actual": 150
+      },
+      "Tokimo": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cell Phone": {
+        "planned": 21.99,
+        "actual": 21.99,
+        "breakdown": [
+          {
+            "label": "Bouygues",
+            "amount": 21.99,
+            "recurrence": 12
+          }
+        ]
+      },
+      "Subscriptions": {
+        "planned": 19.98,
+        "actual": 19.98,
+        "breakdown": [
+          {
+            "label": "Youtube",
+            "amount": 16.99,
+            "recurrence": 12
+          },
+          {
+            "label": "iCloud",
+            "amount": 2.99,
+            "recurrence": 12
+          }
+        ]
+      },
+      "Groceries": {
+        "planned": 100,
+        "actual": 0
+      },
+      "Insurance": {
+        "planned": 75.32,
+        "actual": 75.32,
+        "breakdown": [
+          {
+            "label": "Harmonie Mutuelle",
+            "amount": 75.32,
+            "recurrence": 12
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Fuel/ Car": {
+        "planned": 300,
+        "actual": 319.05
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0,
+        "actual": 12.07
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 0,
+        "actual": 51.8
+      },
+      "Shopping": {
+        "planned": 0,
+        "actual": 673.49,
+        "breakdown": []
+      },
+      "Health": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Gifts": {
+        "planned": 0,
+        "actual": 44.99
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Transport": {
+        "planned": 0,
+        "actual": 13.7
+      },
+      "Activities": {
+        "planned": 26,
+        "actual": 86.48,
+        "breakdown": [
+          {
+            "label": "OGCN",
+            "amount": 26,
+            "recurrence": 3
+          }
+        ]
+      },
+      "Travel": {
+        "planned": 0,
+        "actual": 333
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cash Money": {
+        "planned": 0,
+        "actual": 40,
+        "breakdown": []
+      }
+    },
+    "debt": {
+      "Boursorama": {
+        "planned": 261.65,
+        "actual": 261.65,
+        "recurrence": 3
+      },
+      "Myriam": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": [
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Cell Phone",
+        "amount": 21.99,
+        "note": "Bouygues",
+        "id": 1780913068474
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 13.7,
+        "note": "Mutex",
+        "id": 1780913090644
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 61.62,
+        "note": "Harmonie",
+        "id": 1780913116553
+      },
+      {
+        "day": 6,
+        "section": "variable",
+        "category": "Gifts",
+        "amount": 44.99,
+        "note": "Jardiland",
+        "id": 1780913141291
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Taxes / Fines",
+        "amount": 0.99,
+        "note": "BoursoProtect",
+        "id": 1780913177225
+      },
+      {
+        "day": 7,
+        "section": "income",
+        "category": "Salary",
+        "amount": 1445.4,
+        "note": "France Travail",
+        "id": 1780913196471
+      },
+      {
+        "day": 8,
+        "section": "debt",
+        "category": "Boursorama",
+        "amount": 261.65,
+        "note": "",
+        "id": 1780913227411
+      },
+      {
+        "day": 8,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 3.5,
+        "note": "EasyJet",
+        "id": 1780913244583
+      },
+      {
+        "day": 9,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 26,
+        "note": "OGCN",
+        "id": 1780913270287
+      },
+      {
+        "day": 9,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 16.99,
+        "note": "Youtube - Apple",
+        "id": 1780913336320
+      },
+      {
+        "day": 12,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 2.99,
+        "note": "iCloud (Apple)",
+        "id": 1780913365949
+      },
+      {
+        "day": 15,
+        "section": "savings",
+        "category": "Wise",
+        "amount": 150,
+        "note": "",
+        "id": 1780913391835
+      },
+      {
+        "day": 21,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 0.6,
+        "note": "Distributeur 42",
+        "id": 1780913416801
+      },
+      {
+        "day": 22,
+        "section": "income",
+        "category": "Salary",
+        "amount": 2752.78,
+        "note": "CAF",
+        "id": 1780913441000
+      },
+      {
+        "day": 22,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 1.2,
+        "note": "Horodateur",
+        "id": 1780913469725
+      },
+      {
+        "day": 22,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 60.48,
+        "note": "Weezevent",
+        "id": 1780913493341
+      },
+      {
+        "day": 22,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 1.8,
+        "note": "Distributeur 42",
+        "id": 1780913505432
+      },
+      {
+        "day": 23,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 0.6,
+        "note": "Distributeur 42",
+        "id": 1780913515631
+      },
+      {
+        "day": 23,
+        "section": "variable",
+        "category": "Cash Money",
+        "amount": 40,
+        "note": "",
+        "id": 1780913548962
+      },
+      {
+        "day": 23,
+        "section": "fixed",
+        "category": "Fuel/ Car",
+        "amount": 50.06,
+        "note": "",
+        "id": 1780913569561
+      },
+      {
+        "day": 23,
+        "section": "variable",
+        "category": "Travel",
+        "amount": 333,
+        "note": "Virement Ele",
+        "id": 1780913606121
+      },
+      {
+        "day": 27,
+        "section": "fixed",
+        "category": "Fuel/ Car",
+        "amount": 268.99,
+        "note": "Garage Maltesse",
+        "id": 1780913774081
+      },
+      {
+        "day": 27,
+        "section": "fixed",
+        "category": "Taxes / Fines",
+        "amount": 11.08,
+        "note": "La Poste",
+        "id": 1780913798896
+      },
+      {
+        "day": 27,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 8.8,
+        "note": "RLA Automate",
+        "id": 1780913826746
+      },
+      {
+        "day": 27,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 1.8,
+        "note": "Distributeur 42",
+        "id": 1780913839826
+      },
+      {
+        "day": 27,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 9.5,
+        "note": "Class Croute",
+        "id": 1780913855090
+      },
+      {
+        "day": 28,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 70,
+        "note": "Virement Olivia",
+        "id": 1780913872441
+      },
+      {
+        "day": 28,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 32.8,
+        "note": "Sushi Fabron",
+        "id": 1780913885740
+      },
+      {
+        "day": 28,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 1.2,
+        "note": "Distributeur 42",
+        "id": 1780913914088
+      },
+      {
+        "day": 28,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 3.7,
+        "note": "CHU",
+        "id": 1780913933563
+      },
+      {
+        "day": 30,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 384.87,
+        "note": "Sofinco Fnac",
+        "id": 1780913957532
+      },
+      {
+        "day": 31,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 127.99,
+        "note": "Fnac Market",
+        "id": 1780913973319
+      },
+      {
+        "day": 31,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 60,
+        "note": "RK Gaming",
+        "id": 1780913998993
+      },
+      {
+        "day": 31,
+        "section": "savings",
+        "category": "BoursoPlus",
+        "amount": 2500,
+        "note": "",
+        "id": 1780914024108
+      },
+      {
+        "day": 31,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 100.63,
+        "note": "Oney",
+        "id": 1780914417980
+      }
+    ]
+  },
+  "2025-11": {
+    "income": {
+      "Salary": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Refunds": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 7955.85
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 6566.59
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 175.76
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 115.54
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cell Phone": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Subscriptions": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Groceries": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Insurance": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Shopping": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Health": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Gifts": {
+        "planned": 0,
+        "actual": 0
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Transport": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Activities": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Travel": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cash Money": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "debt": {
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Myriam": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": [
+      {
+        "day": 1,
+        "section": "savings",
+        "category": "BoursoPlus",
+        "amount": 6566.59,
+        "note": "",
+        "id": 1780912484159
+      },
+      {
+        "day": 1,
+        "section": "savings",
+        "category": "Crypto",
+        "amount": 175.76,
+        "note": "",
+        "id": 1780912668518
+      },
+      {
+        "day": 1,
+        "section": "savings",
+        "category": "Wise",
+        "amount": 115.54,
+        "note": "",
+        "id": 1780912685402
+      },
+      {
+        "day": 1,
+        "section": "income",
+        "category": "Misc",
+        "amount": 7955.85,
+        "note": "",
+        "id": 1780912736532
+      }
+    ]
+  },
+  "2025-10": {
+    "income": {
+      "Salary": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Refunds": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cell Phone": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Subscriptions": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Groceries": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Insurance": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Shopping": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Health": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Gifts": {
+        "planned": 0,
+        "actual": 0
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Transport": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Activities": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Travel": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cash Money": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "debt": {
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Myriam": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": []
+  },
+  "2026-6": {
+    "income": {
+      "Salary": {
+        "planned": 1600,
+        "actual": 1774.31,
+        "breakdown": [
+          {
+            "label": "AAH",
+            "amount": 500,
+            "checked": true
+          },
+          {
+            "label": "CPAM",
+            "amount": 500,
+            "checked": true
+          },
+          {
+            "label": "France Travail",
+            "amount": 600,
+            "checked": true
+          }
+        ]
+      },
+      "Refunds": {
+        "planned": 1993.8,
+        "actual": 2122.98,
+        "breakdown": [
+          {
+            "label": "Kermesse ticket",
+            "amount": 50,
+            "checked": true
+          },
+          {
+            "label": "From visit Dr Schramm",
+            "amount": 13.8,
+            "checked": true
+          },
+          {
+            "label": "Assurance Habitation Ele's payment",
+            "amount": 71,
+            "checked": true
+          },
+          {
+            "label": "Payment Bond from Ele",
+            "amount": 1194,
+            "checked": true
+          },
+          {
+            "label": "Harmonie Mutuelle (Surgery)",
+            "amount": 265,
+            "checked": true
+          },
+          {
+            "label": "Ceiling fan",
+            "amount": 230,
+            "checked": true
+          },
+          {
+            "label": "Payback taxes",
+            "amount": 170,
+            "checked": true
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0,
+        "breakdown": []
+      },
+      "Savings": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Tokimo": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Invest": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 2746.43,
+        "actual": 2746.43,
+        "breakdown": [
+          {
+            "label": "Bond",
+            "amount": 1856,
+            "checked": true
+          },
+          {
+            "label": "Agency fees",
+            "amount": 551.56,
+            "checked": true
+          },
+          {
+            "label": "Rent",
+            "amount": 329.29,
+            "checked": true
+          },
+          {
+            "label": "Provision",
+            "amount": 9.58,
+            "checked": true
+          }
+        ]
+      },
+      "Cell Phone": {
+        "planned": 21.99,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Bouygues",
+            "amount": 21.99
+          }
+        ]
+      },
+      "Subscriptions": {
+        "planned": 41.97,
+        "actual": 41.97,
+        "breakdown": [
+          {
+            "label": "Youtube",
+            "amount": 16.99,
+            "checked": true
+          },
+          {
+            "label": "iCloud",
+            "amount": 2.99,
+            "checked": true
+          },
+          {
+            "label": "Cell Phone",
+            "amount": 21.99,
+            "recurrence": 6,
+            "checked": true
+          }
+        ]
+      },
+      "Groceries": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Insurance": {
+        "planned": 75.32,
+        "actual": 75.32,
+        "breakdown": [
+          {
+            "label": "Harmonie Mutuelle",
+            "amount": 75.32,
+            "checked": true
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 60,
+        "actual": 61,
+        "breakdown": [
+          {
+            "label": "Barber",
+            "amount": 60,
+            "checked": true
+          }
+        ]
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 75.99,
+        "actual": 75.99,
+        "breakdown": [
+          {
+            "label": "BoursoProtect",
+            "amount": 0.99,
+            "checked": true
+          },
+          {
+            "label": "Fine",
+            "amount": 75,
+            "checked": true
+          }
+        ]
+      },
+      "Apartment's bills": {
+        "planned": 318.5,
+        "actual": 141.5,
+        "breakdown": [
+          {
+            "label": "Gas",
+            "amount": 55,
+            "recurrence": 12
+          },
+          {
+            "label": "Water",
+            "amount": 40
+          },
+          {
+            "label": "Electricity",
+            "amount": 42,
+            "recurrence": 12
+          },
+          {
+            "label": "Internet Box",
+            "amount": 40
+          },
+          {
+            "label": "Assurance Habitation",
+            "amount": 141.5,
+            "checked": true
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Shopping": {
+        "planned": 742.89,
+        "actual": 650.88,
+        "breakdown": [
+          {
+            "label": "Bed sheet set",
+            "amount": 270,
+            "checked": true
+          },
+          {
+            "label": "Pan",
+            "amount": 90
+          },
+          {
+            "label": "Mop",
+            "amount": 20
+          },
+          {
+            "label": "The Witcher3",
+            "amount": 9.99,
+            "checked": true
+          },
+          {
+            "label": "Ceiling fan",
+            "amount": 229,
+            "checked": true
+          },
+          {
+            "label": "Boku",
+            "amount": 109,
+            "checked": true
+          },
+          {
+            "label": "Purify",
+            "amount": 14.9,
+            "checked": true
+          }
+        ]
+      },
+      "Health": {
+        "planned": 672,
+        "actual": 672,
+        "breakdown": [
+          {
+            "label": "Dr Schramm",
+            "amount": 70,
+            "checked": true
+          },
+          {
+            "label": "Clinique St George",
+            "amount": 532,
+            "checked": true
+          },
+          {
+            "label": "Dr Schramm",
+            "amount": 70
+          }
+        ]
+      },
+      "Gifts": {
+        "planned": 70,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Dad's BD",
+            "amount": 70
+          }
+        ]
+      },
+      "E-Vape": {
+        "planned": 39.8,
+        "actual": 39.8,
+        "breakdown": [
+          {
+            "label": "Liquid",
+            "amount": 39.8,
+            "checked": true
+          }
+        ]
+      },
+      "Transport": {
+        "planned": 0,
+        "actual": 6.2,
+        "breakdown": []
+      },
+      "Activities": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Travel": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0,
+        "breakdown": []
+      },
+      "Cash Money": {
+        "planned": 180,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Ele & Ben enjoy money",
+            "amount": 40
+          },
+          {
+            "label": "Cash out",
+            "amount": 50
+          },
+          {
+            "label": "Cashback from June",
+            "amount": 90
+          }
+        ]
+      }
+    },
+    "debt": {
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": [
+      {
+        "day": 2,
+        "section": "income",
+        "category": "Salary",
+        "amount": 674.52,
+        "note": "France Travail",
+        "id": 1783100838038
+      },
+      {
+        "day": 2,
+        "section": "variable",
+        "category": "Health",
+        "amount": 532,
+        "note": "Clinique St George",
+        "id": 1783100858407
+      },
+      {
+        "day": 6,
+        "section": "income",
+        "category": "Salary",
+        "amount": 669.42,
+        "note": "AAH",
+        "id": 1783439989510
+      },
+      {
+        "day": 6,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 13.7,
+        "note": "Mutex",
+        "id": 1783440038615
+      },
+      {
+        "day": 6,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 61.62,
+        "note": "Harmonie Mutuelle",
+        "id": 1783440072187
+      },
+      {
+        "day": 6,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 21.99,
+        "note": "Bouygues",
+        "id": 1783440085458
+      },
+      {
+        "day": 8,
+        "section": "variable",
+        "category": "Health",
+        "amount": 70,
+        "note": "Dr Schramm",
+        "id": 1783440220901
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Taxes / Fines",
+        "amount": 0.99,
+        "note": "BoursoProtect",
+        "id": 1783440236009
+      },
+      {
+        "day": 7,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 50,
+        "note": "Vir Sepa Stripe (Kermesse ticket)",
+        "id": 1783440283889
+      },
+      {
+        "day": 8,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 9.99,
+        "note": "GOG (The Witcher 3)",
+        "id": 1783940660575
+      },
+      {
+        "day": 9,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 16.99,
+        "note": "Apple (Youtube)",
+        "id": 1783940756755
+      },
+      {
+        "day": 13,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 2.99,
+        "note": "Apple (iCloud)",
+        "id": 1783940784835
+      },
+      {
+        "day": 13,
+        "section": "variable",
+        "category": "E-Vape",
+        "amount": 39.8,
+        "note": "Dragon's Vape",
+        "id": 1783940810395
+      },
+      {
+        "day": 13,
+        "section": "fixed",
+        "category": "Misc",
+        "amount": 61,
+        "note": "Barber (One Love)",
+        "id": 1783940873766
+      },
+      {
+        "day": 13,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 264.9,
+        "note": "Linvosges Boutique",
+        "id": 1783940905731
+      },
+      {
+        "day": 9,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 13.8,
+        "note": "Harmonie Mutuelle",
+        "id": 1783941013324
+      },
+      {
+        "day": 15,
+        "section": "fixed",
+        "category": "Taxes / Fines",
+        "amount": 75,
+        "note": "Amendes",
+        "id": 1784203939056
+      },
+      {
+        "day": 15,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 71,
+        "note": "Vir Ele (Assurance Habitation)",
+        "id": 1784203957186
+      },
+      {
+        "day": 16,
+        "section": "fixed",
+        "category": "Apartment's bills",
+        "amount": 141.5,
+        "note": "Lemonade (Assurance Habitation)",
+        "id": 1784303547425
+      },
+      {
+        "day": 16,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 268.39,
+        "note": "Harmonie Mutuelle",
+        "id": 1784303582549
+      },
+      {
+        "day": 17,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 1194,
+        "note": "Vir Ele (Bond)",
+        "id": 1784303611212
+      },
+      {
+        "day": 17,
+        "section": "variable",
+        "category": "Cash Money",
+        "amount": 0,
+        "note": "Took the money from Ele's transfert",
+        "id": 1784303828129
+      },
+      {
+        "day": 17,
+        "section": "fixed",
+        "category": "Rent",
+        "amount": 2746.43,
+        "note": "Sepa Sarl Experta",
+        "id": 1784550292421
+      },
+      {
+        "day": 23,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 230,
+        "note": "Vir Ele for ceiling fan",
+        "id": 1784983663919
+      },
+      {
+        "day": 24,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 170,
+        "note": "Vir Sepa Dgfip Finances Publiques",
+        "id": 1784983710140
+      },
+      {
+        "day": 24,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 23.09,
+        "note": "Leroy Merlin (Mom's stuff)",
+        "id": 1784983743572
+      },
+      {
+        "day": 24,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 229,
+        "note": "Leroy Merlin (Ceiling fan)",
+        "id": 1784983771529
+      },
+      {
+        "day": 27,
+        "section": "income",
+        "category": "Salary",
+        "amount": 430.37,
+        "note": "Vir Sepa CPAM",
+        "id": 1784983810600
+      },
+      {
+        "day": 28,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 4.2,
+        "note": "Escota",
+        "id": 1786013184047
+      },
+      {
+        "day": 28,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 111.99,
+        "note": "Nike",
+        "id": 1786013228873
+      },
+      {
+        "day": 30,
+        "section": "variable",
+        "category": "Health",
+        "amount": 70,
+        "note": "Dr Schramm",
+        "id": 1786013250396
+      },
+      {
+        "day": 30,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 14.9,
+        "note": "Purify",
+        "id": 1786013287062
+      },
+      {
+        "day": 30,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 109,
+        "note": "Boku",
+        "id": 1786013303237
+      },
+      {
+        "day": 30,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 13.8,
+        "note": "Harmonie Mutuelle",
+        "id": 1786013353300
+      },
+      {
+        "day": 31,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 2,
+        "note": "Escota",
+        "id": 1786013369074
+      }
+    ]
+  },
+  "2026-7": {
+    "income": {
+      "Salary": {
+        "planned": 1099,
+        "actual": 1072.26,
+        "breakdown": [
+          {
+            "label": "AAH",
+            "amount": 669,
+            "checked": true,
+            "recurrence": 2
+          },
+          {
+            "label": "CPAM",
+            "amount": 430,
+            "recurrence": 2,
+            "checked": true
+          }
+        ]
+      },
+      "Refunds": {
+        "planned": 1022.34,
+        "actual": 1046.73,
+        "breakdown": [
+          {
+            "label": "Europcar (Cancellation booking)",
+            "amount": 51.54,
+            "checked": true
+          },
+          {
+            "label": "Ele's rent",
+            "amount": 477.5,
+            "checked": true
+          },
+          {
+            "label": "Harmonie Mutuelle (Radio)",
+            "amount": 13.3,
+            "checked": true
+          },
+          {
+            "label": "Ele's rent for september",
+            "amount": 480,
+            "checked": true
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 60
+      },
+      "Savings": {
+        "planned": 500,
+        "actual": 500,
+        "breakdown": [
+          {
+            "label": "Need more money",
+            "amount": 500,
+            "checked": true
+          }
+        ]
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Tokimo": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Invest": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 955,
+        "actual": 955,
+        "breakdown": [
+          {
+            "label": "Rent",
+            "amount": 955,
+            "recurrence": 11,
+            "checked": true
+          }
+        ]
+      },
+      "Cell Phone": {
+        "planned": 21.99,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Bouygues",
+            "amount": 21.99
+          }
+        ]
+      },
+      "Subscriptions": {
+        "planned": 98.95,
+        "actual": 112.93,
+        "breakdown": [
+          {
+            "label": "Youtube",
+            "amount": 16.99,
+            "checked": true
+          },
+          {
+            "label": "iCloud",
+            "amount": 2.99,
+            "checked": true
+          },
+          {
+            "label": "Cell Phone",
+            "amount": 21.99,
+            "checked": true
+          },
+          {
+            "label": "Apple (Balanced)",
+            "amount": 44.99,
+            "checked": true
+          },
+          {
+            "label": "Orange",
+            "amount": 11.99,
+            "checked": true
+          }
+        ]
+      },
+      "Groceries": {
+        "planned": 324,
+        "actual": 381.63,
+        "breakdown": [
+          {
+            "label": "Groceries",
+            "amount": 150
+          },
+          {
+            "label": "Common account",
+            "amount": 174,
+            "checked": true
+          }
+        ]
+      },
+      "Insurance": {
+        "planned": 75.32,
+        "actual": 75.32,
+        "breakdown": [
+          {
+            "label": "Harmonie Mutuelle",
+            "amount": 75.32,
+            "checked": true
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 314.26,
+        "actual": 314.26,
+        "breakdown": [
+          {
+            "label": "Ele's payment payback",
+            "amount": 314.26,
+            "checked": true
+          }
+        ]
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0.99,
+        "actual": 0.99,
+        "breakdown": [
+          {
+            "label": "BoursoProtect",
+            "amount": 0.99
+          }
+        ]
+      },
+      "Apartment's bills": {
+        "planned": 271.08,
+        "actual": 222.46999999999997,
+        "breakdown": [
+          {
+            "label": "Gas",
+            "amount": 55
+          },
+          {
+            "label": "Electricity",
+            "amount": 42,
+            "checked": true
+          },
+          {
+            "label": "Water",
+            "amount": 40,
+            "checked": true,
+            "recurrence": 2
+          },
+          {
+            "label": "First payment Water",
+            "amount": 134.08,
+            "checked": true
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 205,
+        "actual": 392.82,
+        "breakdown": [
+          {
+            "label": "Coffees",
+            "amount": 5
+          },
+          {
+            "label": "Drink with Ele's",
+            "amount": 50
+          },
+          {
+            "label": "Restaurant",
+            "amount": 150
+          }
+        ]
+      },
+      "Shopping": {
+        "planned": 234,
+        "actual": 592.42,
+        "breakdown": [
+          {
+            "label": "Lampadaire",
+            "amount": 50,
+            "checked": true
+          },
+          {
+            "label": "Bath mat",
+            "amount": 15,
+            "checked": true
+          },
+          {
+            "label": "Pull Up Bar",
+            "amount": 50,
+            "checked": true
+          },
+          {
+            "label": "Kettle",
+            "amount": 20
+          },
+          {
+            "label": "Barre de son",
+            "amount": 99,
+            "checked": true
+          }
+        ]
+      },
+      "Health": {
+        "planned": 108,
+        "actual": 76.2,
+        "breakdown": [
+          {
+            "label": "Ballonement",
+            "amount": 10,
+            "checked": true
+          },
+          {
+            "label": "Radio",
+            "amount": 50
+          },
+          {
+            "label": "Barber",
+            "amount": 48,
+            "checked": true
+          }
+        ]
+      },
+      "Gifts": {
+        "planned": 70,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "MyrIam's BD",
+            "amount": 70
+          }
+        ]
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Transport": {
+        "planned": 177,
+        "actual": 262.04,
+        "breakdown": [
+          {
+            "label": "Rent a car for moving",
+            "amount": 150,
+            "checked": true
+          },
+          {
+            "label": "Peage",
+            "amount": 10,
+            "checked": true
+          },
+          {
+            "label": "Ligne d'azur",
+            "amount": 17
+          }
+        ]
+      },
+      "Activities": {
+        "planned": 0,
+        "actual": 29.9,
+        "breakdown": []
+      },
+      "Travel": {
+        "planned": 34.84,
+        "actual": 34.84,
+        "breakdown": [
+          {
+            "label": "USA Visa",
+            "amount": 34.84,
+            "checked": true
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0,
+        "breakdown": []
+      },
+      "Cash Money": {
+        "planned": 20,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Cash out",
+            "amount": 20
+          }
+        ]
+      }
+    },
+    "debt": {
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": [
+      {
+        "day": 3,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 1,
+        "note": "Escota",
+        "id": 1786013396549
+      },
+      {
+        "day": 3,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 41.98,
+        "note": "Ikea",
+        "id": 1786013438365
+      },
+      {
+        "day": 3,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 34.99,
+        "note": "Decathlon (Pull Up Bar)",
+        "id": 1786013475269
+      },
+      {
+        "day": 3,
+        "section": "variable",
+        "category": "Health",
+        "amount": 8.9,
+        "note": "Pharmacie",
+        "id": 1786013601724
+      },
+      {
+        "day": 4,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 51.54,
+        "note": "Europcar",
+        "id": 1786013625040
+      },
+      {
+        "day": 4,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 4.8,
+        "note": "Avia (coffee highway)",
+        "id": 1786013695199
+      },
+      {
+        "day": 4,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 51.54,
+        "note": "Europcar",
+        "id": 1786013713328
+      },
+      {
+        "day": 4,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 480,
+        "note": "Vir Ele (Rent)",
+        "id": 1786013741313
+      },
+      {
+        "day": 5,
+        "section": "income",
+        "category": "Salary",
+        "amount": 669.42,
+        "note": "CAF",
+        "id": 1786013772429
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 61.62,
+        "note": "Harmonie Mutuelle",
+        "id": 1786013800780
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 21.99,
+        "note": "Bouygues Telecom",
+        "id": 1786013821821
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Apartment's bills",
+        "amount": 134.08,
+        "note": "Regie Eau Azur",
+        "id": 1786013849346
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Apartment's bills",
+        "amount": 40,
+        "note": "Regie Eau Azur",
+        "id": 1786013863167
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 44.99,
+        "note": "Apple (Balance)",
+        "id": 1786014595288
+      },
+      {
+        "day": 5,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 59.73,
+        "note": "Esso (Fuel for Europcar)",
+        "id": 1786014644599
+      },
+      {
+        "day": 5,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 13,
+        "note": "Escota",
+        "id": 1786014688432
+      },
+      {
+        "day": 6,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 117.77,
+        "note": "Vir Ines (Europcar)",
+        "id": 1786015391436
+      },
+      {
+        "day": 10,
+        "section": "income",
+        "category": "Salary",
+        "amount": 175.7,
+        "note": "CPAM",
+        "id": 1786703707722
+      },
+      {
+        "day": 10,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 16.99,
+        "note": "Apple (Youtube)",
+        "id": 1786703726939
+      },
+      {
+        "day": 10,
+        "section": "variable",
+        "category": "Health",
+        "amount": 48,
+        "note": "SouthSide barber",
+        "id": 1786703765888
+      },
+      {
+        "day": 10,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 1,
+        "note": "Escota",
+        "id": 1786703779158
+      },
+      {
+        "day": 10,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 110,
+        "note": "Cafe Paulette",
+        "id": 1786703791836
+      },
+      {
+        "day": 11,
+        "section": "fixed",
+        "category": "Apartment's bills",
+        "amount": 48.39,
+        "note": "EDF",
+        "id": 1786703808808
+      },
+      {
+        "day": 11,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 2.99,
+        "note": "Apple (iCloud)",
+        "id": 1786703828611
+      },
+      {
+        "day": 11,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 99,
+        "note": "Boulanger (JBL)",
+        "id": 1786703846760
+      },
+      {
+        "day": 11,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 20,
+        "note": "Sailor Pub",
+        "id": 1786703863529
+      },
+      {
+        "day": 11,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 17,
+        "note": "Sailor Pub",
+        "id": 1786703872576
+      },
+      {
+        "day": 11,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 160,
+        "note": "Ctoilacave",
+        "id": 1786703889384
+      },
+      {
+        "day": 12,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 3.3,
+        "note": "Musiciens (Bakery)",
+        "id": 1786703949675
+      },
+      {
+        "day": 12,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 1,
+        "note": "Escota",
+        "id": 1786703963267
+      },
+      {
+        "day": 13,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 13.7,
+        "note": "Mutex",
+        "id": 1786703980977
+      },
+      {
+        "day": 13,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 18.45,
+        "note": "Cafe Indiens",
+        "id": 1786704001136
+      },
+      {
+        "day": 13,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 42.89,
+        "note": "Marionnaud (TOC)",
+        "id": 1786704070300
+      },
+      {
+        "day": 13,
+        "section": "fixed",
+        "category": "Rent",
+        "amount": 955,
+        "note": "Experta",
+        "id": 1786704096604
+      },
+      {
+        "day": 13,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 8.9,
+        "note": "Intermarche",
+        "id": 1786704116899
+      },
+      {
+        "day": 14,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 11.99,
+        "note": "Orange",
+        "id": 1786704138292
+      },
+      {
+        "day": 17,
+        "section": "income",
+        "category": "Misc",
+        "amount": 60,
+        "note": "Prime parrainage Ines",
+        "id": 1787038134299
+      },
+      {
+        "day": 17,
+        "section": "fixed",
+        "category": "Taxes / Fines",
+        "amount": 0.99,
+        "note": "BoursoProtect",
+        "id": 1787038146470
+      },
+      {
+        "day": 18,
+        "section": "fixed",
+        "category": "Misc",
+        "amount": 314.26,
+        "note": "Payback Ele",
+        "id": 1787492446412
+      },
+      {
+        "day": 19,
+        "section": "variable",
+        "category": "Activities",
+        "amount": 29.9,
+        "note": "Pathe",
+        "id": 1787492461995
+      },
+      {
+        "day": 20,
+        "section": "income",
+        "category": "Savings",
+        "amount": 500,
+        "note": "",
+        "id": 1787492478081
+      },
+      {
+        "day": 20,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 188.92,
+        "note": "IKEA",
+        "id": 1787492493557
+      },
+      {
+        "day": 20,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 6.99,
+        "note": "Apple (Crunchyroll)",
+        "id": 1787492516555
+      },
+      {
+        "day": 20,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 34.99,
+        "note": "Decathlon (Pull up bar)",
+        "id": 1787492533614
+      },
+      {
+        "day": 20,
+        "section": "variable",
+        "category": "Travel",
+        "amount": 34.84,
+        "note": "ESTA Visa",
+        "id": 1787492576635
+      },
+      {
+        "day": 24,
+        "section": "variable",
+        "category": "Health",
+        "amount": 19.3,
+        "note": "Cabinet image (radio)",
+        "id": 1787492594423
+      },
+      {
+        "day": 21,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 4.7,
+        "note": "Pathe (water)",
+        "id": 1787492635760
+      },
+      {
+        "day": 21,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 8.71,
+        "note": "Intermarche",
+        "id": 1787492651100
+      },
+      {
+        "day": 21,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 48.5,
+        "note": "Comptoir Irlandais (Gin)",
+        "id": 1787492672992
+      },
+      {
+        "day": 21,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 9.99,
+        "note": "Pharmacie",
+        "id": 1787492700748
+      },
+      {
+        "day": 24,
+        "section": "income",
+        "category": "Salary",
+        "amount": 167.37,
+        "note": "CPAM",
+        "id": 1787492719323
+      },
+      {
+        "day": 20,
+        "section": "savings_withdrawal",
+        "category": "BoursoPlus",
+        "amount": 500,
+        "note": "",
+        "id": 1787492748245
+      },
+      {
+        "day": 24,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 41,
+        "note": "Nicolas (Tequila)",
+        "id": 1787833338573
+      },
+      {
+        "day": 24,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 6.99,
+        "note": "Apple (Crunchyroll)",
+        "id": 1787833383008
+      },
+      {
+        "day": 25,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 29.99,
+        "note": "Clay",
+        "id": 1787833403449
+      },
+      {
+        "day": 25,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 55.92,
+        "note": "IKEA",
+        "id": 1787833422519
+      },
+      {
+        "day": 25,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 17,
+        "note": "Ticket Ligne d'Azur",
+        "id": 1787833445932
+      },
+      {
+        "day": 25,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 93.73,
+        "note": "Aperitif",
+        "id": 1787833504896
+      },
+      {
+        "day": 26,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 14.9,
+        "note": "Bouygues Telecom",
+        "id": 1787833531152
+      },
+      {
+        "day": 26,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 31,
+        "note": "Cave Tambour",
+        "id": 1787833543127
+      },
+      {
+        "day": 27,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 12.14,
+        "note": "Carrefour TNL",
+        "id": 1787833578760
+      },
+      {
+        "day": 27,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 56.64,
+        "note": "Otera",
+        "id": 1787833607095
+      },
+      {
+        "day": 27,
+        "section": "income",
+        "category": "Salary",
+        "amount": 59.77,
+        "note": "CPAM",
+        "id": 1787833631396
+      },
+      {
+        "day": 28,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 15.33,
+        "note": "Pub St Laurent",
+        "id": 1787915583928
+      },
+      {
+        "day": 28,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 13.3,
+        "note": "Harmonie Mutuelle",
+        "id": 1787915710439
+      },
+      {
+        "day": 28,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 480,
+        "note": "Ele's rent",
+        "id": 1787927111755
+      },
+      {
+        "day": 28,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 174,
+        "note": "Common account",
+        "id": 1787927287619
+      },
+      {
+        "day": 31,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 6.99,
+        "note": "Crunchyroll",
+        "id": 1788602827733
+      }
+    ]
+  },
+  "2026-8": {
+    "income": {
+      "Salary": {
+        "planned": 1069,
+        "actual": 1008.27,
+        "breakdown": [
+          {
+            "label": "AAH",
+            "amount": 669,
+            "checked": true
+          },
+          {
+            "label": "CPAM",
+            "amount": 400
+          }
+        ]
+      },
+      "Refunds": {
+        "planned": 109.98,
+        "actual": 138.66,
+        "breakdown": [
+          {
+            "label": "Decathlon",
+            "amount": 34.99,
+            "checked": true
+          },
+          {
+            "label": "Decathlon",
+            "amount": 34.99,
+            "checked": true
+          },
+          {
+            "label": "Psy Mutuelle",
+            "amount": 40,
+            "checked": true
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Savings": {
+        "planned": 1000,
+        "actual": 1000,
+        "breakdown": [
+          {
+            "label": "Need money",
+            "amount": 1000,
+            "checked": true
+          }
+        ]
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Tokimo": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Invest": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 955,
+        "actual": 955,
+        "breakdown": [
+          {
+            "label": "Rent",
+            "amount": 955,
+            "checked": true,
+            "recurrence": 2
+          }
+        ]
+      },
+      "Cell Phone": {
+        "planned": 21.99,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Bouygues",
+            "amount": 21.99
+          }
+        ]
+      },
+      "Subscriptions": {
+        "planned": 124.96,
+        "actual": 148.95,
+        "breakdown": [
+          {
+            "label": "Youtube",
+            "amount": 16.99,
+            "checked": true,
+            "recurrence": 2
+          },
+          {
+            "label": "iCloud",
+            "amount": 2.99,
+            "checked": true,
+            "recurrence": 2
+          },
+          {
+            "label": "Orange",
+            "amount": 16.99
+          },
+          {
+            "label": "IPTV App",
+            "amount": 5.99,
+            "checked": true
+          },
+          {
+            "label": "IPTV",
+            "amount": 82,
+            "checked": true
+          }
+        ]
+      },
+      "Groceries": {
+        "planned": 75,
+        "actual": 163.06,
+        "breakdown": [
+          {
+            "label": "My groceries",
+            "amount": 75,
+            "checked": true
+          }
+        ]
+      },
+      "Insurance": {
+        "planned": 87.82,
+        "actual": 87.82,
+        "breakdown": [
+          {
+            "label": "Harmonie Mutuelle",
+            "amount": 75.32,
+            "checked": true
+          },
+          {
+            "label": "Smeno (Responsabilite Civile)",
+            "amount": 12.5,
+            "checked": true
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0.99,
+        "actual": 0.99,
+        "breakdown": [
+          {
+            "label": "BoursoProtect",
+            "amount": 0.99,
+            "checked": true
+          }
+        ]
+      },
+      "Apartment's bills": {
+        "planned": 137,
+        "actual": 222.16,
+        "breakdown": [
+          {
+            "label": "EDF",
+            "amount": 97,
+            "checked": true,
+            "recurrence": 2
+          },
+          {
+            "label": "Water",
+            "amount": 40,
+            "checked": true
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 70,
+        "actual": 56.5,
+        "breakdown": [
+          {
+            "label": "Drinks",
+            "amount": 70
+          }
+        ]
+      },
+      "Shopping": {
+        "planned": 125,
+        "actual": 258.29,
+        "breakdown": [
+          {
+            "label": "Buy stuff",
+            "amount": 100,
+            "checked": true
+          },
+          {
+            "label": "To fix pull up bar",
+            "amount": 25,
+            "checked": true
+          }
+        ]
+      },
+      "Health": {
+        "planned": 174.3,
+        "actual": 174.88,
+        "breakdown": [
+          {
+            "label": "Dr Schramm",
+            "amount": 70,
+            "checked": true
+          },
+          {
+            "label": "Radio",
+            "amount": 19.3,
+            "checked": true
+          },
+          {
+            "label": "Barber",
+            "amount": 25,
+            "checked": true
+          },
+          {
+            "label": "Psy",
+            "amount": 60,
+            "checked": true
+          }
+        ]
+      },
+      "Gifts": {
+        "planned": 50,
+        "actual": 8.99,
+        "breakdown": [
+          {
+            "label": "PA's present",
+            "amount": 50
+          }
+        ]
+      },
+      "E-Vape": {
+        "planned": 41.3,
+        "actual": 41.3,
+        "breakdown": [
+          {
+            "label": "Cig Liquid",
+            "amount": 41.3,
+            "checked": true
+          }
+        ]
+      },
+      "Transport": {
+        "planned": 42,
+        "actual": 26.5,
+        "breakdown": [
+          {
+            "label": "Parking",
+            "amount": 15
+          },
+          {
+            "label": "Peage",
+            "amount": 10
+          },
+          {
+            "label": "Top up tram card",
+            "amount": 17,
+            "checked": true
+          }
+        ]
+      },
+      "Activities": {
+        "planned": 35,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Ceramique",
+            "amount": 35
+          }
+        ]
+      },
+      "Travel": {
+        "planned": 0,
+        "actual": 0,
+        "breakdown": []
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0,
+        "breakdown": []
+      },
+      "Cash Money": {
+        "planned": 240,
+        "actual": 290,
+        "breakdown": [
+          {
+            "label": "Ele & Ben enjoy money",
+            "amount": 90,
+            "checked": true
+          },
+          {
+            "label": "Cash out",
+            "amount": 30,
+            "checked": true
+          },
+          {
+            "label": "Withdraw for psy",
+            "amount": 60,
+            "checked": true
+          },
+          {
+            "label": "Withdray for psy",
+            "amount": 60
+          }
+        ]
+      }
+    },
+    "debt": {
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": [
+      {
+        "day": 2,
+        "section": "variable",
+        "category": "E-Vape",
+        "amount": 41.3,
+        "note": "Dragon's Vape",
+        "id": 1788602861619
+      },
+      {
+        "day": 2,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 34.99,
+        "note": "Decathlon",
+        "id": 1788602895128
+      },
+      {
+        "day": 3,
+        "section": "fixed",
+        "category": "Apartment's bills",
+        "amount": 34.39,
+        "note": "Orange",
+        "id": 1788602923201
+      },
+      {
+        "day": 3,
+        "section": "variable",
+        "category": "Health",
+        "amount": 60,
+        "note": "Doctolib",
+        "id": 1788602943553
+      },
+      {
+        "day": 4,
+        "section": "income",
+        "category": "Salary",
+        "amount": 669.42,
+        "note": "AAH",
+        "id": 1788602965794
+      },
+      {
+        "day": 4,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 5.99,
+        "note": "Apple (IPTV App)",
+        "id": 1788603313408
+      },
+      {
+        "day": 4,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 2.2,
+        "note": "Parking",
+        "id": 1788603334692
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 13.7,
+        "note": "Mutex",
+        "id": 1788603355595
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 61.62,
+        "note": "Harmonie Mutuelle",
+        "id": 1788603371921
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Apartment's bills",
+        "amount": 40,
+        "note": "Regie eau d'azur",
+        "id": 1788603387155
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Rent",
+        "amount": 955,
+        "note": "Experta",
+        "id": 1788603596466
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Taxes / Fines",
+        "amount": 0.99,
+        "note": "BoursoProtect",
+        "id": 1789038373027
+      },
+      {
+        "day": 7,
+        "section": "income",
+        "category": "Savings",
+        "amount": 1000,
+        "note": "From Bourso+",
+        "id": 1789038406721
+      },
+      {
+        "day": 7,
+        "section": "savings_withdrawal",
+        "category": "BoursoPlus",
+        "amount": 1000,
+        "note": "",
+        "id": 1789038414589
+      },
+      {
+        "day": 7,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 12.83,
+        "note": "Intermarche",
+        "id": 1789038433738
+      },
+      {
+        "day": 8,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 10,
+        "note": "Cafe des fleurs (cafe des amis)",
+        "id": 1789038465328
+      },
+      {
+        "day": 8,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 40,
+        "note": "Cafe des fleurs (cafe des amis)",
+        "id": 1789038473073
+      },
+      {
+        "day": 11,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 24.97,
+        "note": "Leroy Merlin",
+        "id": 1789038507431
+      },
+      {
+        "day": 10,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 1,
+        "note": "Escota",
+        "id": 1789038518588
+      },
+      {
+        "day": 11,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 9.99,
+        "note": "Auchan",
+        "id": 1789038555516
+      },
+      {
+        "day": 9,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 16.99,
+        "note": "Apple (Youtube)",
+        "id": 1789038582411
+      },
+      {
+        "day": 10,
+        "section": "variable",
+        "category": "Health",
+        "amount": 30,
+        "note": "Levant Barber",
+        "id": 1789038600205
+      },
+      {
+        "day": 10,
+        "section": "income",
+        "category": "Salary",
+        "amount": 175.7,
+        "note": "CPAM",
+        "id": 1789038613997
+      },
+      {
+        "day": 11,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 2.99,
+        "note": "Apple (iCloud)",
+        "id": 1789038629765
+      },
+      {
+        "day": 11,
+        "section": "fixed",
+        "category": "Apartment's bills",
+        "amount": 20.79,
+        "note": "EDF",
+        "id": 1789550769049
+      },
+      {
+        "day": 11,
+        "section": "fixed",
+        "category": "Apartment's bills",
+        "amount": 97,
+        "note": "EDF",
+        "id": 1789550777219
+      },
+      {
+        "day": 11,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 40,
+        "note": "Harmonie Mutuelle (Psy)",
+        "id": 1789550805701
+      },
+      {
+        "day": 14,
+        "section": "fixed",
+        "category": "Apartment's bills",
+        "amount": 29.98,
+        "note": "Orange",
+        "id": 1789550838800
+      },
+      {
+        "day": 14,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 50,
+        "note": "Commun account",
+        "id": 1789551007590
+      },
+      {
+        "day": 15,
+        "section": "variable",
+        "category": "Cash Money",
+        "amount": 180,
+        "note": "",
+        "id": 1789551445017
+      },
+      {
+        "day": 15,
+        "section": "variable",
+        "category": "Health",
+        "amount": 14.88,
+        "note": "Cabinet d'imagerie",
+        "id": 1789551460257
+      },
+      {
+        "day": 15,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 28.5,
+        "note": "TOC (Chinois)",
+        "id": 1789551484280
+      },
+      {
+        "day": 17,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 17,
+        "note": "Top up Ligne d'Azur",
+        "id": 1789903829930
+      },
+      {
+        "day": 18,
+        "section": "variable",
+        "category": "Health",
+        "amount": 70,
+        "note": "Dr Schramm",
+        "id": 1789903842468
+      },
+      {
+        "day": 21,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 34.99,
+        "note": "Decathlon",
+        "id": 1790165330126
+      },
+      {
+        "day": 22,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 28.68,
+        "note": "Harmonie Mutuelle (Dr.Schramm)",
+        "id": 1790165397910
+      },
+      {
+        "day": 22,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 37,
+        "note": "Auchan",
+        "id": 1790165412497
+      },
+      {
+        "day": 23,
+        "section": "income",
+        "category": "Salary",
+        "amount": 163.15,
+        "note": "CPAM",
+        "id": 1790165429364
+      },
+      {
+        "day": 24,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 82,
+        "note": "Smtv.com (iptv)",
+        "id": 1790851872907
+      },
+      {
+        "day": 24,
+        "section": "variable",
+        "category": "Gifts",
+        "amount": 8.99,
+        "note": "Amazon (PA's apron)",
+        "id": 1790851922611
+      },
+      {
+        "day": 25,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 179.87,
+        "note": "Nike",
+        "id": 1790851968578
+      },
+      {
+        "day": 25,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 0.8,
+        "note": "Escota",
+        "id": 1790851985197
+      },
+      {
+        "day": 25,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 1.6,
+        "note": "Escota",
+        "id": 1790851993535
+      },
+      {
+        "day": 28,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 33.99,
+        "note": "Apple (Strong App)",
+        "id": 1790852016943
+      },
+      {
+        "day": 28,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 0.8,
+        "note": "Escota",
+        "id": 1790852032144
+      },
+      {
+        "day": 28,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 1.7,
+        "note": "Escota",
+        "id": 1790852048268
+      },
+      {
+        "day": 28,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 12.5,
+        "note": "Smeno (Ecole 42 RC)",
+        "id": 1790852074213
+      },
+      {
+        "day": 28,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 19.9,
+        "note": "Bokus filter",
+        "id": 1790852142957
+      },
+      {
+        "day": 28,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 13.8,
+        "note": "Intermarche",
+        "id": 1790852171312
+      },
+      {
+        "day": 29,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 1.4,
+        "note": "Escota",
+        "id": 1790852186501
+      },
+      {
+        "day": 29,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 9.97,
+        "note": "Intermarche",
+        "id": 1790852203815
+      },
+      {
+        "day": 29,
+        "section": "fixed",
+        "category": "Subscriptions",
+        "amount": 6.99,
+        "note": "Crunchyroll",
+        "id": 1790852218209
+      },
+      {
+        "day": 29,
+        "section": "variable",
+        "category": "Shopping",
+        "amount": 24.95,
+        "note": "Amazon (Ear Plugs)",
+        "id": 1790852247544
+      },
+      {
+        "day": 30,
+        "section": "variable",
+        "category": "Cash Money",
+        "amount": 110,
+        "note": "Psy + Cindy",
+        "id": 1790852378782
+      },
+      {
+        "day": 30,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 6.5,
+        "note": "Chez Felix (Pan Bagnat)",
+        "id": 1790852398544
+      },
+      {
+        "day": 30,
+        "section": "fixed",
+        "category": "Groceries",
+        "amount": 9.57,
+        "note": "Maison Olive",
+        "id": 1790852415615
+      }
+    ]
+  },
+  "2026-9": {
+    "income": {
+      "Salary": {
+        "planned": 871.94,
+        "actual": 708.79,
+        "breakdown": [
+          {
+            "label": "AAH",
+            "amount": 533.09
+          },
+          {
+            "label": "CPAM",
+            "amount": 175.7
+          },
+          {
+            "label": "CPAM",
+            "amount": 163.15
+          }
+        ]
+      },
+      "Refunds": {
+        "planned": 341.99,
+        "actual": 270,
+        "breakdown": [
+          {
+            "label": "Vir Ele for rent (minus 250 for groceries)",
+            "amount": 230,
+            "checked": true
+          },
+          {
+            "label": "Vir Ele for Apartment Bills",
+            "amount": 111.99
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0.1
+      },
+      "Savings": {
+        "planned": 750,
+        "actual": 750,
+        "breakdown": [
+          {
+            "label": "Need money",
+            "amount": 750
+          }
+        ]
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Tokimo": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Invest": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 955,
+        "actual": 955,
+        "breakdown": [
+          {
+            "label": "Rent",
+            "amount": 955
+          }
+        ]
+      },
+      "Cell Phone": {
+        "planned": 21.99,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Bouygues",
+            "amount": 21.99
+          }
+        ]
+      },
+      "Subscriptions": {
+        "planned": 34.97,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Youtube",
+            "amount": 16.99
+          },
+          {
+            "label": "iCloud",
+            "amount": 2.99
+          },
+          {
+            "label": "Orange",
+            "amount": 14.99
+          }
+        ]
+      },
+      "Groceries": {
+        "planned": 0,
+        "actual": 0,
+        "breakdown": []
+      },
+      "Insurance": {
+        "planned": 75.32,
+        "actual": 75.32,
+        "breakdown": [
+          {
+            "label": "Harmonie Mutuelle",
+            "amount": 75.32,
+            "checked": true
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0.99,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "BoursoProtect",
+            "amount": 0.99
+          }
+        ]
+      },
+      "Apartment's bills": {
+        "planned": 263.99,
+        "actual": 69.99,
+        "breakdown": [
+          {
+            "label": "Gas",
+            "amount": 55
+          },
+          {
+            "label": "Electricity",
+            "amount": 42
+          },
+          {
+            "label": "EDF",
+            "amount": 97
+          },
+          {
+            "label": "Orange",
+            "amount": 29.99,
+            "checked": true
+          },
+          {
+            "label": "Regie Eau Azur",
+            "amount": 40,
+            "checked": true
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 130,
+        "actual": 3.7,
+        "breakdown": [
+          {
+            "label": "Drinking",
+            "amount": 65
+          },
+          {
+            "label": "Eating",
+            "amount": 65
+          }
+        ]
+      },
+      "Shopping": {
+        "planned": 0,
+        "actual": 0,
+        "breakdown": []
+      },
+      "Health": {
+        "planned": 30,
+        "actual": 25,
+        "breakdown": [
+          {
+            "label": "Barber",
+            "amount": 30
+          }
+        ]
+      },
+      "Gifts": {
+        "planned": 0,
+        "actual": 0
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Transport": {
+        "planned": 35,
+        "actual": 19,
+        "breakdown": [
+          {
+            "label": "Escota",
+            "amount": 8
+          },
+          {
+            "label": "Parking",
+            "amount": 10
+          },
+          {
+            "label": "Ligne d'azur",
+            "amount": 17,
+            "checked": true
+          }
+        ]
+      },
+      "Activities": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Travel": {
+        "planned": 280,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "New Zealand Visa",
+            "amount": 70
+          },
+          {
+            "label": "Ferry",
+            "amount": 200
+          },
+          {
+            "label": "Picture for international driver license",
+            "amount": 10
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0,
+        "breakdown": []
+      },
+      "Cash Money": {
+        "planned": 100,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Ele & Ben enjoy money",
+            "amount": 40
+          },
+          {
+            "label": "Psy",
+            "amount": 60
+          }
+        ]
+      }
+    },
+    "debt": {
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": [
+      {
+        "day": 1,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 230,
+        "note": "Vir Ele for rent",
+        "id": 1790852475037
+      },
+      {
+        "day": 1,
+        "section": "income",
+        "category": "Misc",
+        "amount": 0.1,
+        "note": "REG",
+        "id": 1790852646034
+      },
+      {
+        "day": 2,
+        "section": "income",
+        "category": "Refunds",
+        "amount": 40,
+        "note": "Harmonie Mutuelle (Psy)",
+        "id": 1791019843315
+      },
+      {
+        "day": 5,
+        "section": "income",
+        "category": "Salary",
+        "amount": 533.09,
+        "note": "AAH",
+        "id": 1791019884064
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 13.7,
+        "note": "Mutex",
+        "id": 1791019900615
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Rent",
+        "amount": 955,
+        "note": "Experta",
+        "id": 1791019910964
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Insurance",
+        "amount": 61.62,
+        "note": "Harmonie Mutuelle",
+        "id": 1791019927273
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Apartment's bills",
+        "amount": 29.99,
+        "note": "Orange",
+        "id": 1791019944494
+      },
+      {
+        "day": 5,
+        "section": "fixed",
+        "category": "Apartment's bills",
+        "amount": 40,
+        "note": "Regie Eau d Azur",
+        "id": 1791019961339
+      },
+      {
+        "day": 5,
+        "section": "savings_withdrawal",
+        "category": "BoursoPlus",
+        "amount": 750,
+        "note": "",
+        "id": 1791360808427
+      },
+      {
+        "day": 5,
+        "section": "income",
+        "category": "Savings",
+        "amount": 750,
+        "note": "",
+        "id": 1791360817559
+      },
+      {
+        "day": 5,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 1.8,
+        "note": "Distributi",
+        "id": 1791360840613
+      },
+      {
+        "day": 6,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 1,
+        "note": "Escota",
+        "id": 1791360856799
+      },
+      {
+        "day": 6,
+        "section": "variable",
+        "category": "Health",
+        "amount": 25,
+        "note": "Levant Barber",
+        "id": 1791360878785
+      },
+      {
+        "day": 6,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 17,
+        "note": "Ligne d Azur",
+        "id": 1791360898386
+      },
+      {
+        "day": 6,
+        "section": "variable",
+        "category": "Eating Out",
+        "amount": 1.9,
+        "note": "Distributi",
+        "id": 1791360956234
+      },
+      {
+        "day": 7,
+        "section": "variable",
+        "category": "Transport",
+        "amount": 1,
+        "note": "Escota",
+        "id": 1791360971424
+      },
+      {
+        "day": 7,
+        "section": "income",
+        "category": "Salary",
+        "amount": 175.7,
+        "note": "CPAM",
+        "id": 1791360997431
+      }
+    ]
+  },
+  "2026-10": {
+    "income": {
+      "Salary": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Refunds": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Savings": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Tokimo": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Invest": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 477.5,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Rent",
+            "amount": 477.5
+          }
+        ]
+      },
+      "Cell Phone": {
+        "planned": 21.99,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Bouygues",
+            "amount": 21.99
+          }
+        ]
+      },
+      "Subscriptions": {
+        "planned": 19.98,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Youtube",
+            "amount": 16.99
+          },
+          {
+            "label": "iCloud",
+            "amount": 2.99
+          }
+        ]
+      },
+      "Groceries": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Insurance": {
+        "planned": 75.32,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Harmonie Mutuelle",
+            "amount": 75.32
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0.99,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "BoursoProtect",
+            "amount": 0.99
+          }
+        ]
+      },
+      "Apartment's bills": {
+        "planned": 97,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Gas",
+            "amount": 55
+          },
+          {
+            "label": "Electricity",
+            "amount": 42
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Shopping": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Health": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Gifts": {
+        "planned": 0,
+        "actual": 0
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Transport": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Activities": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Travel": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cash Money": {
+        "planned": 90,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Ele & Ben enjoy money",
+            "amount": 40
+          },
+          {
+            "label": "Cash out",
+            "amount": 50
+          }
+        ]
+      }
+    },
+    "debt": {
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": []
+  },
+  "2026-11": {
+    "income": {
+      "Salary": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Refunds": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Savings": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Tokimo": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Invest": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 477.5,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Rent",
+            "amount": 477.5
+          }
+        ]
+      },
+      "Cell Phone": {
+        "planned": 21.99,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Bouygues",
+            "amount": 21.99
+          }
+        ]
+      },
+      "Subscriptions": {
+        "planned": 19.98,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Youtube",
+            "amount": 16.99
+          },
+          {
+            "label": "iCloud",
+            "amount": 2.99
+          }
+        ]
+      },
+      "Groceries": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Insurance": {
+        "planned": 75.32,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Harmonie Mutuelle",
+            "amount": 75.32
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0.99,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "BoursoProtect",
+            "amount": 0.99
+          }
+        ]
+      },
+      "Apartment's bills": {
+        "planned": 97,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Gas",
+            "amount": 55
+          },
+          {
+            "label": "Electricity",
+            "amount": 42
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Shopping": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Health": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Gifts": {
+        "planned": 0,
+        "actual": 0
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Transport": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Activities": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Travel": {
+        "planned": 1000,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "NZ Airbnb",
+            "amount": 1000
+          }
+        ]
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cash Money": {
+        "planned": 90,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Ele & Ben enjoy money",
+            "amount": 40
+          },
+          {
+            "label": "Cash out",
+            "amount": 50
+          }
+        ]
+      }
+    },
+    "debt": {
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": []
+  },
+  "2027-0": {
+    "income": {
+      "Salary": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Refunds": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Savings": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Tokimo": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Invest": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 477.5,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Rent",
+            "amount": 477.5
+          }
+        ]
+      },
+      "Cell Phone": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Subscriptions": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Groceries": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Insurance": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Apartment's bills": {
+        "planned": 97,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Gas",
+            "amount": 55
+          },
+          {
+            "label": "Electricity",
+            "amount": 42
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Shopping": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Health": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Gifts": {
+        "planned": 0,
+        "actual": 0
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Transport": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Activities": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Travel": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cash Money": {
+        "planned": 90,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Ele & Ben enjoy money",
+            "amount": 40
+          },
+          {
+            "label": "Cash out",
+            "amount": 50
+          }
+        ]
+      }
+    },
+    "debt": {
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": []
+  },
+  "2027-1": {
+    "income": {
+      "Salary": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Refunds": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Savings": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Tokimo": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Invest": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 477.5,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Rent",
+            "amount": 477.5
+          }
+        ]
+      },
+      "Cell Phone": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Subscriptions": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Groceries": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Insurance": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Apartment's bills": {
+        "planned": 97,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Gas",
+            "amount": 55
+          },
+          {
+            "label": "Electricity",
+            "amount": 42
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Shopping": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Health": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Gifts": {
+        "planned": 0,
+        "actual": 0
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Transport": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Activities": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Travel": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cash Money": {
+        "planned": 90,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Ele & Ben enjoy money",
+            "amount": 40
+          },
+          {
+            "label": "Cash out",
+            "amount": 50
+          }
+        ]
+      }
+    },
+    "debt": {
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": []
+  },
+  "2027-2": {
+    "income": {
+      "Salary": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Refunds": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Savings": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Tokimo": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Invest": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 477.5,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Rent",
+            "amount": 477.5
+          }
+        ]
+      },
+      "Cell Phone": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Subscriptions": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Groceries": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Insurance": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Apartment's bills": {
+        "planned": 97,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Gas",
+            "amount": 55
+          },
+          {
+            "label": "Electricity",
+            "amount": 42
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Shopping": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Health": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Gifts": {
+        "planned": 0,
+        "actual": 0
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Transport": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Activities": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Travel": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cash Money": {
+        "planned": 90,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Ele & Ben enjoy money",
+            "amount": 40
+          },
+          {
+            "label": "Cash out",
+            "amount": 50
+          }
+        ]
+      }
+    },
+    "debt": {
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": []
+  },
+  "2027-3": {
+    "income": {
+      "Salary": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Refunds": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Savings": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Tokimo": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Invest": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 477.5,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Rent",
+            "amount": 477.5
+          }
+        ]
+      },
+      "Cell Phone": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Subscriptions": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Groceries": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Insurance": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Apartment's bills": {
+        "planned": 97,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Gas",
+            "amount": 55
+          },
+          {
+            "label": "Electricity",
+            "amount": 42
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Shopping": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Health": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Gifts": {
+        "planned": 0,
+        "actual": 0
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Transport": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Activities": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Travel": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cash Money": {
+        "planned": 90,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Ele & Ben enjoy money",
+            "amount": 40
+          },
+          {
+            "label": "Cash out",
+            "amount": 50
+          }
+        ]
+      }
+    },
+    "debt": {
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": []
+  },
+  "2027-4": {
+    "income": {
+      "Salary": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Refunds": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Savings": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Tokimo": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Invest": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 477.5,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Rent",
+            "amount": 477.5
+          }
+        ]
+      },
+      "Cell Phone": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Subscriptions": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Groceries": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Insurance": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Apartment's bills": {
+        "planned": 97,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Gas",
+            "amount": 55
+          },
+          {
+            "label": "Electricity",
+            "amount": 42
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Shopping": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Health": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Gifts": {
+        "planned": 0,
+        "actual": 0
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Transport": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Activities": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Travel": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cash Money": {
+        "planned": 50,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Cash out",
+            "amount": 50
+          }
+        ]
+      }
+    },
+    "debt": {
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": []
+  },
+  "2027-5": {
+    "income": {
+      "Salary": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Refunds": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Savings": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "savings": {
+      "BoursoPlus": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Crypto": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Wise": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Tokimo": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Invest": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "fixed": {
+      "Rent": {
+        "planned": 477.5,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Rent",
+            "amount": 477.5
+          }
+        ]
+      },
+      "Cell Phone": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Subscriptions": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Groceries": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Insurance": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Car": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Taxes / Fines": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Apartment's bills": {
+        "planned": 97,
+        "actual": 0,
+        "breakdown": [
+          {
+            "label": "Gas",
+            "amount": 55
+          },
+          {
+            "label": "Electricity",
+            "amount": 42
+          }
+        ]
+      }
+    },
+    "variable": {
+      "Eating Out": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Shopping": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Health": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Gifts": {
+        "planned": 0,
+        "actual": 0
+      },
+      "E-Vape": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Transport": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Activities": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Travel": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Misc": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Cash Money": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "debt": {
+      "Parent's Money": {
+        "planned": 0,
+        "actual": 0
+      },
+      "Boursorama": {
+        "planned": 0,
+        "actual": 0
+      }
+    },
+    "transactions": []
+  }
+}
